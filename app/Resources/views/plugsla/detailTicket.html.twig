@@ -1,0 +1,443 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block body %}
+    <div class="col-12 row">
+        <div class="col-2 card position-fixed mt-4">
+            <a class="btn btn-secondary m-2" href = '{{ path('tickets') }}'  about="back to ticket list"><i  class="fa fa-home"></i> </a>
+            <br>
+            <hr/>
+            Status
+            {%  for status in statusAllow %}
+            <a class="btn {{ status['btn'] }} m-2" title="{{ status['title'] }}" href = '{{ path('status_ticket',   {'id' : ticket.key, 'status':  status['id'] }) }}'>{{ status['label'] }}<i class=" m-1 fa {{ status['icon'] }}"></i> </a>
+                <br>
+            {% endfor%}
+            <hr/>
+            <a href="{{ path('modify_ticket',   {'id' : ticket.key }) }}" class="btn btn-outline-dark m-2">Go back to the ticket</a>
+            <a href="{{ path('tickettoPDF',   {'id' : ticket.key }) }}" class="btn  btn-outline-dark m-2"><i class="fa fa-file-pdf-o"></i>PDF</a>
+        </div>
+
+        <div class="col-10 container offset-2">
+            <h1 class="text-center">Author : {{ ticket.getCustomField(10225)}}</h1>
+
+            {% for so,row in result %}
+            <h2 class="card card-header mb-4 bg-dark text-white text-center">{{ so }}</h2>
+
+            <div class="mb-4 card">
+                <div class="card-header d-flex">
+                    <p class="col-6">Start date : {{ row['data']['start']['value'] | date("d/m/Y") }}</p>
+                    <p class="col-6 text-right">End date : {{ row['data']['start']['value'] | date_modify("+" ~ row['data']['NumberOfDays']['value'] ~ " day") | date("d/m/Y") }}</p>
+                </div>
+                <div class="card-body">
+
+                    {% if row['data']['access_type'] is defined %}
+                        <p>access_type : {{ row['data']['access_type']['value'] }}</p>
+                    {% endif %}
+                    {% if row['data']['requirements'] is defined %}
+                        <p>Requirements : {{ row['data']['requirements']['value'] }}</p>
+                    {% endif %}
+
+                    {% for serviceType in row['serviceType'] %}
+                        {% if loop.first %}
+                            <p>Service Area : {{ serviceType }}</p>
+                            {% elseif loop.last %}
+                                <p>ServiceOption : {{ serviceType }}</p>
+                            {% else %}
+                                <p>Service : {{ serviceType }}</p>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if row | length > 2 %}
+                        <div class="row mt-4">
+                             <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <td>Request</td>
+                                        <td>Value</td>
+                                        <td>Total</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for clef,value in row['data'] %}
+                                        {% if clef != 'start' and clef != 'NumberOfDays'  and clef != 'access_type'  and clef != 'requirements' %}
+                                            <tr>
+                                                <td>{{ clef }}</td>
+                                                <td><span class="badge badge-info">{{ value['value'] }}</span></td>
+                                                <td>
+                                                    {% if value['type'] == 'number' %}
+                                                        <div class="progress">
+                                                            <div class="progress-bar" data-available="{{ value['value'] }}" data-demande="{{ value['percentage'] }}" role="progressbar" style="width: 0;" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                                        </div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                        <button type="button" class="btn btn-primary mt-2 mb-2" data-toggle="modal" data-target="#modal-{{ so }}">
+                            <span class="fa fa-plus-square"></span> Add provider
+                        </button>
+                        <button type="button" class="btn btn-primary mt-2 mb-2" data-toggle="modal" data-target="#contact">
+                            <span class="fa fa-envelope"></span> Contact provider
+                        </button>
+
+                        <!-- Modal contact provideur without data -->
+                        <div class="modal fade w-50 m-auto" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Contact provider</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ path('contact_provideur') }}" method="post">
+                                            <div class="row m-2">
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-provideur">resource provider</label>
+                                                    <select class="form-control col-12 provideur" name="provideur" id="{{ so }}-provideur">
+                                                        {% for provid in row['provideur'] %}
+                                                                <option value="{{ provid['NAME'] }}" data-contact="{{ provid['CONTACT_EMAIL'] }}">{{ provid['NAME'] }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-mail">Mail</label>
+                                                    <input type="text" name="mail" class="form-control mail" id="{{ so }}-mail" required>
+                                                </div>
+                                            </div>
+                                            <div class="row m-2">
+                                                <div class="col-12">
+                                                    <label for="subject">Subject</label>
+                                                    <input type="text" name="subject" class="form-control" id="subject">
+                                                </div>
+                                            </div>
+                                            <div class="row m-2">
+                                                <div class="col-12">
+                                                    <label for="message">Message</label>
+                                                    <textarea class="form-control" name="message" id="message" style="height: 300px;"></textarea>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" value="{{ ticket.key }}" name="idTicket">
+                                            <div class="row">
+                                                <input type="submit" value="Send" class="btn btn-success ml-4 mt-4 mb-4 mr-2">
+                                                <button type="button" class="btn btn-secondary mt-4 mb-4" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal add Provideur -->
+                        <div class="modal fade w-50 m-auto" id="modal-{{ so }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form action="{{ path('add_provideur') }}" name="form_provider" method="post" class="col-12">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-center" id="exampleModalLabel">Add provider</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-provideur">resource provider</label>
+                                                    <select class="form-control col-12 provideur" name="provideur" id="{{ so }}-provideur">
+                                                        {% for provideur in row['provideur'] %}
+                                                            <option value="{{ provideur['NAME'] }}" data-contact="{{ provideur['CONTACT_EMAIL'] }}">{{ provideur['NAME'] }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-mail">Mail</label>
+                                                    <input type="text" name="mail" class="form-control mail" id="{{ so }}-mail" >
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                {% for clef,value in row['data']  %}
+                                                    {% if clef != 'start' and clef != 'NumberOfDays'  and clef != 'access_type'  and clef != 'requirements' %}
+                                                        {% if value['type'] == 'number' %}
+                                                            <div class="mt-4 mb-4 col-6">
+                                                                <label for="{{ so }}-{{ clef }}">{{ clef }}</label>
+                                                                <input type="{{ value['type'] }}"
+                                                                        {% if value['type'] == 'number' %}
+                                                                            min="0" max="{{ value['value'] - value['percentage'] }}" value="0"
+                                                                        {% endif %}
+                                                                       class="form-control mb-2 demande" name="{{ clef }}" placeholder="{{ clef }}" id="{{ so }}-{{ clef }}" >
+
+                                                                {% if value['type'] == 'number' %}
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar" data-available="{{ value['value'] }}"  data-percentage="{{ value['percentage'] }}" role="progressbar" style="width: 0;" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+
+                                            <div class="row mt-4 mb-4 ">
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-start">Start</label>
+                                                    <input type="text" name="start" class="form-control" id="{{ so }}-start" value="{{ row['data']['start']['value'] | date("d/m/Y") }}" >
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-end">End</label>
+                                                    <input type="text" name="end" class="form-control" id="{{ so }}-end" value="{{ row['data']['start']['value'] | date_modify("+" ~ row['data']['NumberOfDays']['value'] ~ " day") | date("d/m/Y") }}" >
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-4 mb-4 ">
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-ava">Availability</label>
+                                                    <input type="number" name="ava" class="form-control" id="{{ so }}-ava" value="90" max="100" min="0" >
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="{{ so }}-rel">Reliability</label>
+                                                    <input type="number" name="rel" class="form-control" id="{{ so }}-rel" value="95" max="100" min="0" >
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" name="idTicket" value="{{ ticket.key }}">
+                                            <input type="hidden" name="SO" value="{{ so }}">
+                                            <input type="hidden" name="attributeSla" value="{{ row['attributeSla'] }}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" class="btn btn-primary" value="Save">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+
+            </div>
+            </div>
+        </div>
+
+                            {% if row['soProvideur'] is not empty %}
+                    <table class="table">
+                                    <thead class="thead-dark">
+                        <tr>
+                                        <th>Resource center</th>
+                                        <th>Contact</th>
+                                        <th>Resources Cloud</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Ava</th>
+                                        <th>Rel</th>
+                                        <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                                    {% for provideur in row['soProvideur'] %}
+                                <tr>
+                                            <td>{{ provideur.provideur }}</td>
+                                            <td>{{ provideur.mail }}</td>
+                                            <td>
+                                                {% for clef,value in row['data'] %}
+                                                    {% if clef != 'start' and clef != 'NumberOfDays' and clef != 'requirements' and clef != 'access_type'  %}
+                                                        <p>{{ clef }} : {{ provideur.data[clef] }}</p>
+                                                        {% if value['type'] == 'number' %}
+                                                            <div class="progress">
+                                                                <div class="progress-bar" data-available="{{ value['value'] }}" data-demande="{{ provideur.data[clef] }}" role="progressbar" style="width: 0;" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                    <td>
+                                                {% if provideur.data.start is defined %}
+                                                    {{ provideur.data['start'] }}
+                                                {% endif %}
+                                    </td>
+                                    <td>
+                                                {% if provideur.data.end is defined %}
+                                                    {{ provideur.data['end'] }}
+                                                {% endif %}
+                                            </td>
+                                            <td><span class="badge badge-success">{{ provideur.data['ava'] }}%</span></td>
+                                            <td><span class="badge badge-success">{{ provideur.data['rel'] }}%</span></td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#comment-{{ provideur.id }}">
+                                                    Add comment
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contact-{{ provideur.id }}">
+                                                    Contact provider
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                {% for provideur in row['soProvideur'] %}
+                                    <!-- Modal commentaire-->
+                                    <div class="modal fade w-50 m-auto" id="comment-{{ provideur.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"> Add comment</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ path('add_comment') }}" method="post">
+                                                        <label for="comment">Comment</label>
+                                                        <textarea class="form-control" name="commentaire" id="comment" style="height: 300px;">
+                                                            Resource Provider : {{ provideur.provideur }}
+                                                            {% for clef,value in row['data'] %}
+                                                                {% if clef != 'start' and clef != 'NumberOfDays' and clef != 'requirements' and clef != 'access_type'  %}
+                                                                    {{ clef }} : {{ provideur.data[clef] }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </textarea>
+                                                        <input type="hidden" value="{{ ticket.key }}" name="idTicket">
+                                                        <div class="row">
+                                                            <input type="submit" value="Send" class="btn btn-success ml-4 mt-4 mb-4 mr-2">
+                                                            <button type="button" class="btn btn-secondary mt-4 mb-4" data-dismiss="modal">Close</button>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal contact -->
+                                    <div class="modal fade w-50 m-auto" id="contact-{{ provideur.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Contact provider</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ path('contact_provideur') }}" method="post">
+                                                        <div class="row m-2">
+                                                            <div class="col-6">
+                                                                <label for="{{ so }}-provideur">resource provider</label>
+                                                                <select class="form-control col-12 provideur" name="provideur" id="{{ so }}-provideur">
+                                                                    {% for provid in row['provideur'] %}
+                                                                        {% if provid['NAME'] == provideur.provideur %}
+                                                                            <option value="{{ provid['NAME'] }}" selected data-contact="{{ provid['CONTACT_EMAIL'] }}">{{ provid['NAME'] }}</option>
+                                                                            {% else %}
+                                                                                <option value="{{ provid['NAME'] }}" data-contact="{{ provid['CONTACT_EMAIL'] }}">{{ provid['NAME'] }}</option>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="{{ so }}-mail">Mail</label>
+                                                                <input type="text" name="mail" class="form-control mail" id="{{ so }}-mail" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-2">
+                                                            <div class="col-12">
+                                                                <label for="subject">Subject</label>
+                                                                <input type="text" name="subject" class="form-control" id="subject">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-2">
+                                                            <div class="col-12">
+                                                                <label for="message">Message</label>
+                                                                <textarea class="form-control" name="message" id="message" style="height: 300px;">
+                                                                    Resource Provider : {{ provideur.provideur }}
+                                                                    {% for clef,value in row['data'] %}
+                                                                        {% if clef != 'start' and clef != 'NumberOfDays' and clef != 'requirements' and clef != 'access_type'  %}
+                                                                            {{ clef }} : {{ provideur.data[clef] }}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </textarea>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" value="{{ ticket.key }}" name="idTicket">
+                                                        <div class="row">
+                                                            <input type="submit" value="Send" class="btn btn-success ml-4 mt-4 mb-4 mr-2">
+                                                            <button type="button" class="btn btn-secondary mt-4 mb-4" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+
+                            {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+    {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(function () {
+
+        $( ".progress-bar" ).each(function() {
+
+            var available = $(this).data('available');
+            var demande = $(this).data('demande');
+            var resultat = parseFloat(demande / available * 100).toFixed(1);
+
+            $(this).css('width', resultat+'%');
+            if(resultat > 0 ){
+                $(this).css('min-width', '40px');
+            }
+            $(this).html(resultat+'%');
+
+        });
+
+            $('.demande').keyup(function () {
+                var value = this.value;
+                var progressBar = $(this).next().find('.progress-bar');
+
+                var available = progressBar.data('available');
+                var percentage = progressBar.data('percentage');
+                var demande =  parseFloat(percentage) + parseFloat(value);
+                var resultat = parseFloat(demande / available * 100).toFixed(1);
+
+                progressBar.css('width', resultat+'%');
+                if(resultat > 0 ){
+                    progressBar.css('min-width', '40px');
+                }
+                progressBar.html(resultat+'%');
+            }).keyup();
+
+            $('.demande').click(function () {
+                var value = this.value;
+                var progressBar = $(this).next().find('.progress-bar');
+
+                var available = progressBar.data('available');
+                var percentage = progressBar.data('percentage');
+                var demande =  parseFloat(percentage) + parseFloat(value);
+                var resultat = parseFloat(demande / available * 100).toFixed(1);
+
+                progressBar.css('width', resultat+'%');
+                if(resultat > 0 ){
+                    progressBar.css('min-width', '40px');
+                }
+                progressBar.html(resultat+'%');
+            });
+
+
+            $('.provideur').change(function () {
+                $(this).parent().parent().find('.col-6:last').find('.mail').val($('option:selected',this).data("contact"));
+            }).change();
+    });
+
+</script>
+{% endblock %}

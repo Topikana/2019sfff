@@ -1,0 +1,34 @@
+parameters:
+  credits:
+    webapp:
+      title: 'Official web application for Operations within the <a href="http://egi.eu">EGI Foundation</a>'
+      icon: "images/logo_final_medium.png"
+      items:
+        - {txt: "This portal is developped and maintained at <a href='http://cc.in2p3.fr'>CCIN2P3</a>,Computing Center for the IN2P3 Institute is depending from <a href='http://cnrs.fr'>CNRS</a> <br/>This service is co-funded by  <a href='http://egi.eu'>EGI Foundation</a> and <a href='https://eosc-hub.eu'>EOSC-Hub</a> <br/>Licensed under the <a href='http://www.apache.org/licenses/LICENSE-2.0' target='_blank' title='ApacheLink'> Apache License. </a><br/> For any contact, use this section: <a href='{{path(&quot;contact&quot;)}}' title='contact link'>contact us</a><br/> Or visit our <a href='http://forge.in2p3.fr/projects/opsportaluser?jump=welcome' target='_blank'>forge</a>"}
+    mainDev:
+      title: "Main developers"
+      icon: "fas fa-user"
+      items:
+        - {txt: "Cyril L'Orphelin"}
+        - {txt: "Pierre Frébault"}
+        - {txt: "Thibaut Salanon"}
+        - {txt: "Laure-Beya Souai"}
+        - {txt: "Sylvain Reynaud"}
+        - {txt: "Olivier Lequeux"}
+        - {txt: "Arthur de Barbanson"}
+        - {txt: "François Letellier"}
+    infoData:
+      title: "Information and data sources"
+      icon: "fas fa-cog"
+      items:
+        - {txt: "GOC Database"}
+        - {txt: "GGUS"}
+        - {txt: "Nagios"}
+        - {txt: "Pakiti"}
+        - {txt: "Lavoisier"}
+        - {txt: "Bdii"}
+        - {txt: "ARGO"}
+        - {txt: "AppDB"}
+        - {txt: "Accounting Portal"}
+
+

@@ -1,0 +1,8 @@
+<ul class="timeline">
+    {% for comment in comments |reverse %}
+        <li>
+            <a class="text-primary">{{ comment.getCreated()| date('Y-m-d H:i:s') }}</a>
+            <p>{{ comment.getBody()}}</p>
+        </li>
+    {% endfor %}
+</ul>

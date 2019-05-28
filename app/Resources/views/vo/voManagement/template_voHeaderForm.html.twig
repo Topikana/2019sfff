@@ -1,0 +1,159 @@
+<div class="card">
+<div class="card-header">
+        <h2 class="portal text-primary">General information</h2>
+</div>
+    <div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end font-weight-bold infoLabel">{{ form_label(voForm.VoHeader.name) }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.name,{ 'attr': {'readonly': '', 'class' : 'form-control form-control-sm'} }) }}
+                </div>
+            </div>
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.vo_scope) }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.scope_id , {'attr': {'class' : 'form-control form-control-sm'}}) }}
+                    {{ form_widget(voForm.VoHeader.vo_scope , {'attr': {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.alias) }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.alias, {'attr': {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.serial, "Grid id") }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.serial,{ 'attr': {'readonly': '', 'class' : 'form-control form-control-sm'} }) }}
+                </div>
+            </div>
+            {% if isSubmitted == true %}
+                <div class="row help">
+                    <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.validation_date) }}</label>
+                    <div class="col-md-5">
+                        {{ form_widget(voForm.VoHeader.validation_date,{ 'attr': {'readonly': '', 'class' : 'form-control form-control-sm'} }) }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="row help">
+                    <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.validation_date) }}</label>
+                    <div class="col-md-5">
+                        <span class="label label-warning">This VO is not validated</span>
+                    </div>
+                </div>
+            {% endif %}
+            <br>
+            <h3>Url</h3>
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.enrollment_url) }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.enrollment_url , {'attr': {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.homepage_url) }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.homepage_url , {'attr': {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row help">
+                <label class="col-md-5 d-flex justify-content-end infoLabel font-weight-bold" >{{ form_label(voForm.VoHeader.support_procedure_url) }}</label>
+                <div class="col-md-5">
+                    {{ form_widget(voForm.VoHeader.support_procedure_url, {'attr': {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.notify_sites) }}</a>
+                <label >{{ form_label(voForm.VoHeader.notify_sites, "GGUS dedicated user support") }}</label>
+            </div>
+            {{ form_widget(voForm.VoHeader.user, {'attr': {'class' : 'form-control form-control-sm'}}) }}
+
+        </div>
+
+        <div class="col-md-6 mt-3" id="supportedServices">
+            <h3>Supported services</h3>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.arc_supported) }}</a>
+                <label>{{ form_label(voForm.VoHeader.arc_supported, "Arc") }}</label>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.glite_supported, { 'attr': { 'class' : 'help'}}) }}</a>
+                <label>{{ form_label(voForm.VoHeader.glite_supported, "gLite") }}</label>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.globus_supported) }}</a>
+                <label>{{ form_label(voForm.VoHeader.globus_supported, "Globus") }}</label>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.unicore_supported) }}</a>
+                <label>{{ form_label(voForm.VoHeader.unicore_supported, "Unicore") }}</label>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.cloud_computing_supported) }}</a>
+                <label>{{ form_label(voForm.VoHeader.cloud_computing_supported, "Cloud Computing") }}</label>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.cloud_storage_supported) }}</a>
+                <label>{{ form_label(voForm.VoHeader.cloud_storage_supported, "Cloud Storage") }}</label>
+            </div>
+            <div class="row help font-weight-bold" >
+                <a class="infoLabel">{{ form_widget(voForm.VoHeader.desktop_grid_supported) }}</a>
+                <label>{{ form_label(voForm.VoHeader.desktop_grid_supported, "Desktop Grid") }}</label>
+            </div>
+            <div class="row help d-flex flex-column font-weight-bold">
+                <label class="infoLabel" >{{ form_label(voForm.VoHeader.description) }}</label>
+               {{ form_widget(voForm.VoHeader.description,{ 'attr': {'rows': '5'} }) }}
+            </div>
+
+        </div>
+        </div>
+        <div class="col-md-10 mt-5">
+            <h2 class="portal text-primary">Acceptable use policy management
+                <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+                   title="Acceptable use policy management"
+                   data-content="The VO Acceptable Use Policy. (AUP) is a statement which, by clearly describing the goals of the VO, <br>
+                        defines the expected and acceptable usage of the Grid by the members of the VO.<br>
+                        By requiring that all members of the VO who participate in the Grid agree to act within the constraints
+                        of the VO AUP the VO Manager defines a community of responsible users with a common goal.<br>
+                        This definition enables Site Managers to decide whether to allow VO members to use their resources.<br>
+                        For more information please check below the VO security policy documents.<br><br>
+                        <a class=\'message\' target=\'_blank\' href=\'https://documents.egi.eu/public/ShowDocument?docid=74\'>
+                        See official documentation</a>" data-html='true'><span class='fa fa-info-circle my-auto ml-2 mr-2 text-primary'
+                                                                               style="font-size: 15px;"></span></a>
+            </h2>
+            <div class="">
+                <div class="col-md-2 form-group help">
+                    <label>{{ form_label(voForm.VoHeader.aup_type) }}</label>
+                    <a class="infoLabel">{{ form_widget(voForm.VoHeader.aup_type) }}</a>
+                    {{ form_widget(voForm.VoHeader.aup) }}
+                    <br>
+                </div>
+                <div class="col-md-12 form-group">
+                    <div id="aup_text_block" style="display: none;">
+                        {{ form_label(voForm.VoHeader.aupText) }}
+                        {{ form_widget(voForm.VoHeader.aupText,{ 'attr': {'rows': '10'} }) }}
+                    </div>
+                    <div id="aup_url_block" style="display: none;">
+                        {{ form_label(voForm.VoHeader.aupUrl) }}
+                        {{ form_widget(voForm.VoHeader.aupUrl) }}
+                    </div>
+                    <div id="aup_file_block" style="display: none;">
+                        <div><label>{{ form_label(voForm.VoHeader.aupFile) }}</label></div>
+                        <div class="col-md-6">
+
+                            {{ form_widget(voForm.VoHeader.aupFile) }}
+                        </div>
+                        <a type="button" href="{{ path("manageAupFile", {"serial":serial}) }}"
+                           role="button" class="btn btn-light">
+                            <span class="fa fa-plus"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

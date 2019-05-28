@@ -1,0 +1,29 @@
+Workflow conventions
+--------------------
+
+* Most of steps are inheriting the "default" one,
+     >> 'Close' one doesn't because we must not check|modify expiration date
+     >> 'NewEntry" too, because this just a notification on add/remove alarm and no form is displayed
+        to the user who can't modify any field
+in form before closing a ticket,  the 'EndDate' widget must must be not displayed
+* "default" step basically set most common fields behaviour and values :
+   by default a value is set by the current ticket value.
+
+    - Priority
+    - Modifier
+    - Expiration Date
+    - CarbonCopy
+    - ....
+
+    We must add each value which is used in form, if not, it's not necessary : values will be not updated
+    Then each step must set specific step values overriding default step by example :
+
+     => EndDate to default in3days calculation for the 1st submission
+     => Priority, set to "less urgent" for the 1st submission, but usually set to the previous ticket values
+     => Community set to COD only when a ticket is transferred to COD, but to ROD in first ROD ticket submission and not updated after
+     => EndDate and Priority are hidden in case of close, status is set to solved.
+
+
+
+
+

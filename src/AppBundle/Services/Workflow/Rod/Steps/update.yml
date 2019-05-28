@@ -1,0 +1,14 @@
+step:
+  Comments:
+    id : Comment
+    label: Comment
+    required: true
+    order: 20
+    quick: true
+    value: |
+      Dear site administrator,
+      alarm(s) has(have) been +C.action+ :
+
+      +C.alarms+
+
+      +C.user+

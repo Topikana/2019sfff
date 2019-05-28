@@ -1,0 +1,133 @@
+<h5 class="card card-header p-2 mb-0">Notepad from : {{ notepad.site }}</h5>
+<div class="mt-0 mb-0 col-sm-12">
+                <ul class="timeline">
+                    {% for infos in history|sort %}
+                    {% if infos.notepadId == notepad.id and infos.status == 1 %}
+                    <li><h5>Creation notepad to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                        <div>Subject : <span class="text-primary">{{ notepad.subject }}</span></div>
+                        {% if notepad.status == 0 %}
+                            <div>Status : <span class="text-primary"> Close</span></div>
+                        {% elseif notepad.status == 1 %}
+                            <div>Status : <span class="text-primary">Open</span></div>
+                        {% endif %}
+                        <div>Last Modifer : <span class="text-primary">{{ notepad.lastModifer }} to {{ notepad.lastUpdate|date("F jS \\a\\t g:ia") }}</span></div>
+                        {% for carbon in notepad.carbonCopy %}
+                            <div>
+                            {% if carbon == 0 %}
+                                <div>Carbon Copy : <span class="text-primary">Site</span></div>
+                            {% elseif carbon == 1 %}
+                                <div><span class="text-primary">Carbon Copy : Ngi</span></div>
+                            {% elseif carbon == 2 %}
+                                <div>Carbon Copy :<span class="text-primary"> Rod</span></div>
+                            {% endif %}
+                            </div>
+                        {% endfor %}
+                        <h7>Alarm group: </h7>
+                        {% for alarm in alarms %}
+                            {% for alarmKey in infos.alarmId %}
+                                {% if alarmKey == alarm.id %}
+                                    {% if alarm.status == 0 %}
+                                        <span class="badge badge-success text-white">{{ alarm['test_name'] }}</span>
+                                    {% endif %}
+                                    {% if alarm.status == 1 %}
+                                        <span class="badge badge-warning text-white">{{alarm['test_name'] }}</span>
+                                    {% endif %}
+                                    {% if alarm.status == 2 %}
+                                        <span class="badge badge-danger text-white">{{ alarm['test_name'] }}</span>
+                                    {% endif %}
+                                    {% if alarm.status == 3 %}
+                                        <span class="badge badge-default text-white">{{ alarm['test_name'] }}</span>
+                                    {% endif %}
+                                    {% if alarm.status == 4 %}
+                                        <span class="badge badge-primary text-white">{{alarm['test_name'] }}</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        <div>Detail description :</div>
+                        <pre class="text-primary">{{ notepad.comment }}</pre>
+                    </li>
+                    {% for infos in history|sort %}
+                        {% if infos.notepadId == notepad.id and infos.status == 2 %}
+                            <li><h5>Add alarm to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            <h7>Alarm group: </h7>
+                            {% for alarm in alarms %}
+                                {% set splitAlarmId = infos.alarmId | split(',') %}
+                                {% for alarmKey in splitAlarmId %}
+                                    {% if alarmKey == alarm.id %}
+                                        {% if alarm.status == 0 %}
+                                            <span class="badge badge-success text-white">{{ alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 1 %}
+                                            <span class="badge badge-warning text-white">{{alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 2 %}
+                                            <span class="badge badge-danger text-white">{{ alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 3 %}
+                                            <span class="badge badge-default text-white">{{ alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 4 %}
+                                            <span class="badge badge-primary text-white">{{alarm['test_name'] }}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        </li>
+
+                        {% if infos.notepadId == notepad.id and infos.status == 3 %}
+                            <li><h5>Remove alarm to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            <h7>Alarm group: </h7>
+                            {% for alarm in alarms %}
+                                {% set splitAlarmId = infos.alarmId | split(',') %}
+                                {% for alarmKey in splitAlarmId %}
+                                    {% if alarmKey == alarm.id %}
+                                        {% if alarm.status == 0 %}
+                                            <span class="badge badge-success text-white">{{ alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 1 %}
+                                            <span class="badge badge-warning text-white">{{alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 2 %}
+                                            <span class="badge badge-danger text-white">{{ alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 3 %}
+                                            <span class="badge badge-default text-white">{{ alarm['test_name'] }}</span>
+                                        {% endif %}
+                                        {% if alarm.status == 4 %}
+                                            <span class="badge badge-primary text-white">{{alarm['test_name'] }}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        </li>
+
+                        {% if infos.notepadId == notepad.id and infos.status == 4 %}
+                            <li><h5>New comment to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            {% for commentary in commentaries %}
+                                {% if commentary.id == infos.commentId %}
+                                    <h7>Author :</h7>
+                                    <a class="text-primary">{{ commentary.author }}</a>
+                                    <p class="text-primary">{{ commentary.commentary }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+                {{ form_start(edit_form,  {'method': 'post', 'action': path('notepad_show', { 'id' : notepad.id }), 'attr' : {'id' : 'formNewComment'}}) }}
+                            <h5 class="card card-header p-2 mb-2">Add your comment :</h5>
+                            <div class="form-group">
+                                {{ form_widget(edit_form.commentary) }}
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary float-right" value="Edit">Add your comment</button>
+
+                {{ form_end(edit_form) }}
+    </div>
+

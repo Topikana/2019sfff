@@ -1,0 +1,233 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+{% block title %}Operations portal - Broadcast{% endblock %}
+
+
+{% block body %}
+    <div class="loader-wrapper absolute"><div class="loader"></div></div>
+    <section id="homeSection">
+
+        {% if form is defined %}
+            {#bootstrap_3_layout.html.twig#}
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            <article class="card m-5  ">
+
+                <div class="card-header" >
+                    <div class="card-title"><h2 class="mt-0">Retrieve Broadcasts - Search engine </h2></div>
+
+                </div>
+
+                <div class="card-body pt-1">
+                    <form class="form" id='broadcastSearchForm' method="POST">
+                        <div class="d-flex  flex-nowrap">
+                        <div class="form-group d-flex flex-column">
+
+                            <label class="col-form-label-sm pt-0 mb-0 pb-0" style="font-weight: bold">{{ form_label(form.begin_date ,  label|default(null), { 'label_attr' : {'class' : 'pb-0' }}) }}</label>
+
+                                {{ form_widget(form.begin_date , { 'attr' : {'class' : 'pt-0' }}) }}
+                                {{ form_errors(form.begin_date) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label-sm ml-1 mb-0 pb-0 pt-2" style="font-weight: bold">{{ form_label(form.author ,  label|default(null), { 'label_attr' : {'class' : 'mb-0'}}) }}</label>
+
+
+                                {{ form_widget(form.author , { 'attr' : {'class' : 'form-control form-control-sm ml-1' }}) }}
+                                {{ form_errors(form.author) }}
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label-sm ml-2 mb-0 pb-0 pt-2" style="font-weight: bold">{{ form_label(form.subject ,  label|default(null), { 'label_attr' : {'class' : 'mb-0 pb-0' }}) }}</label>
+
+
+                                {{ form_widget(form.subject , { 'attr' : {'class' : 'form-control form-control-sm ml-2' }}) }}
+                                {{ form_errors(form.subject) }}
+
+                        </div>
+                        </div>
+                        <div class="d-flex mt-0">
+                        <div class="form-group  d-flex flex-column">
+                            <label class="col-form-label-sm pt-0 mb-0 pb-0" style="font-weight: bold">{{ form_label(form.end_date  ,  label|default(null), { 'label_attr' : {'class' : 'pb-0' }}) }}</label>
+
+                            <div>
+                                {{ form_widget(form.end_date  , { 'attr' : {'class' : 'pt-0' }}) }}
+                                {{ form_errors(form.end_date) }}
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label-sm ml-1 mb-0 pb-0 pt-2" style="font-weight: bold">{{ form_label(form.email,  label|default(null), { 'label_attr' : {'class' : 'mb-0' }}) }}</label>
+
+                            <div>
+                                {{ form_widget(form.email , { 'attr' : {'class' : 'form-control form-control-sm ml-1' }}) }}
+                                {{ form_errors(form.email) }}
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-form-label-sm ml-2 mb-0 pb-0 pt-2" style="font-weight: bold">{{ form_label(form.body ,  label|default(null), { 'label_attr' : {'class' : 'mb-0 pb-0' }}) }}</label>
+
+                            <div>
+                                {{ form_widget(form.body  , { 'attr' : {'class' : 'form-control form-control-sm ml-2' }}) }}
+                                {{ form_errors(form.body) }}
+
+                            </div>
+                        </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="form-group pull-right">
+                            <div>
+                                {{ form_widget(form.send , { 'attr' : {'class' : 'btn-primary float-right', 'style' : 'font-size : 14px' }}) }}
+                            </div>
+                        </div>
+                        {{ form_rest(form) }}
+                    </form>
+
+                </div>
+            </article>
+
+        {% endif %}
+
+        <div class="card-group d-flex flex-column" id="accordionBd" role="tablist" aria-multiselectable="true">
+            <!-- SEARCH RESULT -->
+            {% if broadcasts is defined %}
+                {% set countBD = broadcasts|length %}
+
+                <article class="card m-5" style="font-size: 14px;">
+                    <div class="card-header" role="tab" id="headingResults">
+                        <div class="card-title">
+                            <h3>
+                                <a role="button" data-toggle="collapse" data-parent="#accordionBd" href="#collapseResults" aria-expanded="true" aria-controls="collapseResults">
+                                    Results
+                                </a>
+                                <div style="font-size:10px" class="badge float-right
+                                    {% if countBD == 0 %}
+                                    badge-danger">
+                                    Sorry no Model found.
+                                    {% else %}
+                                        label-success">{{ countBD }} model(s) found.
+                                    {% endif %}
+                                </div>
+                            </h3>
+                        </div>
+                    </div>
+                    <div id="collapseResults" class="card" role="tabpanel" aria-labelledby="headingResults">
+                        <div class="card-body">
+
+                            {% if countBD == 0 %}
+                                <div class="badge badge-danger" style="font-size:10px">
+                                    <span >Sorry no Model found.</span>
+                                </div>
+
+                            {% else %}
+
+                                {% include ":Broadcast/templates:template_tab_broadcastDisplayList.html.twig" with
+                                {"broadcasts":broadcasts, "targets": targets, "displayHead": displayHead, "type":"result"} %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+            {% endif %}
+
+            <!-- USER BROADCASTS -->
+            {% if userBroadcasts is defined %}
+                {% set countUsersBD = userBroadcasts|length %}
+
+                <article class="card m-5">
+                    <div class="card-header" role="tab" id="headingYrBdSent">
+                        <div class="card-title">
+                            <h3 class="mt-3">
+                                <a role="button" data-toggle="collapse" style="font-size: 24px;" data-parent="#accordionBd" href="#collapseYrBdSent" aria-expanded="true" aria-controls="collapseYrBdSent">
+                                    Your broadcasts sent
+                                </a>
+                                <div style="font-size:12px" class="p-2 badge float-right
+                                    {% if countUsersBD == 0 %}
+                                    badge-danger">
+                                    Sorry no Model found.
+                                    {% else %}
+                                        badge-success"> {{ countUsersBD }} model(s) found.
+                                    {% endif %}
+                                </div>
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div id="collapseYrBdSent" class="panel-collapse collapse show in" role="tabpanel" aria-labelledby="headingYrBdSent">
+
+                        <div class="card-body">
+
+
+                            {% if countUsersBD == 0 %}
+                                <div class="badge badge-danger" style="font-size:12px">
+                                    <span>Sorry no Model found.</span>
+                                </div>
+
+                            {% else %}
+
+                                {% include ":Broadcast/templates:template_tab_broadcastDisplayList.html.twig" with
+                                {"broadcasts":userBroadcasts, "targets": targets, "displayHead": displayHead, "type":"userBd"} %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+            {% endif %}
+
+            <!-- LAST BROADCAST SENT -->
+            {% if lastBroadcasts is defined %}
+                {% set countLastsBD = lastBroadcasts|length %}
+
+                <article class="card m-5" style="font-size: 14px;">
+                    <div class="card-header" role="tab" id="headingLastBdSent">
+                        <div class="card-title">
+                            <h3>
+                                <a role="button" data-toggle="collapse"  style="font-size: 24px;"  data-parent="#accordionBd" href="#collapseLastBdSent" aria-expanded="true"
+                                   aria-controls="collapseLastBdSent">
+                                    Last EGI broadcasts sent
+                                </a>
+                                <div style="font-size:12px" class="p-2 badge float-right
+                                    {% if countLastsBD == 0 %}
+                                    badge-danger">
+                                    Sorry no Model found.
+                                    {% else %}
+                                        badge-success">{{ countLastsBD }} broadcast(s) found.
+                                    {% endif %}
+                                </div>
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div id="collapseLastBdSent" class="card-collapse collapse show in" role="tabpanel" aria-labelledby="headingLastBdSent">
+
+                        <div class="card-body">
+                            {% set countLastsBD = lastBroadcasts|length %}
+
+                            {% if countLastsBD == 0 %}
+                                <div class="m-1 badge badge-danger" >
+                                    <span>Sorry no Model found.</span>
+                                </div>
+
+                            {% else %}
+
+                                {% include ":Broadcast/templates:template_tab_broadcastDisplayList.html.twig" with
+                                {"broadcasts":lastBroadcasts, "targets": targets,  "displayHead": displayHead , "type":"EGIBd"} %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </article>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{ asset('build/js/broadcast/broadcast.min.js') }}"></script>
+
+{% endblock %}

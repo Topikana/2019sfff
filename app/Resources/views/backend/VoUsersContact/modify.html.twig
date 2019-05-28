@@ -1,0 +1,77 @@
+{% extends 'backend/base.html.twig' %}
+
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+    <div class="row">
+
+        {% for flash_message in app.session.flashbag.get('danger') %}
+            <div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+        {% for flash_message in app.session.flashbag.get('success') %}
+            <div role="alert" class="alert alert-success">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+
+        <div class="panel panel-default panel-body col-md-12 col-sm-12 col-xs-12 ">
+            <br><br>
+
+            <form enctype="multipart/form-data" id="voContactForm" action="#" method="post" class="form-horizontal col-md-10 col-sm-10 col-xs-10">
+                <div class="form-group">
+                    <label class="col-md-4 col-sm-4 col-xs-4 control-label">{{ form_label(voContactForm.first_name) }}</label>
+
+                    <div id="voContactForm_uservo" class="col-sm-6 col-md-6 col-xs-6">
+                        {{ form_errors(voContactForm.first_name) }}
+                        {{ form_widget(voContactForm.first_name) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-4 col-sm-4 col-xs-4 control-label">{{ form_label(voContactForm.last_name) }}</label>
+
+                    <div id="voContactForm_uservo" class="col-sm-6 col-md-6 col-xs-6">
+                        {{ form_errors(voContactForm.last_name) }}
+                        {{ form_widget(voContactForm.last_name) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="col-md-4 col-sm-4 col-xs-4 control-label">{{ form_label(voContactForm.dn) }}</label>
+
+                    <div id="voContactForm_dn" class="col-sm-6 col-md-6 col-xs-6">
+                        {{ form_errors(voContactForm.dn) }}
+                        {{ form_widget(voContactForm.dn) }}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="col-md-4 col-sm-4 col-xs-4 control-label">{{ form_label(voContactForm.email) }}</label>
+
+                    <div id="voContactForm_email" class="col-sm-6 col-md-6 col-xs-6">
+                        {{ form_errors(voContactForm.email) }}
+                        {{ form_widget(voContactForm.email) }}
+                    </div>
+                </div>
+                <div class="form-group col-md-10 col-sm-10 col-xs-10">
+                        <input type="submit" class="btn btn-primary pull-right" value="Modify User">
+                </div>
+                {{ form_widget(voContactForm._token) }}
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

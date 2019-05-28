@@ -1,0 +1,71 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory:
+            memory: ~
+        main:
+            id: app.user_provider
+        db_provider:
+            entity:
+                class: AppBundle:User
+                property: username
+
+    firewalls:
+
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        anonym_area:
+            pattern: /a/.
+            anonymous: ~
+
+        vo_search_area:
+            pattern: /vo/search
+            anonymous: ~
+
+        vo_id_card_area:
+            pattern: /vo/view/voname/.
+            anonymous: ~
+
+#        secured_area:
+#            pattern: ^/*
+#            light_saml_sp:
+#                provider: db_provider    # user provider name configured in step 9
+#                user_creator: user_creator  # name of the user creator service created in step 10
+#                login_path: /saml/login
+#                check_path: /saml/login_check
+#                username_mapper: lightsaml_sp.username_mapper.simple
+#                  # called in case provider didn't return a user to create a new user
+#                # provides token attributes
+#                attribute_mapper: my_attributes_mapper
+#                force: false
+#            anonymous: ~
+#            access_denied_handler: app.security.access_denied_handler
+#            logout:
+#                path: /logout
+
+        secured_area:
+            pattern: ^/*
+            x509:
+                provider: main
+                user: SSL_CLIENT_S_DN
+            logout:
+                path: /logout
+
+
+
+    access_control:
+    - { path: /a/backend/*, allow_if: " '127.0.0.1' == request.getClientIp() or  '134.158.231.33' == request.getClientIp() or '134.158.231.28' == request.getClientIp() or '134.158.231.106' == request.getClientIp() or '134.158.231.111' == request.getClientIp()" }
+    - { path: /a/., roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: /spool/., roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: /vo/search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: /vo/view/voname/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: /vo/voUrlCheckReport/*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+    - { path: ^/saml/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    - { path: ^/saml/discovery, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+    - { path: ^/ROD/admin, roles: ROLE_ADMIN }

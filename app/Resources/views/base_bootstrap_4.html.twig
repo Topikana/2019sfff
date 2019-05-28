@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Operations portal</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <!--     css   -->
+    <link rel="stylesheet" href="{{ asset('build/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/vendor/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+
+    <!-- jstree themes -->
+    <link rel="stylesheet" href="{{ asset('css/themes/proton/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset("css/themes/default/style.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("css/themes/default-dark/style.min.css") }}"/>
+
+
+    <!-- DataTables-->
+
+    <link rel="stylesheet" href="{{ asset("build/css/dataTables.bootstrap4.min.css") }}"/>
+
+
+    <link rel="stylesheet" href="{{ asset("build/vendor/datatables/select/css/select.dataTables.min.css") }}"/>
+
+    <!--// DataTables-->
+
+
+    {% block stylesheets %}{% endblock %}
+    <!--             End css -->
+</head>
+<body>
+
+
+{% block header %}{% endblock %}
+
+{% include 'default/header_bootstrap_4.html.twig' %}
+
+<div class="container-fluid">
+    {% block body %}{% endblock %}
+</div>
+<!--             Javascript -->
+
+<!-- bloque défilement help vo search tool-->
+<script type="text/javascript" src="{{ asset('build/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset("build/js/jquery.validate.min.js") }}"></script>
+
+<script type="text/javascript" src="{{ asset('build/vendor/popper.js/umd/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+
+
+<!-- DataTables-->
+
+<script type="text/javascript" src="{{ asset('build/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/vendor/datatables/js/dataTables.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('build/js/dataTables.bootstrap4.min.js') }}"></script>
+<!--// DataTables-->
+
+
+
+<script type="text/javascript" src="{{ asset('build/js/global.min.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+<!-- End Javascript -->
+</body>
+</html>

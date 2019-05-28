@@ -1,0 +1,54 @@
+<div class="card mt-4">
+    <div class="card-header text-primary">
+    <h2 id="vo_form_6_acknowledgment help" class="portal">Acknowledgment Statement
+            <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+               title="Acknowledgment Statements"
+               data-content="Specify the acknowledgement statement that should be used in all scientific publications
+                resulting from work within this virtual organisation.<br>
+                This should directly acknowledge the support of EGI services and their providers.<br>
+                For more information:<a class='message' target='_blank' href='http://go.egi.eu/acknowledge'>See official documentation</a>."
+               data-html='true'><span class='fa fa-info-circle' style="font-size: 15px;"></span></a>
+        </h2>
+    </div>
+    <div class="card-body">
+        <div class="col-md-10 ml-5">
+            {#<div class="form-group" onchange="changeAcknowledgment()">#}
+                {#{% for key, choice in voForm.VoAcknowledgmentStatements.as_need %}#}
+                    {#{{ form_widget(choice) }}#}
+                    {#{{ form_label(choice) }}#}
+                    {#<br>#}
+                {#{% endfor %}#}
+            {#</div>#}
+            <div id="as_form">
+                <div class="form-group col-md-11 help font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(voForm.VoAcknowledgmentStatements.suggested) }}
+                    {{ form_widget(voForm.VoAcknowledgmentStatements.suggested) }}
+                </div>
+                <div class="row">
+                <div class="row col-md-5 help">
+                    <label style="font-size: 14px;" class="col-md-7 d-flex justify-content-end font-weight-bold infoLabel">{{ form_label(voForm.VoAcknowledgmentStatements.grantid) }}</label>
+                    <div class="col-md-5">
+                        {{ form_widget(voForm.VoAcknowledgmentStatements.grantid, { 'attr' : { 'class' : 'form-control form-control-sm'}} )}}
+                    </div>
+                </div>
+                <div class="row col-md-7 help">
+                    <label style="font-size: 14px;" class="col-md-6 d-flex justify-content-end font-weight-bold infoLabel">{{ form_label(voForm.VoAcknowledgmentStatements.publicationUrl) }}</label>
+                    <div class="col-md-6">
+                        {{ form_widget(voForm.VoAcknowledgmentStatements.publicationUrl, { 'attr' : { 'class' : 'form-control form-control-sm'}} )}}
+                    </div>
+                </div>
+                </div>
+                <div class="row col-md-11 help font-weight-bold" style="font-size: 14px;" onchange="changeRelationship()">
+                    <a class="infoLabel">{{ form_widget(voForm.VoAcknowledgmentStatements.use_relationShip) }}</a><label style="font-size: 14px;"> {{ form_label(voForm.VoAcknowledgmentStatements.use_relationShip, "Use relationship") }}</label>
+                </div>
+                <div class="row">
+                <div id="use_relationship" style="display: none;" class="row col-md-11 ml-5">
+                    {{ form_widget(voForm.VoAcknowledgmentStatements.relationShip) }}
+                    <label>{{ form_label(voForm.VoAcknowledgmentStatements.relationShip) }} </label>
+
+                </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

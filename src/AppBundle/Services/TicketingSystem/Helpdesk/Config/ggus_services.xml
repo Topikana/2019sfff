@@ -1,0 +1,137 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="team.properties.xml"/>
+        <import resource="ops.properties.xml"/>
+        <import resource="attach.properties.xml"/>
+    </imports>
+
+    <services>
+        <!-- ################################################################################################
+                GGUS Service
+        #################################################################################################### -->
+
+        <service id="OpsLavoisierGGUSService" class="OpsLavoisier\Services\GGUSService">
+            <argument key="hostname">%lavoisier_host_core%</argument>
+        </service>
+
+
+        <!-- ################################################################################################
+                ATTACH Helpdesks
+        #################################################################################################### -->
+
+        <service id="ggus_helpdesk_attach" class="TicketingSystem\Helpdesk\AttachmentService">
+            <argument key="config" type="collection">
+                <argument key='service_identifier'>ggus_helpdesk_attach</argument>
+                <argument key="urls">%ggus.urls%</argument>
+                <argument key="authentication" type="collection">
+                    <argument key="userName">%ggus.ops.login%</argument>
+                    <argument key="password">%ggus.ops.password%</argument>
+                </argument>
+                <argument key="maps">%ggus.attach.maps%</argument>
+                <!--<argument key="communities">%ggus.ops.communities%</argument>-->
+                <argument key="methods">%ggus.attach.methods%</argument>
+                <argument key="defaults" type="collection">
+                </argument>
+            </argument>
+            <argument id="identifier">GGUS_ATTACH</argument>
+        </service>
+
+
+        <!-- ################################################################################################
+              TEAM Helpdesks
+       #################################################################################################### -->
+
+        <!-- TEAM HISTORY Helpdesk -->
+        <service id="ggus.helpdesk.team.history" class="TicketingSystem\Helpdesk\HistoryService" public="false">
+            <argument key="config" type="collection">
+                <argument key="urls">%ggus.urls%</argument>
+                <argument key="authentication" type="collection">
+                    <argument key="userName">%ggus.team.login%</argument>
+                    <argument key="password">%ggus.team.password%</argument>
+                </argument>
+                <argument key="maps">%ggus.team.history.maps%</argument>
+                <argument key="communities">%ggus.team.communities%</argument>
+                <argument key="methods">%ggus.team.history.methods%</argument>
+            </argument>
+            <argument id="identifier">GGUS_HISTORY</argument>
+        </service>
+
+        <!-- TEAM Helpdesk -->
+        <service id="ggus_helpdesk_team" class="TicketingSystem\Helpdesk\TeamHelpdesk">
+            <argument key="config" type="collection">
+                <argument key='service_identifier'>ggus_helpdesk_team</argument>
+                <argument key="urls">%ggus.urls%</argument>
+                <argument key="authentication" type="collection">
+                    <argument key="userName">%ggus.team.login%</argument>
+                    <argument key="password">%ggus.team.password%</argument>
+                </argument>
+                <argument key="maps">%ggus.team.maps%</argument>
+                <argument key="communities">%ggus.team.communities%</argument>
+                <argument key="methods">%ggus.team.methods%</argument>
+                <argument key="defaults" type="collection">
+                    <argument key="GHD_Affected_VO">biomed</argument>
+                    <argument key="GHD_Last_Login">%ggus.team.login%</argument>
+                    <argument key="GHD_Ticket_Type">TEAM</argument>
+                    <argument key="GHD_Ticket_Update_Mode">Team</argument>
+                    <argument key="GHD_Notification_Recipients">Team</argument>
+                </argument>
+            </argument>
+            <argument id="identifier">GGUS_TEAM</argument>
+            <argument type="service" id="ggus.helpdesk.team.history"/>
+            <argument type="service" id="OpsLavoisierGGUSService"/>
+        </service>
+
+        <!-- ################################################################################################
+              OPS Helpdesks
+       #################################################################################################### -->
+
+        <!--OPS HISTORY Helpdesk -->
+        <service id="ggus.helpdesk.ops.history" class="TicketingSystem\Helpdesk\HistoryService" public="false">
+            <argument key="config" type="collection">
+                <argument key="urls">%ggus.urls%</argument>
+                <argument key="authentication" type="collection">
+                    <argument key="userName">%ggus.team.login%</argument>
+                    <argument key="password">%ggus.team.password%</argument>
+                </argument>
+                <argument key="maps">%ggus.ops.history.maps%</argument>
+                <argument key="communities">%ggus.ops.communities%</argument>
+                <argument key="methods">%ggus.ops.history.methods%</argument>
+            </argument>
+            <argument id="identifier">GGUS_HISTORY</argument>
+        </service>
+
+        <!-- OPS Helpdesk -->
+        <service id="ggus_helpdesk_ops" class="TicketingSystem\Helpdesk\OpsHelpdesk">
+            <argument key="config" type="collection">
+                <argument key='service_identifier'>ggus_helpdesk_ops</argument>
+                <argument key="urls">%ggus.urls%</argument>
+                <argument key="authentication" type="collection">
+                    <argument key="userName">%ggus.ops.login%</argument>
+                    <argument key="password">%ggus.ops.password%</argument>
+                </argument>
+                <argument key="maps">%ggus.ops.maps%</argument>
+                <argument key="communities">%ggus.ops.communities%</argument>
+                <argument key="methods">%ggus.ops.methods%</argument>
+                <argument key="defaults" type="collection">
+                    <argument key="GHD_Affected_VO">ops</argument>
+                    <argument key="GHD_Last_Login">%ggus.ops.login%</argument>
+                    <argument key="GHD_Ticket_Type">OPS</argument>
+                    <argument key="GHD_Problem_Type">Operations</argument>
+                </argument>
+
+            </argument>
+            <argument id="identifier">GGUS_OPS</argument>
+            <argument type="service" id="ggus.helpdesk.ops.history"/>
+            <argument type="service" id="OpsLavoisierGGUSService"/>
+            <call method="setAttachementService">
+                <argument type="service" id="ggus_helpdesk_attach"/>
+            </call>
+        </service>
+
+
+    </services>
+</container>

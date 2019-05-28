@@ -1,0 +1,137 @@
+AppBundle\Entity\Dashboard\ROD\RodNagiosMetrics:
+  actAs: {Metricsable: ~ }
+  connection: dashboardConnection
+  tableName: rod_nagios_metrics
+  columns:
+    vo: {type: string, length: 255, notnull: true}
+  options:
+    monitor_class: RodNagiosProblemss
+    history_class: RodNagiosHistory
+AppBundle\Entity\Dashboard\ROD\RodNagiosProblem:
+  actAs: {Monitorable: ~}
+  connection: dashboardConnection
+  tableName: rod_nagios_problem
+  columns:
+    vo: {type: string, length: 255, notnull: true}
+  options:
+    twin_class: RodNagiosHistory
+    metrics_class: RodNagiosMetrics
+AppBundle\Entity\Dashboard\ROD\RodNagiosHistory:
+  actAs: {Historizable: ~}
+  connection: dashboardConnection
+  tableName: rod_nagios_history
+  columns:
+    vo: {type: string, length: 255, notnull: true}
+  options:
+    twin_class: RodNagiosProblemss
+    metrics_class: RodNagiosMetrics
+AppBundle\Entity\Dashboard\ROD\RodNotepad:
+  connection: dashboardConnection
+  tableName: rod_notepad
+  inheritance:
+      extends: BaseNotepadRecord
+AppBundle\Entity\Dashboard\ROD\RodHandover:
+  connection: dashboardConnection
+  tableName: rod_handover
+  inheritance:
+    extends: BaseNotepadRecord
+
+AppBundle\Entity\Dashboard\ROD\RodNotificationRaw:
+  actAs: { RawNotification: ~ }
+  connection: dashboardConnection
+  tableName: rod_notification_raw
+AppBundle\Entity\Dashboard\ROD\RodProblemGroup:
+  actAs: { Timestampable: ~ }
+  actAs: { Groupable: ~ }
+  options:
+    group_relation_class: RodProblemGroupRelations
+  tableName: rod_problem_group
+  connection: dashboardConnection
+AppBundle\Entity\Dashboard\ROD\RodProblemGroupRelations:
+  actAs: { Timestampable: ~ }
+  actAs: { GroupRelationable: ~ }
+  connection: dashboardConnection
+  tableName: rod_problem_group_relations
+  options:
+    TableModelMap:
+      RodNagiosProblem:
+        history_table: rod_nagios_history
+        problem_table: rod_nagios_problem
+AppBundle\Entity\Dashboard\ROD\RodMetrics:
+  actAs: {Metricsable: ~ }
+  connection: dashboardConnection
+  tableName: rod_metrics
+  columns:
+    downtimes: {type:integer(3), default: '0' }
+    nagiosCritical: {type:integer(3), default: '0' }
+    nagiosWarning: {type:integer(3), default: '0' }
+    nagiosUnknown: {type:integer(3), default: '0'  }
+    notepads: {type:integer(3), default: '0'  }
+    onGoingTickets: {type:integer(3), default: '0' }
+    expiringTickets: {type:integer(3),default: '0'  }
+    expiredTickets: {type:integer(3),default: '0'  }
+    MW_onGoingTickets: {type:integer(3), default: '0' }
+    MW_expiringTickets: {type:integer(3),default: '0'  }
+    MW_expiredTickets: {type:integer(3),default: '0'  }
+    codItems: {type:integer(3), default: '0'  }
+    ticketsCreated: {type:integer(3),default: '0'}
+    ticketsClosed: {type:integer(3),default: '0'}
+
+AppBundle\Entity\Dashboard\ROD\MetricsNonok:
+  connection: dashboardConnection
+  tableName: metrics_nonok
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    alarmid:
+      type: string(255)
+      notnull: true
+      autoincrement: false
+    status:
+      type: string(50)
+      notnull: true
+      autoincrement: false
+    reason_id:
+      type: integer(4)
+      notnull: true
+      autoincrement: false
+    date:
+      type: date(25)
+      notnull: true
+      autoincrement: false
+    region:
+      type: string(150)
+      notnull: true
+      autoincrement: false
+    site:
+      type: string(150)
+      notnull: true
+      autoincrement: false
+    synchro_status:
+      type: integer(4)
+      default: '0'
+      notnull: true
+      autoincrement: false
+    metrics_explanation: clob
+AppBundle\Entity\Dashboard\ROD\OperationsTests:
+  actAs: {Timestampable: ~}
+  connection: dashboardConnection
+  tableName: operations_tests
+  columns:
+    test_name: { type: string, length: 255, notnull: true }
+    scope: { type: string, length: 255, notnull: true}
+    vo: { type: string, length: 255, notnull: true}
+    flags : { type: integer(3),default: '0'}
+AppBundle\Entity\Dashboard\ROD\RodHostService:
+  actAs: {Timestampable: ~}
+  connection: dashboardConnection
+  tableName: rod_host_service
+  columns:
+    id: { type: string, length: 50, primary: true }
+    hostname: { type: string, length: 100, notnull: true }
+    service: { type: string, length: 50, notnull: true }
+    Status: { type: integer(1), default: '0' }
+    ngi: {type: string, length: 50,notnull: true }
+    site: {type: string, length: 50, notnull: true }

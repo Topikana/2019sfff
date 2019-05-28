@@ -1,0 +1,3 @@
+This Acceptable Use Policy applies to all members of the ATLAS Virtual Organisation, hereafter referred to as the VO, with reference to use of the Worldwide LCG (wLCG) Grid infrastructure, hereafter referred to as the Grid.
+The ATLAS Collaboration owns and gives authority to this policy. The goal of the VO is to allow the members of the ATLAS collaboration to perform all the computing activities relevant for the ATLAS experiment, making use of the available resources following the policy defined by the Collaboration.
+Members and Managers of the VO agree to be bound by the Grid Acceptable Usage Rules, VO Security Policy and other relevant Grid Policies, and to use the Grid only in the furtherance of the stated goal of the VO.

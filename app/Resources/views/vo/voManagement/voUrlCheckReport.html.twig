@@ -1,0 +1,86 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/vo/voManagement.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/jstree/jstree.min.js') }}"></script>
+    <script language="JavaScript">
+        $(document).ready(function () {
+            $('html, body').animate({scrollTop: 0}, 0);
+        })
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+
+    <div id="flashes">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+    {% if arrayEnrollmentUrl is defined and arrayHomepageUrl is defined and arrayVomsListMembers is defined %}
+        <article id ="URlReportDiv" class="card">
+            <div class="card-header">
+                <h2>{{ voName }} URLs report</h2>
+
+            </div>
+            <div class="card-body">
+                <h2 class="portal" style="color: rgb(16,86,127);">Enrollment url</h2>
+
+                {% include ":vo/templates:template_tab_voUrlCheckReport.html.twig" with
+                {"testDate" : arrayEnrollmentUrl["testDate"],
+                "urlChecked" : arrayEnrollmentUrl["urlChecked"],
+                "httpReturnedStatus": arrayEnrollmentUrl["httpReturnedStatus"],
+                "httpStatusDescription": arrayEnrollmentUrl["httpStatusDescription"],
+                "log" : (arrayEnrollmentUrl["log"] is defined ? arrayEnrollmentUrl["log"] : "") ,
+                "time" : arrayEnrollmentUrl["time"]} %}
+
+                <br>
+
+                <h2 class="portal" style="color: rgb(16,86,127);">Homepage url</h2>
+
+                {% include ":vo/templates:template_tab_voUrlCheckReport.html.twig" with
+                {"testDate" : arrayHomepageUrl["testDate"],
+                "urlChecked" : arrayHomepageUrl["urlChecked"],
+                "httpReturnedStatus": arrayHomepageUrl["httpReturnedStatus"],
+                "httpStatusDescription": arrayHomepageUrl["httpStatusDescription"],
+                "log" : (arrayHomepageUrl["log"] is defined ? arrayHomepageUrl["log"] : "") ,
+                "time" : arrayHomepageUrl["time"]} %}
+
+                <br>
+
+
+                {% for name,voms in  arrayVomsListMembers%}
+
+                    <h2 class="portal" style="color: rgb(16,86,127);">List member url for voms : {{ name  }}</h2>
+
+                    {% include ":vo/templates:template_tab_voUrlCheckReport.html.twig" with
+                        {"testDate" : voms["testDate"],
+                        "urlChecked" : voms["urlChecked"],
+                        "httpReturnedStatus": voms["httpReturnedStatus"],
+                        "httpStatusDescription": voms["httpStatusDescription"],
+                        "log" : (voms["log"] is defined ? voms["log"] : "") ,
+                        "time" : voms["time"]} %}
+
+                    <br>
+
+                {% endfor %}
+
+            </div>
+        </article>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body %}
+
+    {% if regexp_choice is defined  %}
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Availables Regexp </h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        <br><br>
+
+                        <div class="form-group" class="col-md-10 col-sm-10 col-xs-10">
+                            <div class="col-sm-6 col-md-6 col-xs-6">
+                                <select id="regexpChoice" class="form-control">
+                                    {% for rg in regexp[regexp_choice] %}
+                                        <option value="{{ rg["value"] }}">{{ rg["title"] }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-xs-4">
+                                <button onclick="loadTable()" type="submit" class="btn btn-primary"><span id="submitIcon" class="fa fa-check"></span>&nbsp;submit</button>
+                            </div>
+                        </div>
+
+                        <br><br>
+                        <hr>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+<div id="fail">
+        UNKNOWN FILE
+    </div>
+    {% endif %}
+
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($("#tableDetail").length <= 0) {
+                loadTable();
+            }
+        });
+
+        function loadTable() {
+            $.ajax({
+                url: '{{ path("showLogTableAjax", {server:server, file:file}) }}',
+                data: {"regexp": $("#regexpChoice").val()},
+                method: "POST",
+                beforeSend: function () {
+                    $("#submitIcon").parents('button').removeClass("btn-primary").addClass("btn-warning").contents().last().replaceWith(" Pending...");
+                    $("#submitIcon").removeClass("fa-check").addClass("fa-refresh").addClass("fa-refresh-animate");
+                    if ($("#tableDetail").length) {
+                        $("#tableDetail").remove();
+                    }
+                },
+                complete: function (data) {
+                    $("#submitIcon").parents('button').removeClass("btn-warning").addClass("btn-primary").contents().last().replaceWith(" submit");
+                    $("#submitIcon").addClass("fa-check").removeClass("fa-refresh").removeClass("fa-refresh-animate");
+                    $(".x_content").append(data.responseText);
+
+                },
+                error: function (data) {
+                    $("#reload_page").after('<div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">' + data.responseText + '</div>');
+
+                }
+
+            });
+        }
+
+
+    </script>
+{% endblock %}
+
+
+
+
+
+

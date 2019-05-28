@@ -1,0 +1,170 @@
+{#<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>#}
+<div class="card mt-4">
+    <div class="card-header">
+        <h2 class="portal text-primary">Resources</h2>
+    </div>
+    <div class="card-body">
+        {% if message is defined and message != null %}
+            <span class="alert alert-info">{{ message }}</span>
+            <br/><br/>
+        {% endif %}
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" style="font-size: 16px">Queue configuration</h4>
+            </div>
+            <div class="card-body row font-weight-bold" style="font-size: 14px;">
+                <div class="col-md-4 d-flex flex-column mr-5 ml-5">
+                    <div class="row help">
+                        <label class="infoLabel">{{ form_label(voForm.VoRessources.job_max_wall) }}</label>
+                        {{ form_widget(voForm.VoRessources.job_max_wall, {'attr' : { 'class' : 'form-control form-control-sm'}} ) }}
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex flex-column ml-5">
+                    <div class="row help">
+                        <label class="infoLabel">{{ form_label(voForm.VoRessources.job_max_cpu) }}</label>{{ form_widget(voForm.VoRessources.job_max_cpu, {'attr' : { 'class' : 'form-control form-control-sm'}} ) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4 class="card-title" style="font-size: 16px">Single-core jobs</h4>
+            </div>
+            <div class="card-body row font-weight-bold" style="font-size: 14px;">
+                <div class="col-md-4 d-flex flex-column mr-5 ml-5">
+                    <div class="row help">
+                        <label class="infoLabel">{{ form_label(voForm.VoRessources.ram386) }}</label>{{ form_widget(voForm.VoRessources.ram386, {'attr' : { 'class' : 'form-control form-control-sm'}} )}}
+                    </div>
+                    <div class="mt-2 row help">
+                        <label class="infoLabel">{{ form_label(voForm.VoRessources.ram64) }}</label>{{ form_widget(voForm.VoRessources.ram64, {'attr' : { 'class' : 'form-control form-control-sm'}} )}}
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex flex-column ml-5">
+                    <div class="row help">
+                        <label class="infoLabel">{{ form_label(voForm.VoRessources.job_scratch_space) }}</label>{{ form_widget(voForm.VoRessources.job_scratch_space, {'attr' : { 'class' : 'form-control form-control-sm'}} ) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4 class="card-title" style="font-size: 16px">Multicore jobs</h4>
+            </div>
+            <div class="card-body row font-weight-bold" style="font-size: 14px;">
+                <div class="col-md-4 d-flex flex-column mr-5 ml-5">
+                    <div class="row help">
+                        <label>{{ form_label(voForm.VoRessources.minimum_ram) }}</label>{{ form_widget(voForm.VoRessources.minimum_ram, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                    <div class="mt-2 row help">
+                        <label>{{ form_label(voForm.VoRessources.number_cores) }}</label>{{ form_widget(voForm.VoRessources.number_cores, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex flex-column ml-5">
+                    <div class="row help">
+                        <label>{{ form_label(voForm.VoRessources.scratch_space_values) }}</label>{{ form_widget(voForm.VoRessources.scratch_space_values, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+        <div>
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h4 class="card-title" style="font-size: 16px">Cloud Compute</h4>
+                </div>
+                <div class="card-body row ml-5 mr-5 font-weight-bold" style="font-size: 14px">
+                    <div class="col-md-4 d-flex flex-column">
+                        <div class="form-group">
+                            <label>{{ form_label(voForm.VoRessources.cpu_core) }}</label>{{ form_widget(voForm.VoRessources.cpu_core, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form_label(voForm.VoRessources.vm_ram) }}</label>{{ form_widget(voForm.VoRessources.vm_ram, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 ml-5">
+                        <div class="form-group">
+                            <label>{{ form_label(voForm.VoRessources.storage_size) }}</label>{{ form_widget(voForm.VoRessources.storage_size, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cvmfsSection" class="card mt-3">
+            <div class="card-header">
+                <h4 class="card-title">CernVM File System</h4>
+            </div>
+            <div class="card-body ml-5">
+
+
+                <div class="col-md-12">
+                    <div class="btn btn-sm btn-primary m-1" id="addRow"  data-target="#modalCvmfs" onclick="createCvmfs()"><span class="fas fa-plus-square"></span> Add Endpoint</div>
+                    {% include ":vo/voManagement:modal_cvmfs.html.twig" %}
+
+                    <br><br>
+                    <div class="col-sm-12">
+                    <table id="tabcvmfs" class="table  table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Endpoints</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        {% if  voForm.VoRessources.cvmfs.vars.value is not empty %}
+                            {% set endpoints = voForm.VoRessources.cvmfs.vars.value|unserialize(voForm.VoRessources.cvmfs.vars.value) %}
+                            <tbody>
+                            {% for endpoint in endpoints %}
+                                <tr>
+                                    <td class="test">{{ endpoint }}</td>
+                                    <td class="d-flex justify-content-center m-auto">
+                                    <div class="dropdown btn-group" role="group">
+                                            <a id="dLabel" type="button" class="btn-sm btn btn-primary dropdown-toggle text-light" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                               aria-expanded="true">
+                                                Action <span></span> </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                <li><a  onclick="editEndpoint({{ endpoint | json_encode }})">Edit</a></li>
+                                                <li><a  onclick="removeEndpoint($(this).parents('tr'))">Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+
+                    </table>
+                    </div>
+                    {{ form_widget(voForm.VoRessources.cvmfs) }}
+
+
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4 class="card-title">Other requirements</h4>
+            </div>
+            <div class="card-body ml-5 pl-5 mr-5 pl-5">
+                <div class="col-md-12">
+                    <div class="row help">
+                        <label></label>
+                        {{ form_widget(voForm.VoRessources.other_requirements,{ 'attr': {'rows': '3'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-2" style="font-weight: 700; font-size: 14px">
+        {{ form_label(voForm.VoRessources.notify_sites) }}{{ form_widget(voForm.VoRessources.notify_sites) }}
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

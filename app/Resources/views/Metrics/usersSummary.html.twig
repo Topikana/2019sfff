@@ -1,0 +1,99 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/metrics.min.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <section id="homeSection">
+
+        <div id="flashes">
+            {% for label, flashes in app.session.flashbag.all %}
+                {% for flash in flashes %}
+                    <div role="alert" class="alert alert-{{ label }}">
+                        {{ flash|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <article class="row">
+
+            <div class="card m-2">
+                <div class="card-header">
+                    <div class="card-title"><h2>Discipline metrics</h2></div>
+                    <a data-toggle="collapse" href="#collapseHelp">
+                        <span class="fas fa-flag"></span>&nbsp; Methodology and Legend
+                    </a>
+                </div>
+
+
+                <div class="card-body" style="overflow: auto">
+                    <div id="collapseHelp" class="card-collapse collapse">
+
+
+                        <h4>Methodology</h4>
+
+                        The workflow to retrieve the list of users consists of the following steps:<br/><br/>
+                        1. The VO managers use the Operations Portal to record VO information in the VO ID cards<br/>
+                        2. The information related to VOMS servers is registered in the Operations Portal VO database and made
+                        available to the <a href="http://http://software.in2p3.fr/lavoisier/" title="lavoisier home page"></a> Lavoisier Web Service</a><br/>
+                        3. Lavoisier builds the VOMS contact URL list from the data<br/>
+                        4. Lavoisier contacts the VOMSes via a SOAP method and retrieves the list of registered users
+                        certificate DNs for each VO<br/>
+
+                        5. The users list is recorded in the CIC database and a cache is also kept in <a href="http://software.in2p3.fr/lavoisier">Lavoisier</a><br/>
+                        6. The records are aggregated and sorted to expose consistent VO user statistics on the Web Interface.
+                        <br/><br/>
+                        If the VOMS server is not reachable the Web Service is not able to retrieve the list of users .
+                        <hr/>
+
+                        <h4>User accounting</h4>
+
+                        - we count the number of unique CN and VO group by disciplines or sub-disciplines<br/>
+                        - consequently a user represented by a CN could be reported several times<br/>
+                        - consequently a VO could be reported several times in different disciplines<br/>
+                        - consequently the sum of the users group by disciplines is not corresponding to the total of users<br/>
+                        <br/><br/>
+
+                        <table class="table table-bordered  table-condensed table-striped">
+                            <tr>
+                                <th>Nb Vo</th>
+                                <td>Number of VOs in this specific discipline and sub-disciplines</td>
+                            </tr>
+
+                            <tr>
+                                <th>Nb Users</th>
+                                <td>Number of users in the discipline and related sub-disciplines</td>
+                            </tr>
+
+                        </table>
+
+                        <hr/>
+
+                    </div>
+                    {% include ":Metrics/templates:template_tab_usersSummary.html.twig" %}
+
+                </div>
+                
+                
+            </div>
+       
+
+        </article>
+    </section>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/metrics/metrics.min.js') }}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        {% if  chartNbVo is defined and chartNbUsers is defined and charttitle is defined%}
+            buildDisciplinesMetricsPieChart('{{ chartNbVo|json_encode|raw }}', '{{ chartNbUsers|json_encode|raw }}', '{{ charttitle }}');
+        {% endif %}
+
+    </script>
+{% endblock %}

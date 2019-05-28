@@ -1,0 +1,83 @@
+{% set val=0 %}
+
+{% block body %}
+
+<table id="tableDetail" class="table table-responsive table-striped">
+    <thead>
+    <tr>
+    {% for rg in regexp[regexp_choice] %}
+        {% if  rg["value"]  == chosenRegexp %}
+            {% set cols = rg["columns"]|split(",") %}
+            {% for col in cols %}
+                <th>{{ col }}</th>
+            {% endfor %}
+        {% endif %}
+
+    {% endfor %}
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for ln in log %}
+        <tr>
+
+            {% for column in ln %}
+            <td>
+            {{ column }}
+            </td>
+            {% endfor %}
+
+            <td>
+                {% for rg in regexp[regexp_choice] %}
+                {% if  rg["value"]  == chosenRegexp %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".log_details_{{ val }}_{{ rg['title'] }}">Details</button>
+                {% endif %}
+                {% endfor %}
+
+            </td>
+        </tr>
+        {% set val=val+1 %}
+    {% endfor %}
+    </tbody>
+
+</table>
+
+    {% for rg in regexp[regexp_choice] %}
+    {% if  rg["value"]  == chosenRegexp %}
+{% set val=0 %}
+{% for c in cool %}
+    <div class="modal fade log_details_{{ val }}_{{ rg['title'] }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Details</h4>
+            </div>
+            <div class="modal-body">
+                {{ c }}
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+    {% set val=val+1 %}
+{% endfor %}
+    {% endif %}
+    {% endfor %}
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $('#tableDetail').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+        });
+    </script>
+{% endblock %}
+

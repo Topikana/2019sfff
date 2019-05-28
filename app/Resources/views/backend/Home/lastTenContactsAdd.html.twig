@@ -1,0 +1,67 @@
+<div class="x_panel col-md-7 col-sm-7 col-xs-7">
+    <div class="x_title">
+        <h2>10 Last news Vo contacts
+            <small>Vo Users Contact</small>
+        </h2>
+        <a role="button" class="collapse-link pull-right"><i class="fa fa-chevron-up"></i></a>
+
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        {% if error is defined %}
+            <p class="alert alert-danger">{{ error }}</p>
+        {% else %}
+            <table style="display: none" id="VoUsersTab" class="table">
+                <thead>
+                <tr>
+                    <th>Last name</th>
+                    <th>Fist name</th>
+                    <th>DN</th>
+                    <th>Email</th>
+                    <th></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for key,user in listVoContacts %}
+
+                    <tr>
+                        <td>{{ user.getLastName() }}</td>
+                        <td>{{ user.getFirstName() }}</td>
+                        <td>{{ user.getDn() }}</td>
+                        <td>{{ user.getEmail() }}</td>
+                        <td>
+
+                            {% if user.getFirstName()|trim == "" %}
+                                {% set firstName = "N.A" %}
+                            {% else %}
+                                {% set firstName = user.getFirstName() %}
+                            {% endif %}
+
+                            {% if user.getLastName()|trim == "" %}
+                                {% set lastName = "N.A" %}
+                            {% else %}
+                                {% set lastName = user.getLastName() %}
+                            {% endif %}
+
+                            {% if user.getEmail()|trim == "" %}
+                                {% set email = "N.A" %}
+                            {% else %}
+                                {% set email = user.getEmail() %}
+                            {% endif %}
+
+
+                            <a class="btn btn-primary"
+                               href="{{ path("modifyContact", {"dn" : user.getDn()|url_encode , "firstName" : firstName, "lastName" : lastName , "email" : email}) }}">Modify</a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% endif %}
+    </div>
+</div>
+

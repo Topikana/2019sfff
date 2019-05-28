@@ -1,0 +1,61 @@
+<head>
+    <meta charset="UTF-8"/>
+    <title>Operations portal</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <link rel="stylesheet" href="{{ asset('build/vendor/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/vendor/bootstrap/css/bootstrap.min.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+    <!--             End css -->
+</head>
+
+    {% block body %}
+
+        <div class="col-lg-6 offset-3 mt-5 ">
+
+            <div id="homeSection" class="card">
+                <div class="card-header">
+                <span><img src="{{ asset('images/operation_portal.svg') }}"  alt="logo operations portal"></span>
+                    <hr/>
+                    <h1><em><span class="fa fa-sign-in-alt"></span> New authentication system : EGI Checkin</em></h1>
+
+                </div>
+                <div class="card-body">
+                    <h2 class="font-weight-light">
+                        <p class="lead"> Our authentication system has changed and you need to use EGI Checkin</p>
+                    </h2>
+
+                    <ul>
+                        <li>After choosing your Identity Provider (IDP) and after the initial registration process you will be able to access the Operations Portal</li>
+                        <li>If you want to use your certificate please use the "IGTF Certificate proxy" login option*</li>
+                    </ul>
+                    <p>* a preliminary registration into EGI registry is mandatory</p>
+
+
+                    <p class="center text-center">
+                        <a href="https://aai.egi.eu/signup" class="btn btn-primary">
+                            <img class="m-1 " src="{{ asset("images/egi-checkin.png") }}" alt="egi checkin"/>
+                        </a>
+                    </p>
+                </div>
+
+
+                <div class="card-footer"> If you encounter troubles please contact us at &nbsp;&nbsp;&nbsp;
+                    <a href="mailto:{{ webMasterMail }}">
+                        <span class='badge  badge-primary'>{{ webMasterMail }}</span></a>               &nbsp;&nbsp;
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <script src="{{ asset('build/vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('build/vendor/popper.js/popper.min.js') }}"></script>
+        <script src="{{ asset('build/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+
+    {% endblock %}

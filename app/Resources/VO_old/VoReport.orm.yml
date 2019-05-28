@@ -1,0 +1,19 @@
+AppBundle\Entity\VoReport:
+  type: entity
+  table: vo_report
+  connection: dashboardConnection
+  id:
+    report_id:
+      type: integer
+      options:
+        unsigned: false
+    serial:
+      type: integer
+      options:
+       unsigned: false
+      primary: true
+  fields:
+    report_body:
+      type: string
+      options:
+        fixed: false

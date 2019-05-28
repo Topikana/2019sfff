@@ -1,0 +1,121 @@
+<table class="table table-bordered table-hover">
+    {% if displayHead == true %}
+        <thead>
+        <tr>
+            <th style="vertical-align:middle">
+                <div class="text-center my-auto">Details</div>
+            </th>
+            <th style="vertical-align:middle">
+                <div class="text-center my-auto">Author<br/>Date</div>
+            </th>
+            <th style="vertical-align:middle">
+                <div class="text-center my-auto">Subject</div>
+            </th>
+            <th style="vertical-align:middle">
+                <div class="text-center my-auto">Emails</div>
+            </th>
+            <th style="vertical-align:middle">
+                <div class="text-center">Action</div>
+            </th>
+        </tr>
+        </thead>
+    {% endif %}
+    <tbody>
+    {% for broadcast in broadcasts %}
+        <tr>
+            <td>
+                <div class="text-center">
+                    <button onclick="showTrDetail(this,'{{ type }}','{{ broadcast.id }}')" class="btn btn-primary btn-sm">
+                        <span class="fa fa-plus"></span></button>
+                    {#</button>#}
+                </div>
+            </td>
+            <td>
+                <strong>{{ broadcast.authorCn}}</strong><br/><em>{{ broadcast.createdAt|date("Y-m-d")}}</em>
+            </td>
+
+            <td style='vertical-align:middle'>
+                {{ broadcast.subject}}
+            </td>
+            {% if displayHead == true %}
+                <td class="text-center">
+                    <div class="p-2 badge-success badge border-secondary border">
+                        {% set count = broadcast.targetsMail|count_substring(broadcast.targetsMail) + broadcast.cc|count_substring(broadcast.cc)  %}
+                        {{ count }}
+                    </div>
+                </td>
+            {% endif %}
+            <td width="120px">
+                <div class="dropdown">
+                    <button type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            class="btn btn-sm btn-light dropdown-toggle border border-secondary" >
+                        Action&nbsp;&nbsp;
+                        <span class="fa fa-list"></span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a href="{{ path("broadcast", {"from": broadcast.id}) }}" class="dropdown-item"><span class="fa fa-edit" ></span>&nbsp;Load</a>
+                        <a href="{{ path("archive", {"id":broadcast.id}) }}" class="dropdown-item"><span class="fa fa-link"></span>&nbsp;Permalink</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <!-- TR FOR DETAILS VIEWER -->
+
+        {% if displayHead == false %}
+            {% set colspan = 4 %}
+        {% else %}
+            {% set colspan = 5 %}
+        {%  endif %}
+        <tr id="tr_details_{{ type }}_{{ broadcast.id}}" style="display:none">
+            <td id="td_details_{{ type }}_{{ broadcast.id}}" colspan="{{ colspan }}">
+
+
+                <span class='btn btn-sm btn-light border border-secondary' ><a href="{{ path("archive", {"id" : broadcast.id}) }}"> Permalink</a></span>
+                &nbsp;&nbsp;
+            <span class="badge badge-primary p-2">Date:
+                {{ broadcast.createdAt|date("Y-m-d")}}
+            </span>
+                &nbsp;&nbsp;
+                <span class="badge badge-primary p-2">Subject : {{ broadcast.subject}}</span>
+                <hr/>
+                {% if broadcast.cc is not empty %}
+                    <span class="badge badge-primary p-2">CC:
+                        {{ broadcast.cc}}
+                        </span>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="">Message:</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ broadcast.body|replace({"\n":"<br>"})|raw}}</p>
+                    </div>
+                </div>
+                {% if type != "modelBd" %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="">Targets : </h6>
+                        </div>
+                        <div class="card-body" style="font-size: 14px;">
+                            {% if  targets[broadcast.id] is defined and targets[broadcast.id]|length != 0 %}
+                                {%  for target in targets[broadcast.id] %}
+                                    <div style="font-size:1em;word-break:break-all">
+                                        <strong class="message">[{{ target["label"] }}]</strong>
+
+                                        {% if target["item"] is iterable %}
+                                            {{  broadcastjstree.renderRecipients(target["item"]) }}
+                                        {% else %}
+                                            {{ target["item"] }}
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

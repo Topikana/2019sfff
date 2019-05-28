@@ -1,0 +1,107 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/home.min.css') }}">
+
+
+{% endblock %}
+{% block body %}
+    <section id="homeSection" class="row">
+
+        {% for flash_message in app.session.flashbag.get('danger') %}
+            <div role="alert" class="alert alert-danger">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+
+        {% for flash_message in app.session.flashbag.get('success') %}
+            <div role="alert" class="alert alert-success">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+
+        <article class="col-lg-8">
+
+            <div id="homePageMap" class="d-flex flex-row p-3">
+
+                {% for key, module in menu %}
+
+
+                    {% if module['route'] is not defined %}
+                        <div class="card m-auto p-3 border border-secondary">
+
+                            <h3><i class="fas {{ module["icon"] }} fa-2x"></i></h3>
+                            <h6>{{ module["title"] }}</h6>
+
+
+                            <p><a type="button" class="btn btn-outline-secondary text-dark"  data-toggle="tooltip" data-placement="top" title="{{ module["description"] }}"
+                                  href="{{ path(module['items'][0]['action']) }}">Link</a></p>
+
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+            <div class="card border-secondary m-3">
+
+                <div class="card-body text-center m-3">
+                    <img src="{{ asset('images/operation_portal.svg') }}"  alt="logo operations portal" width="700" >
+                    <h5 class="card-title text-center"> <a class="btn btn-outline-primary btn-large" href="{{ path("tasksList", {"releaseId": lastRelease["id"] }
+                        ) }}">v{{ lastRelease["version"] }} - {{  lastRelease["date"] }} </a></h5>
+
+                    <div class="card-text m-3">
+                        <small class="text-muted"><a href="{{ path("contact") }}" title="go to contact us page">Contact Us</a> </small>
+                        | <small><a href="{{ path('termsofuse') }}" title="terms of use" >Terms of use</a></small>
+                        | <small><a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache License" >Apache 2 License.</a></small>
+                    </div>
+                    <div class="card-text m-3">
+                        <p class="text-center">
+                            <small class="text-muted">This service is provided by <a href="http://cc.in2p3.fr">CCIN2P3</a>,  co-funded by <a href="http://egi.eu">EGI Foundation</a> and <a href="https://eosc-hub.eu">EOSC-Hub</a> </small><br/><br/>
+                            <img class="m-3" src="{{ asset('images/cc_cnrs.png') }}"  height="50" alt="logo ccin2p3"/>
+                            <img class="m-3" src="{{ asset('images/egi_logo.png') }}" height="50" alt="logo egi"/>
+                            <img class="m-3" src="{{ asset('images/logoeosc.png') }}" height="50" alt="logo eosc"/>
+                        </p>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </article>
+
+
+        <article class="card col-lg-4 float-right border-secondary">
+            <h2 class="m-2">Latest news</h2><hr/>
+            {{ render(controller('AppBundle:Home/Home:news',{ 'limit': false })) }}
+            <hr/>
+            <p class="text-center">
+
+                <a class="btn btn-sm btn-outline-secondary" data-toggle="collapse" rel="collapse" data-target="#news" style="text-decoration:none">
+                    <span class="fas  fa-chevron-down"></span> More news
+                </a>
+            </p>
+
+            <div id="news" class="collapse out">
+                {{ render(controller('AppBundle:Home/Home:news',{ 'limit': true })) }}
+            </div>
+
+
+        </article>
+
+    </section>
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+
+    </script>
+{% endblock %}

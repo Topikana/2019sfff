@@ -1,0 +1,146 @@
+AppBundle\Entity\VoHeader:
+  type: entity
+  table: vo_header
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    name:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    alias:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    grid_id:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    serial:
+      type: integer
+      options:
+        unsigned: false
+    enrollment_url:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    homepage_url:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    support_procedure_url:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    aup:
+      type: string
+      length: 4000
+      options:
+        fixed: false
+      nullable: true
+    aup_type:
+      type: string
+      columnDefinition: ENUM('text','url', 'file')
+      length: 4
+      options:
+        fixed: false
+        unsigned: false
+    description:
+      type: string
+      length: 4000
+      options:
+        fixed: false
+      nullable: true
+    arc_supported:
+      type: smallint
+      options:
+        unsigned: false
+    glite_supported:
+      type: smallint
+      options:
+        unsigned: false
+    unicore_supported:
+      type: smallint
+      options:
+        unsigned: false
+    globus_supported:
+      type: smallint
+      options:
+        unsigned: false
+    cloud_computing_supported:
+      type: smallint
+      options:
+        unsigned: false
+    cloud_storage_supported:
+      type: smallint
+      options:
+        unsigned: false
+    desktop_grid_supported:
+      type: smallint
+      options:
+        unsigned: false
+    validation_date:
+      type: date
+    discipline_id:
+      type: integer
+      options:
+        unsigned: false
+    scope_id:
+      type: integer
+      options:
+        unsigned: false
+    status_id:
+      type: integer
+      options:
+        unsigned: false
+    insert_date:
+      type: datetime
+    user:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    validated:
+      type: string
+      columnDefinition : ENUM('0', '1', '2')
+      options:
+        fixed: false
+    reject_reason:
+      type: string
+      length: 4000
+      options:
+        fixed: false
+    notify_sites:
+      type: smallint
+      options:
+        unsigned: false
+
+  manyToOne:
+    voScope:
+      targetEntity: VoScope
+      inversedBy: voHeaders
+      joinColumn:
+        name: scope_id
+        referencedColumnName: serial
+    voStatus:
+      targetEntity: VoStatus
+      inversedBy: voHeaders
+      joinColumn:
+        name: status_id
+        referencedColumnName: id
+
+  oneToMany:
+    vos:
+      targetEntity: Vo
+      mappedBy: voHeader

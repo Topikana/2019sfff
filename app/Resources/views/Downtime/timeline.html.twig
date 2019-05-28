@@ -1,0 +1,405 @@
+{#{% extends 'base_bootstrap_4.html.twig' %}#}
+{% extends 'base_timeline.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
+{% block title %}Operations portal - Downtime - Timeline{% endblock %}
+
+{% set field = app.request.get('field') %}
+{% set query = app.request.get('query') %}
+{% set period = app.request.get('period') %}
+
+{% block stylesheets %}
+{#    <link rel="stylesheet" href="{{ asset('build/css/downtime/downtime.css') }}">#}
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-4" >
+            <h3>Search<small> - <a href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}"><i class="fa fa-link"></i> Permalink</a> </small></h3>
+            <hr>
+            <div class="col-12 row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <form class="form-horizontal" method="get">
+                        <div class="form-group">
+                            <label for="selectfield" class="col-sm-3 control-badge">Field</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="selectfield" name="field" onchange="changeField(this)">
+                                    <option disabled {% if field == '' %}selected{% endif %} hidden>Choose</option>
+                                    <option value="ngi" {% if field == 'ngi' %}selected="selected"{% endif %}>NGI</option>
+                                    <option value="site" {% if field == 'site' %}selected="selected"{% endif %}>Site</option>
+                                    <option value="tier" {% if field == 'tier' %}selected="selected"{% endif %}>Tier</option>
+                                    <option value="vo" {% if field == 'vo' %}selected="selected"{% endif %}>VO</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="query" class="col-sm-3 control-badge">Entity</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="query" name="query">
+                                    <option disabled {% if field == '' %}selected{% endif %} hidden>Choose</option>
+                                    {% if query is defined %}
+                                        <option value="{{ query }}" selected="selected">{{ query }}</option>
+                                    {% endif %}
+                                </select>
+                                <i id="querySpinner" class="fa fa-spinner fa-pulse" style="display: none;"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectperiod" class="col-sm-3 control-badge">Period</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="selectperiod" name="period">
+                                    <option value="1" {% if period == '1' %}selected="selected"{% endif %}>1 month</option>
+                                    <option value="2" {% if period == '2' %}selected="selected"{% endif %}>3 month</option>
+                                    <option value="3" {% if period == '3' %}selected="selected"{% endif %}>On going downtimes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-secondary">Search</button>
+                            </div>
+                        </div>
+                        <div class="card card-body d-inline mt-4">
+                            <a href="{{ url('timelinedata_json', {'period':period, 'ngi':ngi, 'site':site, 'tier':tier}) }}">export.json</a> - <a href="{{ url('timelinedata_csv', {'period':period, 'ngi':ngi, 'site':site, 'tier':tier}) }}">export.csv</a>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xs-offset-1">
+                    <div class="jumbotron">
+
+                        <p>
+                        <h4>How to use search tool</h4>
+                        <ul>
+                            <li>Select the field</li>
+                            <li>Fill the query</li>
+                            <li>Select the period</li>
+                        </ul>
+                        <em><strong>Exemple :</strong> for "Tier 1", select Tier and fill "1" in Entity.</em>
+                        </p>
+                        <hr>
+                        <p>
+                        <h4>Popular queries </h4>
+                        <ul>
+                            <li><a href="{{ url('timeline', {'field':'tier', 'query':1, 'period':1}) }}">Tier 1</a></li>
+                            <li><a href="{{ url('timeline', {'field':'tier', 'query':2, 'period':1}) }}">Tier 2</a></li>
+                        </ul>
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <hr>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+                <input type="text" class="form-control input-lg" placeholder="Search" id="searchfieldcustom" autofocus>
+            </div>
+
+        </div>
+        <div class="row" style="margin-top: 25px;">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="home" aria-selected="true">Timeline</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#table" role="tab" aria-controls="profile" aria-selected="false">Table</a>
+                    </li>
+                </ul>
+                <div class="tab-content w-100" id="myTabContent">
+                    <div class="tab-pane fade show active mt-4" id="timeline" role="tabpanel" aria-labelledby="home-tab">
+                        <div id="timeline-chart" class="w-100"></div>
+                    </div>
+                    <div class="tab-pane fade mt-4" id="table" role="tabpanel" aria-labelledby="profile-tab">
+
+                        <table id="table-timeline" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>NGI</th>
+                                <th>Site</th>
+                                <th>Tier</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Severity</th>
+                                <th>Classification</th>
+                                <th>Description</th>
+                                <th>EndPoints</th>
+                                <th>Link</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for result in results %}
+                                <tr>
+                                    <td>{{ result.NGI }}</td>
+                                    <td>{{ result.SITE }}</td>
+                                    <td>TIER{{ result.TIER }}</td>
+                                    <td><span data-nf="{{ result.START_DATE }}">{{ result.FORMATED_START_DATE }}</span></td>
+                                    <td><span data-nf="{{ result.END_DATE }}">{{ result.FORMATED_END_DATE }}</td>
+                                    <td>
+                                        <span class="badge {% if result.SEVERITY =='OUTAGE' %}badge-danger{% elseif result.SEVERITY =='WARNING' %}badge-warning{% endif %}">{{ result.SEVERITY }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {% if result.CLASSIFICATION =='SCHEDULED' %}badge-success{% elseif result.CLASSIFICATION =='UNSCHEDULED' %}badge-warning{% endif %}">{{ result.CLASSIFICATION }}</span>
+                                    </td>
+                                    <td>{{ result.DESCRIPTION }}</td>
+                                    <td><button rel="popover" tabindex="0" class="btn btn-secondary" role="button" data-placement="bottom" data-toggle="popover" data-trigger="focus" title="Endpoints" data-content="{{ result.Endpoints }}">Show <i class="fa fa-caret-down"></i></button></td>
+                                    <td><a data-link="{{ result.GOCDB_PORTAL_URL }}" href="{{ result.GOCDB_PORTAL_URL }}" role="button" class="btn btn-secondary">Link <i class="fa fa-external-link"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <!-- Nav tabs -->
+                {#<ul class="nav nav-tabs" role="tablist">#}
+                    {#<li  class="nav-item active"><a href="#timeline" aria-controls="home" role="tab" data-toggle="tab">Timeline</a></li>#}
+                    {#<li class="nav-item"><a href="#table" aria-controls="profile" role="tab" data-toggle="tab">Table</a></li>#}
+                {#</ul>#}
+
+                <!-- Tab panes -->
+                {#<div class="tab-content">#}
+                    {#<div role="tabcard" class="tab-pane active" id="timeline" style="margin-top: 25px;">#}
+
+                        {#<div id="timeline-chart"></div>#}
+
+                    {#</div>#}
+                    {#<div role="tabcard" class="tab-pane" id="table" style="margin-top: 25px;">#}
+
+                        {#<table id="table-timeline" class="table table-striped">#}
+                            {#<thead>#}
+                            {#<tr>#}
+                                {#<th>NGI</th>#}
+                                {#<th>Site</th>#}
+                                {#<th>Tier</th>#}
+                                {#<th>Start</th>#}
+                                {#<th>End</th>#}
+                                {#<th>Severity</th>#}
+                                {#<th>Classification</th>#}
+                                {#<th>Description</th>#}
+                                {#<th>EndPoints</th>#}
+                                {#<th>Link</th>#}
+                            {#</tr>#}
+                            {#</thead>#}
+                            {#<tbody>#}
+                            {#{% for result in results %}#}
+                                {#<tr>#}
+                                    {#<td>{{ result.NGI }}</td>#}
+                                    {#<td>{{ result.SITE }}</td>#}
+                                    {#<td>TIER{{ result.TIER }}</td>#}
+                                    {#<td><span data-nf="{{ result.START_DATE }}">{{ result.FORMATED_START_DATE }}</span></td>#}
+                                    {#<td><span data-nf="{{ result.END_DATE }}">{{ result.FORMATED_END_DATE }}</td>#}
+                                    {#<td>#}
+                                        {#<span class="badge {% if result.SEVERITY =='OUTAGE' %}badge-danger{% elseif result.SEVERITY =='WARNING' %}badge-warning{% endif %}">{{ result.SEVERITY }}</span>#}
+                                    {#</td>#}
+                                    {#<td>#}
+                                        {#<span class="badge {% if result.CLASSIFICATION =='SCHEDULED' %}badge-success{% elseif result.CLASSIFICATION =='UNSCHEDULED' %}badge-warning{% endif %}">{{ result.CLASSIFICATION }}</span>#}
+                                    {#</td>#}
+                                    {#<td>{{ result.DESCRIPTION }}</td>#}
+                                    {#<td><button rel="popover" tabindex="0" class="btn btn-secondary" role="button" data-placement="bottom" data-toggle="popover" data-trigger="focus" title="Endpoints" data-content="{{ result.Endpoints }}">Show <i class="fa fa-caret-down"></i></button></td>#}
+                                    {#<td><a data-link="{{ result.GOCDB_PORTAL_URL }}" href="{{ result.GOCDB_PORTAL_URL }}" role="button" class="btn btn-secondary">Link <i class="fa fa-external-link"></i></a></td>#}
+                                {#</tr>#}
+                            {#{% endfor %}#}
+                            {#</tbody>#}
+                        {#</table>#}
+
+                    {#</div>#}
+                {#</div>#}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{#    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>#}
+{#    <script type="text/javascript"#}
+{#            src="https://cdn.datatables.net/s/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,kt-2.1.0,r-2.0.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.min.js"></script>#}
+
+    <script src="{{ asset('build/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/js/dataTables.dataTables.min.js') }}"></script>
+    <script src="{{ asset('build/js/jsapi.min.js') }}"></script>
+    <script>
+        google.load("visualization", "1", {packages:["timeline"]});
+
+        var table;
+        var chart;
+        var dataTable;
+
+        $(document).ready(function(){
+            google.setOnLoadCallback(drawChart);
+
+            table = $('#table-timeline').DataTable({
+                "dom": 'lrtip'
+            });
+            $('[rel=popover]').popover();
+
+            table.on( 'search.dt', function () {
+                refreshTimeline();
+            } );
+
+            $('#searchfieldcustom').keyup(function(){
+                table.search($(this).val()).draw() ;
+            });
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                refreshTimeline();
+            });
+
+        });
+
+
+        function refreshTimeline(){
+            chart.clearChart();
+            drawChart();
+        }
+
+        function drawChart() {
+            var container = document.getElementById('timeline-chart');
+            chart = new google.visualization.Timeline(container);
+            dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({type: 'string', id: 'Entity'});
+            dataTable.addColumn({type: 'string', id: 'status'});
+            dataTable.addColumn({type: 'string', 'role': 'tooltip', 'p': {'html': true}});
+            dataTable.addColumn({type: 'date', id: 'Start'});
+            dataTable.addColumn({type: 'date', id: 'End'});
+
+            var chartEntries = [];
+
+            table.rows( { filter: 'applied' } ).data().each( function (d) {
+
+                var ngi = d[0];
+                var site = d[1];
+
+                var start_date = $($.parseHTML( d[3])).attr("data-nf");
+                var end_date = $($.parseHTML( d[4])).attr("data-nf");
+
+                var start_date_f = $($.parseHTML( d[3])).text();
+                var end_date_f = $($.parseHTML( d[4])).text();
+
+                var resources = $($.parseHTML( d[8])).attr("data-content");
+                var severity = $($.parseHTML( d[5])).text();
+                var classification = $($.parseHTML( d[6])).text();
+                var description = d[7];
+                var link = $($.parseHTML( d[9])).attr("data-link");
+
+                var tooltip =
+                        '<div class="card" style="width:500px;">' +
+                        '<div class="card-header"><div class="card-title"><h4>' + site + ' ' + ngi + '</h4></div></div>' +
+                        '<div class="card-body">' +
+                        '<label>Severity: &nbsp;</label>' + severity + '<hr/>' +
+                        '<label>Classification: &nbsp;</label>' + classification + '<hr/>' +
+                        '<label>Start Time : &nbsp;</label>' + start_date_f + '<hr/>' +
+                        '<label>End Time : &nbsp;</label>' + end_date_f + '<hr/>' +
+                        '<label>Endpoint(s): &nbsp;</label><br/>' + resources + '<hr/>' +
+                        '<label>Link : &nbsp;</label>' + link + '</div>' +
+                        '<div class="card-footer"><em>' + description + '</em></div></div>';
+
+
+
+                if (classification) {
+                    var row = [ngi + ' - ' + site, classification,tooltip, new Date(start_date * 1000), new Date(end_date * 1000)];
+                    dataTable.addRows([row]);
+
+                    if (chartEntries.indexOf(ngi + ' - ' + site) == -1) {
+                        chartEntries.push(ngi + ' - ' + site);
+                    }
+                }
+
+            });
+
+            console.log(chartEntries.length);
+
+            var rowHeight = 50;
+            var chartHeight = chartEntries.length * rowHeight;
+
+            var options = {
+                height: chartHeight,
+                title: 'Downtime Report',
+                backgroundColor: '#fff',
+                timeline: {
+                    groupByRowLabel: true,
+                    showBarLabels: false
+                },
+                colors:["orange","red"]
+            };
+
+
+            chart.draw(dataTable, options);
+        }
+
+        function changeField(select){
+
+            var strField = select.options[select.selectedIndex].value;
+            var options = $("#selectfield");
+            var optionsTarget = $("#query");
+            var querySpinner = $("#querySpinner");
+            var url;
+
+            switch (strField){
+                case 'ngi':
+                    url = "{{ url("listngi") }}";
+                    break;
+                case 'site':
+                    url = "{{ url("listsite") }}";
+                    break;
+                case 'tier':
+                    url = "{{ url("listtier") }}";
+                    break;
+                case 'vo':
+                    url = "{{ url("listvo") }}";
+                    break;
+                default:
+                    break;
+            }
+
+            querySpinner.css('display','');
+            optionsTarget.css('display','none');
+
+            $.getJSON(url, function(result) {
+                optionsTarget.find('option')
+                        .remove()
+                        .end();
+                switch (strField){
+                    case 'ngi':
+                        $.each(result, function() {
+                            optionsTarget.append($("<option />").val(this.NAME).text(this.NAME));
+                        });
+                        break;
+                    case 'site':
+                        $.each(result, function() {
+                            optionsTarget.append($("<option />").val(this.NAME).text(this.NAME));
+                        });
+                        break;
+                    case 'tier':
+                        $.each(result, function() {
+                            optionsTarget.append($("<option />").val(this).text(this));
+                        });
+                        break;
+                    case 'vo':
+                        $.each(result, function() {
+                            optionsTarget.append($("<option />").val(this).text(this));
+                        });
+                        break;
+                    default:
+                        break;
+                }
+
+            }).always(function() {
+                querySpinner.css('display','none');
+                optionsTarget.css('display','');
+            });
+        }
+
+    </script>
+{% endblock %}

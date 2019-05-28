@@ -1,0 +1,136 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+{% block body %}
+    {% if app.user.isSuUser() == true %}
+        <div class="container pt-0">
+
+
+
+
+            <h2 class="card card-header mb-4">User group</h2>
+            <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target=".bd-addUser-modal-sm">
+                <span class="fa fa-plus-square "></span> Add a user to a group
+            </button>
+            <button type="button" class="btn btn-warning mb-4" data-toggle="modal" data-target=".bd-addService-modal-sm">
+                <span class="fa fa-plus-square "></span> Add a service
+            </button>
+            <table class="table table-bordered  table-hover" id="tableDn">
+                <thead>
+                <tr>
+                    <td>Service</td>
+                    <td>User DN</td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for groupeTicket in groupe|sort %}
+                    <tr>
+                        <td><span class="badge badge-light text-dark border border-secondary ">{{ groupeTicket.type }}</span></td>
+                        <td style="font-size: 80%; font-weight: 400;">{{ groupeTicket.dNAuthorized }}</td>
+                        <td class="d-flex justify-content-center"><a href="{{ path('delete_user_group',  { 'id' : groupeTicket.id } )}}" class="btn btn-danger col-sm-8 far fa-trash-alt text-light d-flex justify-content-center"></a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- Modal add service-->
+        <div class="modal fade bd-addService-modal-sm"  tabindex="-1" role="dialog" aria-labelledby="bd-addService-modal-sm" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" style="width: 30%" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"> Add service</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body col-12">
+                        {{ form_start(formService, {'attr': {}}) }}
+                            <div class="m-2 col-12">
+
+                                {{ form_row(formService.type, {'attr': {}}) }}
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(formService) }}
+        </div>
+
+
+
+
+        <!-- Modal add user to a group-->
+    <div class="modal fade bd-addUser-modal-sm"  tabindex="-1" role="dialog" aria-labelledby="bd-addUser-modal-sm" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" style="width: 60%" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"> Add a user to the group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(formGroupe, {'attr': {}}) }}
+                    <div class="row col-12">
+                    <div class="m-2 col-6">
+                        {{ form_row(formGroupe.DN_authorized, {'attr': {}}) }}
+                    </div>
+
+                    <div class="m-2 col-4">
+                        {{ form_row(formGroupe.type) }}
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(formGroupe) }}
+    </div>
+
+    {% endif %}
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+
+
+            var groupColumn = 0;
+            var table = $('.table').DataTable({
+                "columnDefs": [
+                    { "visible": true, "targets": groupColumn }
+                ],
+                "columns": [
+                                {"data" : "groupeTicket.type"},
+                                {"data" : "groupeTicket.dNAuthorized"},
+                            ],
+                "order": [[ groupColumn, 'asc' ]],
+                "displayLength": 25,
+            } );
+
+            // Order by the grouping
+            $('.table tbody').on( 'click', 'tr.group', function () {
+                var currentOrder = table.order()[0];
+                if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+                    table.order( [ groupColumn, 'desc' ] ).draw();
+                }
+                else {
+                    table.order( [ groupColumn, 'asc' ] ).draw();
+                }
+            } );
+
+        });
+    </script>
+{% endblock %}

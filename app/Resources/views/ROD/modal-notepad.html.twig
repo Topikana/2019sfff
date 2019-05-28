@@ -1,0 +1,20 @@
+{% form_theme form_notepad 'bootstrap_4_layout.html.twig' %}
+
+<div id="modal-notepad" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-details modal-dialog-centered mt-4" role="document" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-header col-12">
+                <h3 class="modal-title">Notepad / New submission</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ render(controller('AppBundle:Notepad:newNotepad')) }}
+            </div>
+            {#<div class="modal-footer">#}
+            {#<button type="button" class="btn btn-primary">Save changes</button>#}
+            {#</div>#}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,325 @@
+<!-- navbar for small device -->
+<div id="navBarSmallDevice" class="visible-xs navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            {% if (app.user != null) %}
+
+                <button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false"
+                        data-target="#userRoleDropdownSmall" data-toggle="collapse" type="button">
+                    <span class="sr-only">Toggle User roles information</span>
+                    <a>
+                        {% if app.user.opRoles["project"]["GRID BODY"] is defined %}
+                            <img alt="user role" width="25px" height="25px"
+                                 src="{{ asset('images/super_user.jpg') }}">
+                        {% else %}
+                            <img id="imgUserSmall" alt="user role" width="25px" height="25px"
+                                 src="{{ asset('images/user.jpg') }}">
+                        {% endif %}
+                        <span class="caret"></span>
+                    </a>
+                </button>
+            {% endif %}
+
+
+            <button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false"
+                    data-target="#OpsPortalGlobalMenuSmall" data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle global navigation menu</span>
+                <img alt="menu" width="25px" height="25px" src="{{ asset('images/menu.jpg') }}">
+                <span class="caret"></span>
+            </button>
+
+            <button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false" data-target="#navbarSF3Small" data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle local navigation menu</span>
+                <span class="fa fa-th-list"></span>
+                <span class="caret"></span>
+            </button>
+
+
+            <div class="navbar-brand">
+                <a href="{{ path("home") }}" title="operations portal home page"><img src="{{ asset('images/logo_final_medium.png') }}"
+                                                                                      alt="logo operations portal" height="50"/>
+                </a>
+            </div>
+        </div>
+
+
+        {% if app.request.attributes.get('_route') == "operations portal" %}
+            <h5 class="hidden-xs navbar-text">Home</h5>
+        {% elseif app.request.attributes.get('_route') == "registration" %}
+            <h5 class="hidden-xs navbar-text">Vo Registration</h5>
+        {% else %}
+            {% for key, module in menu|reverse %}
+                {% for key2, item in module["items"] %}
+                    {% if app.request.attributes.get('_route') == item["action"] %}
+                        <h5 class="hidden-xs  navbar-text"> {{ item["title"] }}</h5>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {% if "voUpdate" in app.request.attributes.get('_route') %}
+            <h5 class="hidden-xs navbar-text">VO Update</h5>
+
+        {% endif %}
+
+        <div id="OpsPortalGlobalMenuSmall" class=" navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% for key, module in menu %}
+
+                    <li>
+                        {% if module['route'] is defined %}
+                            <a href="http://{{ portalUrl }}/{{ module['route'] }}"><span
+                                        class="fa fa-chevron-right"
+                                        style="font-size: 8px;padding-right:8px"></span> {{ module["title"] }}</a>
+                        {% else %}
+
+                            <a href="{{ path(module['items'][0]['action']) }}"><span
+                                        class="fa fa-chevron-right"
+                                        style="font-size: 8px;padding-right:8px"></span> {{ module["title"] }}</a>
+
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+            </ul>
+            <hr>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a title="go to sitemap view" href="{{ path("siteMap") }}"><span class="fa fa-map-marker"></span> SiteMap</a></li>
+
+                <li><a title="go to contact page" href="{{ path("contact") }}"><span class="fa fa-envelope"></span> Contact Us</a></li>
+            </ul>
+            <hr>
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a title="go to argo application" target="_blank" href="{{ argoUrl }}"><img src="{{ asset('images/logo_argo.png') }}" width="30" alt="logo argo">&nbsp; <strong>ARGO</strong></a>
+                </li>
+            </ul>
+            <hr>
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a target="_blank" href="http://{{ vaporUrl }}"><img src="{{ asset('images/logo_vapor.png') }}" width="70" alt="logo vapor"></a>
+                    <br>
+                    <a title="go to vapor application" href="http://{{ vaporUrl }}" class="arrowList">
+                        Index
+                    </a>
+                    <a title="go to vapor resources browser" href="http://{{ vaporUrl }}/resources/GL2Browser" class="arrowList">
+                        Resources Browser
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        {% if(app.user != null) %}
+
+            <ul id="userRoleDropdownSmall" class="nav navbar-nav navbar-collapse collapse">
+                <li>
+                    <ul id="roles" style="font-size:smaller; padding: 10px">
+                        {{ render(controller('AppBundle:Default:GetRoles')) }}
+                    </ul>
+                </li>
+            </ul>
+        {% endif %}
+
+
+        <ul id="navbarSF3Small" class="nav navbar-nav navbar-right navbar-collapse collapse">
+            {% if menu[app.request.pathInfo|split('/')[1]]['items'] is defined %}
+                {% for entry in menu[app.request.pathInfo|split('/')[1]]['items'] %}
+                    {% if entry["action"]|lower in app.request.attributes.get('_route')|lower %}
+                        <li class="active">
+                            <a href="{% if entry["prefix"] is defined and entry["prefix"] == "vaporUrl" %}http://{{ vaporUrl }}/{{ entry["module"] }}/{{ entry["action"] }}{% else %}{{ path(entry['action']) }}{% endif %}">
+                                {{ entry['title'] }}
+                            </a>
+                        </li>
+                    {% elseif  app.request.attributes.get('_route') == "voUpdate" and entry["action"] == "VoList" %}
+                        <li class="active">
+                            <a href="{% if entry["prefix"] is defined and entry["prefix"] == "vaporUrl" %}http://{{ vaporUrl }}/{{ entry["module"] }}/{{ entry["action"] }}{% else %}{{ path(entry['action']) }}{% endif %}">
+                                {{ entry['title'] }}
+                            </a>
+                        </li>
+
+                    {% else %}
+
+
+                        <li>
+                            <a href="{{ path(entry['action']) }}">
+                                {{ entry['title'] }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for entry in menu["home"]['items'] %}
+                    <li {% if app.request.attributes.get('_route') == entry["action"] %}class="active"{% endif %}>
+                        <a href="{{ path(entry['action']) }}">
+                            {{ entry['title'] }}
+                        </a>
+                    </li>
+                {% endfor %}
+
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<!-- navbar for big device -->
+<div id="navBarBigDevice" class="hidden-xs navbar navbar-right navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+            <div class="navbar-brand">
+                <a href="{{ path("home") }}" title="operations portal home page"><img src="{{ asset('images/logo_final_medium.png') }}"
+                                                                                      alt="logo operations portal" height="50"/>
+                </a>
+            </div>
+
+
+            {% if app.request.attributes.get('_route') == "operations portal" %}
+                <h4 class="hidden-sm inverse-navbar-text navbar-text">Home</h4>
+            {% elseif app.request.attributes.get('_route') == "registration" %}
+                <h4 class="hidden-sm inverse-navbar-text navbar-text">Vo Registration</h4>
+            {% else %}
+                {% for key, module in menu|reverse %}
+                    {% for key2, item in module["items"] %}
+                        {% if app.request.attributes.get('_route') == item["action"] %}
+                            <h4 class="hidden-sm inverse-navbar-text navbar-text"> {{ item["title"] }}</h4>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            {% if "voUpdate" in app.request.attributes.get('_route') %}
+                <h4 class="hidden-sm inverse-navbar-text navbar-text">VO Update</h4>
+
+            {% endif %}
+        </div>
+
+        <ul id="egiCheckin" class="nav navbar-nav navbar-right navbar-collapse collapse">
+
+            <li>
+                <a  href="{{ path('aai-login') }}" role="button" title="EGI Checkin Login">
+                    <img alt="login trough EGI Checkin" width="45px" height="45px" src="{{ asset('images/login.png') }}"/>
+                </a>
+            </li>
+
+        </ul>
+
+
+        <ul id="OpsPortalGlobalMenuBig" class="navbar-nav nav navbar-collapse navbar-right">
+            <li class="dropdown">
+                <a id="dropdownMenu1" href="#" role="button">
+                    <img alt="menu" width="36px" height="36px" src="{{ asset('images/menu.jpg') }}">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {% for key, module in menu %}
+
+                        <li>
+                            {% if module['route'] is defined %}
+                                <a href="http://{{ portalUrl }}/{{ module['route'] }}"><span
+                                            class="fa fa-chevron-right"
+                                            style="font-size: 8px;padding-right:8px"></span> {{ module["title"] }}</a>
+                            {% else %}
+
+
+                                <a href="{{ path(module['items'][0]['action']) }}"><span
+                                            class="fa fa-chevron-right"
+                                            style="font-size: 8px;padding-right:8px"></span> {{ module["title"] }}</a>
+                            {% endif %}
+                        </li>
+
+                        <li class="divider"></li>
+                    {% endfor %}
+
+                    <li><a title="go to sitemap view" href="{{ path("siteMap") }}"><span class="fa fa-map-marker"></span> SiteMap</a></li>
+                    <li class="divider"></li>
+
+                    <li><a title="go to contact page" href="{{ path("contact") }}"><span class="fa fa-envelope"></span> Contact Us</a></li>
+                    <li class="divider"></li>
+
+                    <li><a title="go to argo application" target="_blank" href="{{ argoUrl }}"><img src="{{ asset('images/logo_argo.png') }}" width="30" alt="logo argo">&nbsp;
+                            <strong>ARGO</strong></a></li>
+                    <li class="divider"></li>
+
+                    <li><a target="_blank" href="http://{{ vaporUrl }}"><img src="{{ asset('images/logo_vapor.png') }}" width="70" alt="logo vapor"></a>
+                        <br>
+                        <a title="go to vapor application" href="http://{{ vaporUrl }}" class="arrowList">
+                            Index
+                        </a>
+                        <a title="go to vapor resources browser" href="http://{{ vaporUrl }}/resources/GL2Browser" class="arrowList">
+                            Resources Browser
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            {% if(app.user != null) %}
+                <li class="dropdown" id="userRoleDropdownBig">
+                    <a id="dropdownMenu2" href="#">
+                        {% if app.user.opRoles["project"]["GRID BODY"] is defined %}
+                            <img alt="user role" width="32px" height="32px"
+                                 src="{{ asset('images/super_user.jpg') }}">
+                        {% else %}
+                            <img id="imgUserBig" alt="user role" width="32px" height="32px"
+                                 src="{{ asset('images/user.jpg') }}">
+                        {% endif %}
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul id="roles" class="dropdown-menu list-group" style="font-size:smaller; padding: 10px">
+                        {{ render(controller('AppBundle:Default:GetRoles')) }}
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+
+        <ul id="navbarSF3Big" class="nav navbar-nav navbar-right navbar-collapse collapse">
+            {% if menu[app.request.pathInfo|split('/')[1]]['items'] is defined %}
+                {% for entry in menu[app.request.pathInfo|split('/')[1]]['items'] %}
+                    {% if entry["action"]|lower in app.request.attributes.get('_route')|lower %}
+
+                        <li class="active">
+                            <a href="{% if entry["prefix"] is defined and entry["prefix"] == "vaporUrl" %}http://{{ vaporUrl }}/{{ entry["module"] }}/{{ entry["action"] }}{% else %}{{ path(entry['action']) }}{% endif %}">
+                                {{ entry['title'] }}
+                            </a>
+                        </li>
+                    {% elseif  app.request.attributes.get('_route') == "voUpdate" and entry["action"] == "VoList" %}
+                        <li class="active">
+                            <a href="{% if entry["prefix"] is defined and entry["prefix"] == "vaporUrl" %}http://{{ vaporUrl }}/{{ entry["module"] }}/{{ entry["action"] }}{% else %}{{ path(entry['action']) }}{% endif %}">
+                                {{ entry['title'] }}
+                            </a>
+                        </li>
+
+                    {% else %}
+
+                        <li>
+                            <a href="{{ path(entry['action']) }}">
+                                {{ entry['title'] }}
+                            </a>
+                        </li>
+
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for entry in menu["home"]['items'] %}
+
+                    <li {% if app.request.attributes.get('_route') == entry["action"] %}class="active"{% endif %}>
+                        <a href="{{ path(entry['action']) }}">
+                            {{ entry['title'] }}
+                        </a>
+                    </li>
+                {% endfor %}
+
+            {% endif %}
+        </ul>
+
+
+
+    </div>
+    <!--/.nav-collapse -->
+</div>

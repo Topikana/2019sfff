@@ -1,0 +1,42 @@
+step:
+  Author:
+    id: Author
+    value: +C.user+
+  Modifier:
+    id: Modifier
+    value: +C.user+
+  AuthorEmail:
+    id: AuthorEmail
+    value: +C.manager_email+
+  Involve:
+    id: Involve
+    value: +C.manager_email+
+  Priority:
+    id: Priority
+    value: less urgent
+  Subject:
+    id: Subject
+    value: VO +C.vo_name+ has been registered and is waiting for validation
+  NotificationStrategy:
+    id: NotificationStrategy
+    value: Every Change
+  Description:
+    id: Description
+    value: |
+        Vo manager : +C.manager+
+        Discipline : +C.discipline+
+        Description : +C.description+
+        AUP : +C.aup_link+
+        Link to Operations-portal : +C.perma_link+
+
+         NB : This ticket should be used during validation process.
+
+  Status:
+    id: Status
+    value: new
+  Step:
+    id: Step
+    value: registration
+  Community:
+    id: Community
+    value: VOM

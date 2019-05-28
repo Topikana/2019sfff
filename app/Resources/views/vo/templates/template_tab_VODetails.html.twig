@@ -1,0 +1,388 @@
+<!-- General info section-->
+
+{% if serial is defined %}
+    <input id="vo_VoHeader_serial" class="d-none" value="{{ serial }}"/>
+{% endif %}
+
+<h4 class="detailsVOTitle" style="font-size: 18px">General information</h4>
+
+<table class="table  table-bordered table-striped" style="font-size: 14px" >
+    <tr>
+        <th scope="row">Name</th>
+        <td>{{ name }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Scope</th>
+        <td>{{ scope }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Status</th>
+        <td>{{ status }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Validation date</th>
+        <td>{{ validationDate|date('Y-m-d') }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Discipline</th>
+        <td>
+            <ul>
+                {% for key,disciplines in disciplines %}
+                    <li> {{ key }}
+                        {% if disciplines is iterable %}
+                            <ul>
+                                {% for key1, lvl1discipline in  disciplines %}
+                                    <li>{{ key1 }}
+                                        {% if lvl1discipline is iterable %}
+                                            <ul>
+                                                {% for key2,lvl2discipline in lvl1discipline %}
+                                                    <li> {{ key2 }}
+                                                        {% if lvl2discipline is iterable %}
+                                                            <ul>
+                                                                {% for lvl3discipline in lvl2discipline %}
+                                                                    <li>lvl3discipline</li>
+                                                                {% endfor %}
+
+                                                            </ul>
+                                                        {% else %}
+                                                            {{ lvl2discipline }}
+                                                            global                     {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            {{ lvl1discipline }}
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% elseif disciplines != "" %}
+                            <ul>
+                                <li>{{ disciplines }}</li>
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">Supported services</th>
+        <td>
+            <ul>
+                {% for middleware in  supportedServices %}
+                    <li>{{ middleware }}</li>
+                {% endfor %}
+            </ul>
+
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">Enrollment Url</th>
+        <td><a href='{{ enrollmentUrl }}'>{{ enrollmentUrl }}</a></td>
+    </tr>
+    <tr>
+        <th scope="row">Homepage Url</th>
+        <td><a href='{{ homepageUrl }}'>{{ homepageUrl }}</a></td>
+    </tr>
+    <tr>
+        <th scope="row">Support Procedure Url</th>
+        <td><a href='{{ supportProcedureUrl }}'>{{ supportProcedureUrl }}</a></td>
+
+    </tr>
+    <tr>
+        <th scope="row">GGUS dedicated user support</th>
+        <td>{{ ggus }}</td>
+    </tr>
+    <tr>
+        <th scope="row">VOMS setup support</th>
+        <td>{{ voms }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<!-- description section -->
+<h4 class="detailsVOTitle" style="font-size: 18px">Description</h4>
+
+<textarea cols="115" rows="5" style="font-size: 14px; width: 100%" readonly>
+    {{ description }}
+</textarea>
+
+<hr>
+
+<!-- Acceptable use policy section -->
+<h4 class="detailsVOTitle" style="font-size: 18px">Acceptable Use Policy</h4>
+
+<div class="card card-body" style="font-size: 14px">
+    {% if aup.type == 'Text' %}
+        {{ aup.val|nl2br }}
+    {% elseif aup.type =="url" %}
+        <a href="{{ aup.val }}" title="link to {{ aup.val }}">{{ aup.val }}</a>
+    {% elseif aup.type =="file" %}
+        <a href="{{ path("downloadAUP", {"file":aup.val}) }}">{{ aup.val }}</a>
+    {% else %}
+        N.A
+    {% endif %}
+</div>
+
+<hr>
+
+<!--acknowledgment statement section-->
+<h4 class="detailsVOTitle" style="font-size: 18px">Acknowledgments Statement</h4>
+{% if acknowledgment is iterable %}
+    <table class="table table-responsive table-bordered" style="font-size: 14px">
+        <tr>
+            <th scope="row">Grant Id</th>
+            <td>{{ acknowledgment.grantid }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Scientific publications URL</th>
+            <td>{{ acknowledgment.scientificpub }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Suggested</th>
+            <td>{{ acknowledgment.suggested }}</td>
+        </tr>
+
+        {% if acknowledgment.asrelationship != "" %}
+            <tr>
+                <th scope="row">Relationship</th>
+                <td>{{ acknowledgment.asrelationship }}</td>
+            </tr>
+        {% endif %}
+    </table>
+{% else %}
+    <p style="font-size: 14px"> {{ acknowledgment }}</p>
+{% endif %}
+<hr>
+
+<!--resources section-->
+<h4 class="detailsVOTitle" style="font-size: 18px">Resources</h4>
+<table class="table table-bordered" style="font-size: 14px">
+    <tr>
+        <th>Max used physical non-swap i386 memory size</th>
+        <td>{{ resources.ram386 }}</td>
+    </tr>
+    <tr>
+        <th>Max used physical non-swap x86_64 memory size</th>
+        <td>{{ resources.ram64 }}</td>
+    </tr>
+    <tr>
+        <th>Max size of scratch space used by jobs</th>
+        <td>{{ resources.jobscratchspace }}</td>
+    </tr>
+    <tr>
+        <th>Max time of job execution</th>
+        <td>{{ resources.jobmaxcpu }}</td>
+    </tr>
+    <tr>
+        <th>Job wall clock time limit</th>
+        <td>{{ resources.jobmaxwall }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<!--cloud resources section-->
+<h4 class="detailsVOTitle" style="font-size: 18px">Cloud Resources</h4>
+<table class="table table-bordered" style="font-size: 14px">
+    <tr>
+        <th scope="row">CPU Core</th>
+        <td>{{ cloud.cpucore }}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">VM Ram</th>
+        <td>{{ cloud.vmram }}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Storage Size</th>
+        <td>{{ cloud.storagesize }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<!--cvmfs section-->
+{% if resources.cvmfs is iterable %}
+    <h4 class="detailsVOTitle" style="font-size: 18px">CernVM File System</h4>
+    <table class="table table-bordered" style="font-size: 14px">
+        <thead>
+        <tr>
+            <th scope="row">Endpoints</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for endpoint in  resources.cvmfs %}
+            <tr>
+
+                <td>{{ endpoint }}</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+{% endif %}
+
+
+
+{% if otherrequirements|trim != "" %}
+    <!--other requirements section-->
+    <h4 class="detailsVOTitle" style="font-size: 18px">Other requirements</h4>
+    <textarea cols="115" rows="5" readonly style="font-size: 14px">
+    {{ otherrequirements }}
+</textarea>
+    <hr>
+
+{% endif %}
+
+<!--generic contacts section-->
+<h4 class="detailsVOTitle" style="font-size: 18px">Generic contacts</h4>
+
+
+<table class="table table-bordered table-striped" style="font-size: 14px">
+    <thead>
+    <tr>
+        <th>Full Name</th>
+        <th>DN</th>
+        <th>Email</th>
+        <th>Comment</th>
+        <th>Profile</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if  contacts is not empty %}
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.first_name }} {{ contact.last_name }} </td>
+                <td>{{ contact.dn }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.comment }}</td>
+                <td>{{ contact.profile }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5" class="text-center">No data available...</td>
+        </tr>
+    {% endif %}
+
+    </tbody>
+</table>
+
+<hr>
+
+<!--mailing list section-->
+<h4 class="detailsVOTitle" style="font-size: 18px">Mailing List</h4>
+<table class="table table-bordered table-striped" style="font-size: 14px">
+    <tr>
+        <th scope="row">VO Managers</th>
+        <td>{{ mailinglist.admins }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Operations</th>
+        <td>{{ mailinglist.operations }}</td>
+    </tr>
+    <tr>
+        <th scope="row">User Support</th>
+        <td>{{ mailinglist.usersupport }}</td>
+    </tr>
+    <tr>
+        <th scope="row">VO Users</th>
+        <td>{{ mailinglist.users }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Security</th>
+        <td>{{ mailinglist.security }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<!-- VOMS information -->
+<h4 class="detailsVOTitle" style="font-size: 18px">VOMS information</h4>
+<table class="table table-bordered table-striped" style="font-size: 14px">
+    <thead>
+    <tr>
+        <th>Detail</th>
+        <th>Hostname</th>
+        <th>Certificate expiration</th>
+        <th>Https port</th>
+        <th>Vomses port</th>
+        <th>Hosted by</th>
+        <th>Admin server</th>
+        <th>Url access</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% if vomslist is not empty %}
+        {% for voms in vomslist %}
+
+            <tr>
+                <td><a href="#VOV_section" onclick="getVomsDetail(this,'{{ path("vomsDetailAjax") }}', '{{ voms.hostname }}',8)"><span class="btn btn-sm btn-info"><span
+                                    class="fa fa-plus"></span></span></a></td>
+                <td><a href="{{ voms.gocurl }}" title="go to {{ voms.hostname }}">{{ voms.hostname }}</a></td>
+                <td>{{ voms.expiry }}</td>
+                <td>{{ voms.https_port }}</td>
+                <td>{{ voms.vomses_port }}</td>
+                <td>{{ voms.site }}</td>
+                <td>{% if voms.is_vomsadmin_server == 1 %} <span class="badge badge-success"><span class="fa fa-check"></span></span> {% else %}{% endif %}</td>
+                <td><span class="badge {% if voms.urlcheck_code is defined %} {% if voms.urlcheck_code == 200 %} badge-success {% else %} badge-danger {% endif %}{% else %} badge-danger{% endif %}">
+                         {% if voms.urlcheck_code is defined %}
+                             {{ voms.urlcheck_code }}: {{ voms.urlcheck_description }}
+                         {% else %}
+                             N.A
+                         {% endif %}
+                    </span></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="8" class="text-center">No data available...</td>
+        </tr>
+    {% endif %}
+
+    <tr id="errorDivVoms" style="display: none">
+        <div style="display: none" class="card card-danger card-body"></div>
+    </tr>
+
+    </tbody>
+</table>
+
+<hr>
+<!-- groups and roles -->
+<h4 class="detailsVOTitle" style="font-size: 18px">Groups and Roles</h4>
+<table class="table table-bordered table-striped" style="font-size: 14px">
+    <thead>
+    <tr>
+        <th>Group/Role</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>VO share(%)</th>
+        <th>User for account generation</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% if vomsgroup is not empty %}
+        {% for group in vomsgroup %}
+            <tr>
+                <td>{{ group.grouprole }}</td>
+                <td><{{ group.grouptype }}/td>
+                <td>{{ group.description }}</td>
+                <td>{{ group.allocatedressources }}</td>
+                <td>{% if group.isgroupused == 1 %} <span class="badge badge-success"><span class="fa fa-check"></span></span> {% else %} <span
+                            class="badge badge-danger"><span class="fa fa-times"></span></span>{% endif %}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5" class="text-center">No data available...</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>

@@ -1,0 +1,40 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "Downtime ========",
+  "main": "index.js",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "bootstrap": "4.3.1",
+    "datatables.net": "^1.10.16",
+    "datatables.net-bs4": "^1.10.19",
+    "datatables.net-buttons-dt": "^1.5.1",
+    "datatables.net-dt": "^1.10.16",
+    "datatables.net-select-dt": "^1.2.5",
+    "fastclick": "^1.0.6",
+    "jquery": "3.3.1",
+    "jquery-ui": "^1.12.1",
+    "jquery.easing": "^1.4.1",
+    "js-cookie": "^2.2.0",
+    "jszip": "^3.2.1",
+    "pdfmake": "^0.1.56",
+    "popper.js": "^1.15.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.2",
+    "merge-stream": "^1.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.in2p3.fr/opsportal/sf3.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

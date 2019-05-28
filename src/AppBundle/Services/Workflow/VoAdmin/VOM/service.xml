@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="loading" type="collection">
+            <parameter key="steps_param_identifier">VOM_steps</parameter>
+            <parameter key="locations" type="collection">
+                <parameter key='close_registration'>/Steps/CloseRegistration.yml</parameter>
+                <parameter key='voms_help_request'>/Steps/VomsHelpRequest.yml</parameter>
+                <parameter key='perun_help_request'>/Steps/PerunHelpRequest.yml</parameter>
+            </parameter>
+        </parameter>
+
+        <parameter key="schema" id="schema" type="collection">
+            <parameter key='close_registration' type='collection'>
+                <parameter key='label'>Close</parameter>
+            </parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+        <!-- VO workflow -->
+        <service id="workflow_vo" class="AppBundle\Services\TicketingSystem\Workflow\Workflow">
+            <call method="setDefaultStepId">
+                <argument id="stepId">new</argument>
+            </call>
+
+            <argument key="schema">%schema%</argument>
+            <argument key="steps">%VOM_steps%</argument>
+            <argument key="service_identifier">workflow_voAdmin</argument>
+        </service>
+    </services>
+
+</container>

@@ -1,0 +1,80 @@
+<div id="modalVomsGroup" class="modal fade" tabindex="-1" role="dialog" style="margin-top: 250px">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                {% if mode == "create" %}
+                    <h3 class="modal-title text-center">Add new Voms Group</h3>
+                {% else %}
+                    <h3 class="modal-title text-center">Edit {{ groupName }}</h3>
+                {% endif %}
+            </div>
+            {{ form_start(vomsGroupForm, {'attr': {'id': 'vomsGroupForm'}}) }}
+            <div class="modal-body">
+                <div class="d-flex justify-content-start">
+                <div class="col-md-4 font-weight-bold" style="font-size: 14px;">
+                    <div class="row">
+                        <label>{{ form_label(vomsGroupForm.group_type) }}</label>
+                        {{ form_widget(vomsGroupForm.group_type, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                    <div class="row help font-weight-bold" style="font-size: 14px;">
+                        <label class="infoLabel">{{ form_label(vomsGroupForm.group_role) }}</label>
+                        {{ form_widget(vomsGroupForm.group_role, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row ml-1 font-weight-bold" style="font-size: 14px;">
+                        <label> {{ form_label(vomsGroupForm.allocated_ressources) }}</label>
+                        {{ form_widget(vomsGroupForm.allocated_ressources, {'attr' : {'class' : 'form-control form-control-sm col-md-2'}}) }}
+                    </div>
+                    <br>
+                    <div class="form-group ml-1 font-weight-bold" style="font-size: 14px;">
+                        {{ form_widget(vomsGroupForm.is_group_used) }}
+                        <label>{{ form_label(vomsGroupForm.is_group_used) }}</label>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-12">
+                    <div class="row help font-weight-bold" style="font-size: 14px;">
+                        <label class="infoLabel"> {{ form_label(vomsGroupForm.description) }}</label>
+                        {{ form_widget(vomsGroupForm.description, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="id" value="{{ vomsGroupId }}" name="id"/>
+                <button type="button" class="pull-right btn btn-default" data-dismiss="modal"
+                        onclick="$('#header').slideDown('slow');">Close
+                </button>
+                <input id="VOVG_form_submit" class="pull-right btn btn-success" type="submit" value="Save">
+
+            </div>
+            {{ form_end(vomsGroupForm) }}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    $(document).ready(function () {
+        $('#header').slideUp("slow");
+        $("#vomsGroupForm").validate();
+
+        $("#vomsGroupForm").submit(function (event) {
+            if ($("#vomsGroupForm").valid()) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'html',
+                    data: $("#modalVomsGroup :input").serialize(),
+                    url: "{{ path("vomsGroupForm") }}",
+                    success: function (data, textStatus) {
+                        $('#panelVomsGroup').html(data)
+                        $('#header').slideDown('slow');
+                    }
+                });
+                $('#modalVomsGroup').modal('toggle');
+            }
+        });
+        refreshHelp("vomsGroupForm");
+        $('[data-toggle="popover"]').popover();
+    });
+
+</script>

@@ -1,0 +1,154 @@
+{% if  voListRemoved is defined %}
+        <div class="row">
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" id="leavingVoListTable">
+            <!-- table headers row -->
+            <thead>
+
+            <tr>
+                <th>Detail</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Discipline</th>
+                <th>Scope</th>
+                <th>Middleware(s)</th>
+                <th>Active Users</th>
+                <th>Total Users</th>
+                <th>Actions</th>
+                <th style="display: none">Serial</th>
+
+            </tr>
+
+            </thead>
+            <thead>
+            <tr class="filters">
+                <th></th>
+                <th class="search">Name</th>
+                <th class="search">Status</th>
+                <th class="search">Discipline</th>
+                <th class="search">Scope</th>
+                <th class="search">Middleware(s)</th>
+                <th>Active Users</th>
+                <th>Total Users</th>
+                <th></th>
+                <th style="display: none"></th>
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for id,vo in voListRemoved %}
+                <tr>
+                    <td><a href="#" onclick="getVODetails(this,'{{ path("voDetailAjax") }}','leavingVoListTable')"><span
+                                    class="btn btn-sm btn-light" style="border-color: rgb(203,203,203)"><span
+                                        class=" fa fa-search-plus text-dark" style="border-color: rgb(203,203,203)"></span></span></a></td>
+                    <td>{{ vo["name"] }}</td>
+                    <td><span class="badge
+                {% if vo["status"] == "Leaving" %}
+                    badge-warning
+                {% else %}
+                    badge-danger
+                {% endif %}
+                ">{{ vo["status"] }}</span>
+                    </td>
+                    <td>
+                        <ul>
+
+                            {% for key,disciplines in vo["disciplines"] %}
+                                <li> {{ key }}
+                                    {% if disciplines is iterable %}
+                                        <ul>
+                                            {% for key1, lvl1discipline in  disciplines %}
+                                                <li>{{ key1 }}
+                                                    {% if lvl1discipline is iterable %}
+                                                        <ul>
+                                                            {% for key2,lvl2discipline in lvl1discipline %}
+                                                                <li> {{ key2 }}
+                                                                    {% if lvl2discipline is iterable %}
+                                                                        <ul>
+                                                                            {% for lvl3discipline in lvl2discipline %}
+                                                                                <li>lvl3discipline</li>
+                                                                            {% endfor %}
+
+                                                                        </ul>
+                                                                    {% else %}
+                                                                        {{ lvl2discipline }}
+                                                                    {% endif %}
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% else %}
+                                                        {{ lvl1discipline }}
+                                                    {% endif %}
+                                                    table-responsive
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% elseif disciplines != "" %}
+                                        <ul>
+                                            <li>{{ disciplines }}</li>
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </td>
+                    <td>{{ vo["scope"] }}</td>
+                    <td>
+                        <ul>
+                            {% for middleware in vo["middlewares"] %}
+                                {% if middleware != "" %}
+                                    <li>{{ middleware }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        </ul>
+                    </td>
+                    <td>{{ vo["members"] }}</td>
+                    <td>{{ vo["membersTotal"] }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button type="button" id="dropdownActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                                    class="btn btn-sm btn-light dropdwon-toggle border-secondary">
+                                Action&nbsp;&nbsp;
+                                <span class="fa fa-list"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownActions">
+                                <li class="dropdown-item"><a target="_blank" href="{{ vo["homeUrl"] }}"><span class="fa fa-home"></span>&nbsp;HomePage</a></li>
+                                <li class="dropdown-item"><a target="_blank" href="http://{{ portalUrl }}/xml/voIDCard/public/voname/{{ vo["name"] }}"><span class="fab fa-xing"></span>&nbsp;XML
+                                        Feed</a>
+                                </li>
+                                <li class="dropdown-item"><a target="_blank" href="http://{{ vaporUrl }}/resources/GL2ResVO?VOfilter={{ vo["name"] }}"><span class="fa fa-globe"></span>&nbsp;VO
+                                        Resources by type</a></li>
+                                <li class="dropdown-item"><a target="_blank" href="http://{{ vaporUrl }}/resources/GL2ResBrowser?VOfilter={{ vo["name"] }}"><span
+                                                class="fa fa-lightbulb"></span>&nbsp;VO Resources by NGI</a></li>
+
+                                <li class="dropdown-item"><a target="_blank" href="http://{{ portalUrl }}/vo/voUrlCheckReport/voname/{{ vo["name"] }}"><span
+                                                class="fa fa-unlink"></span>&nbsp;URLs
+                                        checker report</a></li>
+                                <li class="dropdown-item"><a href="{{ path("VoDetailPermalink", {"voName" : vo["name"]}) }}"><span class="fa fa-link"></span>&nbsp;Permalink</a></li>
+                                <li class="dropdown-item voAction"><a title="Update VO {{ vo["name"] }}" href="{{ path("voUpdate",{"serial": id}) }}"><span
+                                                class="fa fa-edit"></span>&nbsp;Edit this VO ID card</a></li>
+                                {% if vo["status"] == "Leaving" %}
+                                    <li class="dropdown-item voAction"><a href="{{ path("updateStatusVo", {"serial": id, "statusId": 6, "isRejected": false} ) }}"><span
+                                                    class="fa fa-ban" title="Delete VO {{ vo['name'] }}"></span>&nbsp;Delete VO</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td style="display: none">{{ id }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        </div>
+{% else %}
+
+    <p class="alert alert-danger">No data to be displayed...</p>
+
+{% endif %}

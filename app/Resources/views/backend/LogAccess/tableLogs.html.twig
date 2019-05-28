@@ -1,0 +1,76 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body %}
+
+    {% if file is defined and tablefile is defined %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Availables logs </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <table id="logtable" class="table">
+                        <thead>
+                        <tr>
+
+                            <th>Files</th>
+                            <th>Directory</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for file in tablefile %}
+                            {% set foo= file|split('.')[0] %}
+                            <tr>
+
+                                <td>{{ file }}</td>
+                                <td>{{ server }}</td>
+
+                                <td>
+                                    {% if regexp[foo] is defined  or regexp["sf3"] is defined or regexp["sf1"] is defined%}
+                                    <a class="btn btn-default" href="{{ path('viewRegexpTable', {server:server, file:file}) }}">Look</a>
+                                    {% else %}
+                                    not available
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<a class="btn btn-primary" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+
+{% else %}
+    <div id="fail">
+        UNKNOWN CLUSTER
+    </div>
+{% endif %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $('#logtable').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+        });
+    </script>{% endblock %}
+
+
+
+
+
+
+

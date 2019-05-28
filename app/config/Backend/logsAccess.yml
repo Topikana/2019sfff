@@ -1,0 +1,7 @@
+table:
+   path: /server/{server}
+   defaults: { _controller: Backend/LogAccess:logsAccess:tableview }
+
+view:
+   path: /server/{server}/{file}
+   defaults: { _controller: Backend/LogAccess:logsAccess:view }

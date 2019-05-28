@@ -1,0 +1,247 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: menu.yml }
+    - { resource: Home/credits.yml}
+    - { resource: VO/vo_notifications.conf.yml }
+    - { resource: VO/helpTexts.yml}
+    - { resource: Broadcast/services/jsTreeConf.xml }
+    - { resource: doctrine_extensions.yml }
+    - { resource: GGUS/ggus_services.xml}
+    - { resource: VO/voUrl.yml}
+    - { resource: Backend/lavoisierUrl.yml}
+    - { resource: Backend/backendMenu.yml}
+    - { resource: Backend/regexp.yml}
+    - { resource: Backend/ippAdress.yml}
+    - { resource: Plugsla/jiraItems.yml}
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    fakeDn: ""
+    sf3Url: "operations-portal.egi.eu/sf3/"
+    webMasterMail: "cic-information@in2p3.fr"
+    wsdl: "http://cclavoisiertest.in2p3.fr:8000/LavoisierService?WSDL"
+    argoUrl: "http://argo.egi.eu/"
+    app_mail_nocmanagers: 'noc-managers@mailman.egi.eu'
+    lavoisierUrl: "cclavoisierfr.in2p3.fr"
+    lavoisierTestUrl: "cclavoisierfr.in2p3.fr"
+    aupUrl: ""
+    ggusUrl: ""
+    dirLogsApache: ""
+    dirLogsSymfony3: ""
+    dirLogsSymfony1: ""
+
+
+
+framework:
+    #esi:             ~
+    #translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+#        save_path: ~
+    fragments: ~
+    http_method_override: true
+    assets: ~
+
+    workflows:
+        notepad_workflow:
+            type: 'workflow' # or 'state_machine'
+            marking_store:
+                type: 'single_state' # or 'multiple_state'
+                arguments:
+                    - 'currentPlace'
+            supports:
+                - AppBundle\Entity\Notepad
+            places:
+                - create
+                - updated
+                - closed
+            transitions:
+                assign_to_ticket:
+                    from: create
+                    to:   updated
+                update_notepad:
+                    from: create
+                    to:   updated
+                update_ticket:
+                    from: create
+                    to:   updated
+                close:
+                    from: [create,updated]
+                    to:   closed
+
+        ticket_workflow:
+            type: 'workflow' # or 'state_machine'
+            marking_store:
+                type: 'single_state' # or 'multiple_state'
+                arguments:
+                    - 'currentPlace'
+            supports:
+                - AppBundle\Services\TicketingSystem\Helpdesk\GgusHelpdesk
+            places:
+                - create
+                - updated
+                - closed
+            transitions:
+                assign_to_ticket:
+                    from: create
+                    to:   updated
+                update_notepad:
+                    from: create
+                    to:   updated
+                update_ticket:
+                    from: create
+                    to:   updated
+                close:
+                    from: [create,updated]
+                    to:   closed
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        menu: "%menu%"
+        portalUrl: "operations-portal.egi.eu/next"
+        vaporUrl: "operations-portal.egi.eu/vapor"
+        help : "%help%"
+        webMasterMail : cic-information@in2p3.fr
+        credits: "%credits%"
+        jiraItems: "%jiraItems%"
+        broadcastjstree: "@broadcastjstree"
+        ggusUrl: "%ggusUrl%"
+        argoUrl: '%argoUrl%'
+        backendMenu: "%backendmenu%"
+        regexp: "%regexp%"
+    form_themes: ['bootstrap_4_layout.html.twig']
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "pdo_mysql"
+        host:     "%database_host_test%"
+        port:     "%database_port_test%"
+        dbname:   "%database_name_test%"
+        user:     "%database_user_test%"
+        password: "%database_password%"
+        charset:  UTF8
+        mapping_types:
+            enum: string
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+          translatable:
+            type: annotation
+            alias: Gedmo
+            prefix: Gedmo\Translatable\Entity
+            # make sure vendor library location is correct
+            dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+        dql:
+          datetime_functions:
+            date:           Oro\ORM\Query\AST\Functions\SimpleFunction
+            time:           Oro\ORM\Query\AST\Functions\SimpleFunction
+            timestamp:      Oro\ORM\Query\AST\Functions\SimpleFunction
+            convert_tz:     Oro\ORM\Query\AST\Functions\DateTime\ConvertTz
+          numeric_functions:
+            timestampdiff:  Oro\ORM\Query\AST\Functions\Numeric\TimestampDiff
+            dayofyear:      Oro\ORM\Query\AST\Functions\SimpleFunction
+            dayofmonth:     Oro\ORM\Query\AST\Functions\SimpleFunction
+            dayofweek:      Oro\ORM\Query\AST\Functions\SimpleFunction
+            week:           Oro\ORM\Query\AST\Functions\SimpleFunction
+            day:            Oro\ORM\Query\AST\Functions\SimpleFunction
+            hour:           Oro\ORM\Query\AST\Functions\SimpleFunction
+            minute:         Oro\ORM\Query\AST\Functions\SimpleFunction
+            month:          Oro\ORM\Query\AST\Functions\SimpleFunction
+            quarter:        Oro\ORM\Query\AST\Functions\SimpleFunction
+            second:         Oro\ORM\Query\AST\Functions\SimpleFunction
+            year:           Oro\ORM\Query\AST\Functions\SimpleFunction
+            sign:           Oro\ORM\Query\AST\Functions\Numeric\Sign
+            pow:            Oro\ORM\Query\AST\Functions\Numeric\Pow
+          string_functions:
+            group_concat:   Oro\ORM\Query\AST\Functions\String\GroupConcat
+            concat_ws:      Oro\ORM\Query\AST\Functions\String\ConcatWs
+            cast:           Oro\ORM\Query\AST\Functions\Cast
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:
+      type: "%spool_prod%"
+      path: "%kernel.root_dir%/../../documents/spoolSF3"
+
+eko_feed:
+    feeds:
+        article:
+            title:       'Downtimes'
+            description: 'Latests downtimes'
+            link:        'operations-portal.egi.eu'
+            encoding:    'utf-8'
+light_saml_symfony_bridge:
+    own:
+        entity_id: %saml_symfony_id% # required
+        credentials :
+            -
+                certificate: %certificate_opsportal%
+                key: %key_opsportal%
+                password: %password_certificate%
+    system:
+        event_dispatcher: ~
+        logger: ~
+    store:
+        id_state: id_store  # name of id store service created in step 6
+    party:
+        idp:
+            files:
+                - https://aai-dev.egi.eu/proxy/saml2/idp/metadata.php
+light_saml_sp:
+    username_mapper:
+        # default fallback list of attributes for
+        # lightsaml_sp.username_mapper.simple service to use to
+        # resolve SAML Response to username
+        - "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/x500distinguishedname"
+        - "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+        - "http://schemas.xmlsoap.org/claims/EmailAddress"
+        - "http://schemas.xmlsoap.org/claims/CommonName"
+
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
+        options:    []
+    image:
+        enabled:    false
+        binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
+        options:    []
+

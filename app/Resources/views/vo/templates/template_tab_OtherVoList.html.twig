@@ -1,0 +1,124 @@
+{% if  voListOther is defined and voListOther["error"] is not defined %}
+    <table class="table table-bordered table-condensed table-striped table-hover w-100" id="otherVoListTable">
+
+        <thead class="floating-header">
+
+        <tr>
+            <th class="text-nowrap" scope="col">Detail</th>
+            <th class="text-nowrap" scope="col">Name</th>
+            <th class="text-nowrap" scope="col">Discipline(s)</th>
+            <th class="text-nowrap" scope="col">Scope</th>
+            <th class="text-nowrap" scope="col">Middleware(s)</th>
+            <th class="text-nowrap" scope="col">Active Users</th>
+            <th class="text-nowrap" scope="col">Total Users</th>
+            <th scope="col">Actions</th>
+            <th scope="col" class="d-none">Serial</th>
+            <th scope="col" class="d-none">Status</th>
+
+        </tr>
+
+        </thead>
+        <thead>
+
+        <tbody>
+
+        {% for id,vo in voListOther %}
+            <tr>
+                <td class="text-center"><a href="#" onclick="getVODetails(this,'{{ path("voDetailAjax") }}','otherVoListTable')"><span class="btn btn-sm btn-light border border-secondary"><span
+                                    class="fa fa-search-plus"></span></span></a></td>
+                <td class="text-nowrap">{{ vo["name"] }}</td>
+                <td class="text-nowrap">
+                    <ul>
+
+                        {% for key,disciplines in vo["disciplines"] %}
+                            <li> {{ key }}
+                                {% if disciplines is iterable %}
+                                    <ul>
+                                        {% for key1, lvl1discipline in  disciplines %}
+                                            <li>{{ key1 }}
+                                                {% if lvl1discipline is iterable %}
+                                                    <ul>
+                                                        {% for key2,lvl2discipline in lvl1discipline %}
+                                                            <li> {{ key2 }}
+                                                                {% if lvl2discipline is iterable %}
+                                                                    <ul>
+                                                                        {% for lvl3discipline in lvl2discipline %}
+                                                                            <li>lvl3discipline</li>
+                                                                        {% endfor %}
+
+                                                                    </ul>
+                                                                {% else %}
+                                                                    {{ lvl2discipline }}
+                                                                {% endif %}
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% else %}
+                                                    {{ lvl1discipline }}
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% elseif disciplines != "" %}
+                                    <ul>
+                                        <li>{{ disciplines }}</li>
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </td>
+                <td class="text-nowrap">{{ vo["scope"] }}</td>
+                <td class="text-nowrap">
+                    <ul>
+                        {% for middleware in vo["middlewares"] %}
+                            {% if middleware != "" %}
+                                <li>{{ middleware }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td class="text-nowrap">{% if vo["members"] == "NA" or  vo["members"] == "0.0" %}0{% else %}{{ vo["members"] }}{% endif %}</td>
+                <td class="text-nowrap">{% if vo["membersTotal"] == "NA" or  vo["membersTotal"] == "0.0" %}0{% else %}{{ vo["membersTotal"] }}{% endif %}</td>
+                <td class="text-nowrap">
+
+                    <div class="dropdown">
+                        <button type="button" id="dropdownActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                class="btn btn-sm btn-light dropdown-toggle" style="border-color: rgb(203,203,203)">
+                            Action
+                            <span class="fa fa-list-alt caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownActions" >
+                            <a target="_blank" href="{{ vo["homeUrl"] }}" class="dropdown-item"><span class="fa fa-sign-in-alt">&nbsp;</span>HomePage</a>
+                            <a target="_blank" href="http://{{ portalUrl }}/xml/voIDCard/public/voname/{{ vo["name"] }}" class="dropdown-item"><span class="fa fa-tasks caret">&nbsp;</span>XML Feed</a>
+
+                            <a target="_blank" href="http://{{ vaporUrl }}/resources/GL2ResVO?VOfilter={{ vo["name"] }}" class="dropdown-item"><span class="fa fa-globe caret">&nbsp;</span>VO Resources by type</a>
+                                                                                                                                            {#glyphicon glyphicon-filter#}
+                            <a target="_blank" href="http://{{ vaporUrl }}/resources/GL2Browser?VOfilter={{ vo["name"] }}" class="dropdown-item"><span class="fa fa-lightbulb caret">&nbsp;</span>VO Resources by NGI</a>
+                            <a class="dropdown-item" href="{{ path("VoDetailPermalink", {"voName" : vo["name"]}) }}"><span class="fas fa-link">&nbsp;</span>Permalink</a>
+
+                            <a target="_blank" href="{{ path("voUrlCheckReport", {"voName": vo["name"]}) }}" class="dropdown-item"><span class="fas fa-external-link-alt">&nbsp;</span>URLs
+                                    checker report</a></li>
+                            {#voAction#}
+                           <a title="Update VO {{ vo["name"] }}" href="{{ path("voUpdate",{"serial": id}) }}" class="dropdown-item voAction" ><span class="fa fa-edit caret">&nbsp;</span>Edit this VO ID card</a>
+                            {% if isSuUser %}
+                                <a href="{{ path("updateStatusVo", {"serial": id, "statusId": 7, "isRejected": false} ) }}" class="dropdown-item voAction d"><span class="far fa-times-circle caret" title="Decommission VO {{ vo['name'] }}">&nbsp;</span>Decomission VO</a>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+                <td class="d-none">{{ id }}</td>
+                <td class="d-none">{{ vo["status"] }}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+
+    <p class="alert alert-danger">No data to be displayed...</p>
+
+{% endif %}
+

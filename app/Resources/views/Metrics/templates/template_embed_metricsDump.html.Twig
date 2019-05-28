@@ -1,0 +1,25 @@
+<article id="metricsDump">
+
+<div class="row">
+    <div class="card  col-4 offset-md-1" >
+        <div class="card-body">
+            <h5 class="card-title">Vo Metrics Dump</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Set of Users</h6>
+            <p class="card-text">Whole set of users</p>
+            <a class="card-link" href="{{ path("downloadVoUsers") }}" title="download dump of the whole set of users in a gz file"><span class="btn btn-m btn-primary">gz file</span></a>
+        </div>
+    </div>
+
+    <div class="card offset-md-1  col-4" >
+        <div class="card-body">
+            <h5 class="card-title">Vo Metrics Dump</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Users Accounting</h6>
+            <p class="card-text">History of the users accounting</p>
+            <a class="card-link" href="{{ path("downloadVoUsers", {'type': 'history'}) }}" title="download the history of the users accounting"><span
+                        class="btn btn-m btn-primary">CSV</span></a>
+        </div>
+    </div>
+
+</div>
+</article>
+

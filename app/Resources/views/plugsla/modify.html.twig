@@ -1,0 +1,245 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href= "{{ asset('css/simple-vertical-timeline.css') }}"
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        {{ form_start(formTicket, {'attr': {'class': 'col-md-10 col-md-offset-1'}}) }}
+
+
+
+        <div class="card">
+
+
+            <div class="card-header">
+
+                {% if status == 'New' %}
+                    {% set badge= 'badge-success' %}
+                {% elseif status== 'In progress' %}
+                    {% set badge= 'badge-info' %}
+                {% elseif status == 'Waiting for respond' %}
+                    {% set badge= 'badge-warning' %}
+                {%  else %}
+                    {% set badge= 'badge-default border-outline border-secondary' %}
+                {% endif %}
+
+                <span class="m-2 badge {{ badge }}">{{ status  }}</span>
+
+                JIRA Issue #{{ formTicket.id.vars.value }}  {{ form_widget(formTicket.submit, {'attr': {'class': 'btn btn-primary m-2'}}) }}
+                <a class="btn btn-info" href = '{{ path('detail_ticket',  {'idTicket' : id })  }}' title="details about service orders"><i class="fa fa-search-plus"></i> Manage SO</a>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row  d-none">
+                    {{ form_widget(formTicket["id"], {'attr': {'class': 'form-control mb-5'}}) }}
+                    {{ form_errors(formTicket["id"] )}}
+                </div>
+
+
+                {%  set groupTab=["information about user","information about user affilations","information about the project","information about offers","information about service"] %}
+
+                {% for group in groupTab %}
+                <h4>{{ group }}</h4>
+                <hr/>
+                <div class="row mt-4">
+
+                    {% for key, item in formTicket %}
+
+
+                        {%  if key != 'submit' and key!= 'id' and key!='dateCreated' and key!='dateUpdated' and key!='_token'   %}
+                            {%  set groupV= jiraItems[key]['group']%}
+                            {%  if groupV == group %}
+                                <span class="col-2">
+                                {{ form_label(formTicket[key] )}}
+                                {{ form_widget(formTicket[key], {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formTicket[key] )}}
+                                </span>
+                            {%  endif %}
+
+
+
+                        {%  endif %}
+
+                    {% endfor %}
+
+                </div>
+
+                    <br/> <br/>
+
+                {% endfor %}
+
+
+
+                <h4>Jira Issue Details</h4>
+                <hr/>
+               <div class="row mt-4">
+
+
+                    <div class=" text-muted d-flex justify-content-between w-100">
+
+                        <div class="form-group col">
+                            Creation Date
+                            {{ form_widget(formTicket.dateCreated)}}
+                            {{ form_errors(formTicket.dateCreated) }}
+                        </div>
+                        <div class="form-group col float-right">
+                            Last Update
+                            <div class="text_widget">
+                                {{ form_widget(formTicket.dateUpdated)}}
+                                {{ form_errors(formTicket.dateUpdated) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="card-footer">
+
+                {%  if statusAllow |length > 1 %}
+                <em>Change Status</em>
+
+                {%  for status in statusAllow %}
+                    <a class="m-2 btn {{ status['btn'] }}" title="{{ status['title'] }}" href = '{{ path('status_ticket',   {'id' : id, 'status':  status['id'] }) }}'>{{ status['label'] }}<i class=" m-1 fa {{ status['icon'] }}"></i> </a>
+                {% endfor%}
+                {% else %}
+                    <em>Terminal State - You can not change the status</em>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    {{ form_end(formTicket) }}
+
+    <div class="d-flex justify-content-center">
+
+        <div class="col-md-10 col-md-offset-1 mt-3">
+
+
+            <h4>Comments</h4>
+
+            <div class="row">
+                <div class="col-6">
+                    {{ form_start(formComment, { 'attr':{ 'id' : 'form-comment'}}) }}
+                    <div class="form-group">
+                        {{ form_widget(formComment.body, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(formComment.body) }}
+                    </div>
+
+                    <div class="form-group">
+                        {#{{ form_label(formComment.submit) }}#}
+                        {{ form_widget(formComment.submit, { 'label': 'Add Comment'}) }}
+                        <input type="hidden" name="idTicket" value="{{ id }}">
+
+                    </div>
+                    {{ form_end(formComment) }}
+
+                    <div class="mt-0 pt-0 mt-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Latest Comments</h4>
+                                <div id="comments">
+                                    <ul class="timeline">
+                                        {% for comment in comments |reverse %}
+                                            <li>
+                                                <a class="text-primary">{{ comment.getCreated()| date('Y-m-d H:i:s') }}</a>
+                                                <p>{{ comment.getBody()}}</p>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    {{ form_start(formInternalComment, { 'attr':{ 'id' : 'form-internal-comment'}}) }}
+                    <div class="form-group">
+                        {{ form_widget(formInternalComment.body, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(formInternalComment.body) }}
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="idTicket" value="{{ id }}">
+                        <button type="submit" class="btn btn-primary">Add internal comment</button>
+                    </div>
+                    {{ form_end(formInternalComment) }}
+
+                    <div class="mt-0 pt-0 mb-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Latest internal Comments</h4>
+                                <div id="internalComments">
+                                    <ul class="timeline">
+                                        {% for interComment in internalComments %}
+                                            <li>
+                                                <a class="text-primary">{{ interComment.dateCreate | date('Y-m-d H:i:s') }}</a>
+                                                {#                                            <a href="#" class="float-right"></a>#}
+                                                <p>{{ interComment.getBody()}}</p>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+{%  block javascripts %}
+    <script>
+        $("#form-internal-comment, #form-comment").submit(function(e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var self = $(this);
+            if (self.is('#form-internal-comment')) {
+                url = "{{ url('add_internal_comment') }}";
+            }else if (self.is('#form-comment')){
+                url = "{{ url('add_comment_jira') }}";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $(this).serialize(), // serializes the form's elements.
+                beforeSend: function () {
+
+                    if (self.is('#form-internal-comment')) {
+                        $('#internalComments').html("<div class='alert alert-warning' role='alert'>" +
+                            " Loading... " +
+                            "</div>");
+                    }else if (self.is('#form-comment')){
+                        $('#comments').html("<div class='alert alert-warning' role='alert'>" +
+                            " Loading... " +
+                            "</div>");
+                    }
+
+                },
+                success: function(data)
+                {
+                    if (self.is('#form-internal-comment')) {
+                        $('#internalComments').html(data);
+                    }else if (self.is('#form-comment')){
+                        $('#comments').html(data);
+                    }
+
+
+                }
+            });
+
+
+        });
+    </script>
+{% endblock %}

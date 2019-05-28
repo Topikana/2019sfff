@@ -1,0 +1,291 @@
+<h3 class="card card-header mb-4">
+    <span class="fa fa-flash"></span>
+    Issues :
+</h3>
+<div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
+    Make your selection of alarms by clicking on a row. Grey rows are corresponding to alarms already assigned. They can't be selected !
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover details_alarms" >
+        <thead>
+            <tr>
+                <th class='sortable-text' rel="Site name">id</th>
+                <th class='sortable-text' rel="Site name">site</th>
+                <th class='sortable-text' rel="Site name">ngi</th>
+                <th class='sortable-text' rel="Site name">url_to_history</th>
+                <th class='sortable-text' rel="alarm name">Alarm's name</th>
+                <th class='sortable-text' rel="Alarms">Nagios status</th>
+                <th class='sortable-text' rel="alarm name">Execution date</th>
+                <th class='sortable-text' rel="Alarms">Host name</th>
+                <th class="sortable-numeric" rel="alarm availability">Service status</th>
+                <th class="sortable-numeric" rel="alarm availability">Service flavour</th>
+                <th class="sortable-numeric" rel="alarm reliability">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for alarm in details['alarms'] %}
+            {% if alarm['ops_flag'] == 2 %}
+                <tr class="table-dark">
+            {% else %}
+                <tr>
+            {% endif %}
+                    <td>{{ alarm['id'] }}</td>
+                    <td>{{ alarm['site'] }}</td>
+                    <td>{{ alarm['ngi'] }}</td>
+                    <td>{{ alarm['url_to_history'] }}</td>
+                    <td>{{ alarm['test_name'] }}</td>
+                    {% if alarm['status'] == 0 %}
+                        <td>
+                            <span class="badge badge-success">ok</span>
+                        </td>
+                    {% elseif alarm['status'] == 1 %}
+                        <td>
+                            <span class="badge badge-warning">warning</span>
+                        </td>
+                    {% elseif alarm['status'] == 2 %}
+                        <td>
+                            <span class="badge badge-danger">critical</span>
+                        </td>
+                    {% elseif alarm['status'] == 3 %}
+                        <td>
+                            <span class="badge badge-default">unknown</span>
+                        </td>
+                    {% elseif alarm['status'] == 4 %}
+                        <td>
+                            <span class="badge badge-primary">assigned</span>
+                        </td>
+                    {% endif %}
+                    <td>{{ alarm['start_date'] }}</td>
+                    <td>{{ alarm['host_name'] }}</td>
+                    <td>
+                        {% if alarm['monitored'] == 1 and alarm['in_production'] == 1 %}
+                            <span class="badge badge-success">prod & monit</span>
+                        {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 1) %}
+                            <span class="badge badge-warning">prod & not monit</span>
+                        {% elseif (alarm['monitored'] == 1 and alarm['in_production'] == 0) %}
+                            <span class="badge badge-warning">not prod & monit</span>
+                        {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 0) %}
+                            <span class="badge badge-danger">not prod & not monit</span>
+                        {% endif %}
+                        {% if alarm['monitored'] == -1 or alarm['in_production'] == -1 %}
+                        <span class="badge badge-light border border-secondary">endpoint not registered</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ alarm['service'] }}</td>
+                    <td>
+                        <div class="btn-group d-flex justify-content-center" role="group">
+                            <a href="{{ alarm['url_to_history'] }}" title="External Link : ARGO or EGI wiki" class="btn btn-primary btn-sm">
+                                <span class="fa fa-link"></span>
+                            </a>
+                            <button type="button" class="btn btn-secondary btn-sm" title="Details/Output of the alarm" data-toggle="modal" data-target="#myModal-{{ alarm['id'] }}">
+                                <span class="fa fa-search-plus"></span>
+                            </button>
+                            <a href="{{ path('rod_history_alarm', {'id': alarm['id']}) }}"  title="History of the alarm" class="btn btn-warning btn-sm text-body">
+                                <span class="fa fa-history"></span>
+                            </a>
+
+                        <button data-id="{{ alarm['id'] }}" title="Close Alarm" class="btn btn-danger btn-sm close-alarm">
+                            <span class="fa fa-trash-alt"></span>
+                        </button>
+                        </div>
+
+                    </td>
+                </tr>
+            {#{% endif %}#}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+<!-- Modal -->
+{% for alarm in details['alarms'] %}
+
+<div class="modal fade" id="myModal-{{ alarm['id'] }}" tabindex="-1" role="dialog" aria-badgeledby="myModalbadge">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h3 class="modal-title" id="myModalbadge">Details</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="card card-header">Output :</h5>
+                <code class="text-left">{{  alarm['details'] |replace({"\\n": "<br>"})|raw }}</code>
+                <h5 class="card card-header mt-4">Profiles :</h5>
+                <ul>
+                    {% for profile in alarm['profiles'] %}
+                        <li class="badge badge-primary">{{ profile }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endfor %}
+
+     <script async type="application/javascript">
+
+         $(document).ready(function() {
+          var datatable_alarm = $('.details_alarms').DataTable({
+
+                 "columnDefs": [
+                     {"className": "dt-left", "targets": [4]},
+                     {"className": "dt-center", "targets": "_all"},
+                     {
+                         "targets": [0,1,2,3],
+                         "visible": false
+                     }
+                 ],
+                 "columns": [
+                      {"data": "id"},
+                      {"data": "site"},
+                      {"data": "ngi"},
+                      {"data": "url_to_history"},
+                      { "data": "name" },
+                      { "data": "nagios_status" },
+                      { "data": "execution_date" },
+                      { "data": "host_name" },
+                      { "data": "service_status" },
+                      { "data": "service_flavour" },
+                      { "data": "Action" }
+                 ],
+               select: {
+                   style: 'multi',
+                   selector: 'tr:not(.table-dark)'
+               },
+              rowId: 'id',
+               // dom: 'Blftipr',
+              dom: "<<'row  col-sm-12'Bl<'ml-2'f>>>" + "<<'col-sm-12 pl-0 pr-0'tr>>" + "<'row'<'col-sm-5 ml-3'i><'col-sm-6 d-flex justify-content-start'p>>",
+
+
+              buttons: [
+                   {
+                       extend: 'selected',
+                       className: 'btn btn-success mb-2 mr-2 create-ticket',
+                       text: "<span class='fa fa-tags mr-1'></span> Create Ticket",
+                       action: function ( e, dt, button, config ) {
+                           // alert( dt.rows( { selected: true } ).indexes().length +' row(s) selected' );
+                           $('#modal-ticket').modal();
+                       }
+                   },
+                   {
+                       extend: 'selected',
+                       className: 'btn btn-info mb-2 mr-2 create-notepad',
+                       text: "<span class='fa fa-book mr-1'></span> Create Notepad",
+                       action: function ( e, dt, button, config ) {
+                           $('#modal-notepad').modal();
+                           {#$('#modal-notepad').load({{ url('voList') }});#}
+                       }
+                   }
+               ]
+
+             });
+
+             datatable_alarm.buttons().container()
+                 .appendTo( $('.dataTables_length:eq(0)', datatable_alarm.table().container() ) );
+             $('.dt-button').removeClass('dt-button');
+
+             // $('#rod_table_length').append("");
+
+
+             $('.create-notepad').click( function () {
+                 var row = datatable_alarm.rows('.selected').data();
+                 var site = datatable_alarm.row('.selected').data().site;
+                 var idAlarms = datatable_alarm.rows( { selected: true } ).ids().toArray();
+                 $('#appbundle_notepad_subject').val("[Rod Dashboard] Issue detected : "+site);
+                 $('#appbundle_notepad_site').val(site);
+                 $('#appbundle_notepad_group_alarms').val(idAlarms);
+
+                 var template = "Dear all, \n"+
+                    "Issues have been detected at "+site+".\n";
+
+                 $.each(row, function( index, alarm ) {
+
+                     var status = alarm.nagios_status.match(">[a-z]+<").toString();
+                     status = status.match('[a-z]+');
+
+                     // alert( index + ": " + alarm.id+" "+alarm.site );
+                     template+= "----------- \n"+
+                     "*ALARM #"+index+"\n"+
+                     "-----------\n"+
+                     "created_at : "+alarm.execution_date+"\n"+
+                     "test_name : "+alarm.name+"\n"+
+                     "host_name : "+alarm.host_name+"\n"+
+                     "service : "+alarm.service_flavour+"\n"+
+                     "status : "+status+"\n"+
+                     "url_to_history : "+alarm.url_to_history+"\n"+
+                     "site : "+alarm.site+"\n";
+                 });
+
+                 template+=  "Could you have a look ?\n"+
+                    "Best Regard\n";
+
+                 $('#appbundle_notepad_comment').val(template);
+             });
+
+             $('.create-ticket').click( function () {
+                 var row = datatable_alarm.rows('.selected').data();
+                 var site = datatable_alarm.row('.selected').data().site;
+                 var ngi = datatable_alarm.row('.selected').data().ngi;
+                 var nb_pb = datatable_alarm.rows( { selected: true } ).indexes().length;
+                 var idAlarms = datatable_alarm.rows( { selected: true } ).ids().toArray();
+                 $('#appbundle_rod_ticket_site').val(site);
+                 $('#appbundle_rod_ticket_ngi').val(ngi);
+
+                 var template = "";
+                 $.each(row, function( index, alarm ) {
+                     var status = alarm.nagios_status.match(">[a-z]+<").toString();
+                     status = status.match('[a-z]+');
+
+                     template += "----------- \n"+
+                         "*ALARM #"+index+"\n"+
+                         "-----------\n"+
+                         "created_at : "+alarm.execution_date+"\n"+
+                         "test_name : "+alarm.name+"\n"+
+                         "host_name : "+alarm.host_name+"\n"+
+                         "service : "+alarm.service_flavour+"\n"+
+                         "status : "+status+"\n"+
+                         "url_to_history : "+alarm.url_to_history+"\n"+
+                         "site : "+alarm.site+"\n";
+                 });
+
+                 $('#appbundle_rod_ticket_description').val(template);
+                 $('#appbundle_rod_ticket_pbNumber').val(nb_pb);
+                 $('#appbundle_rod_ticket_alarms').val(idAlarms);
+
+             });
+
+             $('.disabled').click(function () {
+                 $(this).removeClass('selected');
+             });
+
+             $('.close-alarm').click(function () {
+                 var alarmId = $(this).data('id');
+
+                 $.ajax({
+                     url : "{{ url('close-alarm') }}",
+                     type : 'POST',
+                     data : 'id='+alarmId,
+                     context: this,
+                     beforeSend: function () {
+                         $(this).find('span').removeClass('fa-trash-alt').html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
+                     },
+                     success : function(data, statut){ // code_html contient le HTML renvoyé
+                         location.reload();
+                     },
+
+                     error : function(resultat, statut, erreur){
+                         $('#div_details').html(statut+ " "+erreur);
+                     }
+                 });
+             });
+
+         });
+     </script>

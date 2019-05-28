@@ -1,0 +1,118 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+{% block body %}
+{#{{ dump(admin[0][0]['alarm_id']) }}#}
+    {% block stylesheets %}
+        {#<link rel="stylesheet" href="{{ asset('dist/css/ROD.min.css') }}" />#}
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/select/css/select.dataTables.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/buttons/css/buttons.dataTables.min.css') }}" />
+        {#<link rel="stylesheet" href="{{ asset('vendor/datatables/css/responsive.dataTables.min.css') }}" />#}
+        {#<link rel="stylesheet" href="{{ asset('css/simple-vertical-timeline.css') }}" />#}
+    {% endblock %}
+
+<table class="table table-striped table-bordered" id="admin-alarms" >
+    <thead>
+    <tr>
+        <th></th>
+        <th class='sortable-text'>Alarm Id</th>
+        <th class='sortable-text'>Group Id</th>
+        <th class='sortable-text'>Ticket Id</th>
+        <th class='sortable-text'>Problem</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for alarmInfo in admin %}
+
+        <tr>
+        {% for alarms in alarmInfo%}
+            <td></td>
+            <td class="details-control">{{ alarms['alarm_id'] }}</td>
+        <td class="details-control">{{ alarms['group_id'] }}</td>
+        <td class="details-control">{{ alarms['ticket_id'] }}</td>
+        <td class="details-control">{{ alarms['problem'] }}</td>
+        <td>
+            {#{{ path('notepadAlarmGroupe', {'site': notepad['site'], 'notepadId': notepad['id']}) }}#}
+            {% if  alarms['group_id'] is same as ('unknown')  %}
+                <a href="" class="btn btn-danger btn-sm">
+                    {#<span class="fa fa-flash"></span>#}
+                    Alarm
+                </a>
+            {% else %}
+            <a href="" class="btn btn-warning btn-sm">
+                {#<span class="fa fa-flash"></span>#}
+                Ticket
+            </a>
+                {% endif %}
+        </td>
+
+    </tr>
+    {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('build/vendor/datatables/select/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.colVis.js') }}"></script>
+    <script src="{{ asset('build/vendor/js-cookie/js.cookie.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var admin_table = $('#admin-alarms').DataTable({
+                columnDefs: [ {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0
+                } ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                },
+                order: [[ 1, 'asc' ]],
+                dom: 'Bfrltip',
+                // dom: 'lftiprB',
+                buttons: [
+                    {
+                        // extend: 'selected',
+                        className: 'btn btn-danger delete-alarms',
+                        text: "Delete alarms",
+                        action: function () {
+                            $('.dt-button').removeClass('dt-button');
+
+                        }
+
+                    }
+                ],
+
+            })
+            admin_table.buttons().container(),
+                // .appendTo( $('.dataTables_length:eq(0)', admin_table.table().container() ) );
+            $('.dt-button').removeClass('dt-button');
+
+
+
+
+
+
+        $('.delete-alarms').click(function () {
+            var alarmsId = admin_table.rows('.selected').data();
+            $('.delete-alarms').val(alarmsId);
+            $.ajax({
+              url : "{{ url('plugsla_alarm') }}",
+              type: 'POST',
+              data: 'id='+alarmsId,
+            })
+
+        })
+
+        });
+
+    </script>
+
+
+{% endblock %}

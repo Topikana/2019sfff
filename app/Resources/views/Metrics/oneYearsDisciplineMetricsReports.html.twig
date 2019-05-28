@@ -1,0 +1,103 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('dist/css/metrics.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="homeSection">
+
+        <div id="flashes">
+            {% for label, flashes in app.session.flashbag.all %}
+                {% for flash in flashes %}
+                    <div role="alert" class="alert alert-{{ label }}">
+                        {{ flash|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <article>
+            <div class="card">
+            <div class="card-header">
+                <div class="card-title"><h2>User Number per DISCIPLINE : History</h2></div>
+            </div>
+
+
+            <div class="card-body">
+                {% include ":Metrics/templates:template_breadCrumbs_metricsReports.html.twig" %}
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="nav-item">
+                        <a href="#table" class="text-primary nav-link active" aria-controls="table" id="tab-table" role="tab" data-toggle="tab">Table</a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a href="#chart" class="text-primary nav-link"  aria-controls="chart" id="tab-chart" role="tab" data-toggle="tab">Chart</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" style="width:100%;margin-bottom: 80px;margin-top:50px;">
+                    <div role="tabpanel" class="tab-pane show active  fade m-2"   aria-labelledby="tab-table" id="table">
+
+                        <table id="users_metrics_table" class="table-condensed table table-bordered table-striped">
+                            <thead>
+                            <tr>
+
+                                <th>Discipline</th>
+                                {% for date in tabdates %}
+                                    <th>{{ date }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>
+                                    {{ tabdiscipline["discipline"] }}
+                                </td>
+                                {% for date,nb in tabdiscipline["dates"]%}
+                                    <td>
+
+                                          <span style="font-size:smaller;padding-right:20px; color:{{ tabdiff[date][tabdiscipline["discipline"]]["style"] }}">
+                                            {{ tabdiff[date][tabdiscipline["discipline"] ]["diff"] }}
+                                        </span>
+                                        <span class="float-right">
+                                            {{ nb }}
+                                        </span>
+
+
+
+                                    </td>
+                                {% endfor %}
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade m-2"   aria-labelledby="tab-table" id="chart">
+
+                        <div id="chart_div"></div>
+                        <div id="chart_div_png"></div>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </article>
+    </section>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/metrics/metrics.min.js') }}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+
+        //build the area chart
+        buildUserPerMetricsHistoryChart("{{ csv }}", "{{ name }}");
+    </script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{#<link rel="stylesheet" href="" src="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css">#}
+
+<div class="card-header">
+    <h2 class="portal text-primary">VOMS Group and Role</h2>
+</div>
+    <div class="card-body">
+    {% if message is defined and message != null %}
+        <span class="alert alert-info">{{ message }}</span>
+        <br/><br/>
+    {% endif %}
+    <!-- VOMS information -->
+    <table class="table  table-responsive-lg table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Group/Role</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>VO share (%)</th>
+            <th>Used for account generation</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if vomsGroup is not empty %}
+            {% for voms in vomsGroup %}
+                <tr>
+                    <td> {{ voms.grouprole }}</td>
+                    <td> {{ voms.grouptype }}</td>
+                    <td> {{ voms.description }}</td>
+                    <td> {{ voms.allocatedressources }}</td>
+                    <td class="text-center"> {% if voms.isgroupused == 1 %} <span class="fa fa-check-circle text-success"></span> {% else %}{% endif %}
+                    </td>
+                    <td>
+                        <div class="dropdown btn-group" role="group">
+                            <a id="dLabel" type="button" class="btn btn-light btn-sm dropdown-toggle"
+                               data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Action
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                <li>
+                                    <a onclick="entityAction('{{ path("vomsGroupForm") }}', {{ serial }}, '{{ voms.id }}', 'VomsGroup')"
+                                       href="#panelVomsGroup"><span
+                                                class="fas fa-pencil-alt" style="font-size:15px"
+                                                rel="tooltip"
+                                                title="" data-original-title="Edit this Group/Role"></span> Edit</a>
+                                </li>
+                                <li>
+                                    <a href="#panelVomsGroup"
+                                       onclick="deleteEntityAction('{{ path("deleteVomsGroup") }}', {{ serial }}, {{ voms.id }},'{{ voms.grouprole }}','panelVomsGroup')"><span
+                                                class="fas fa-times" style="font-size:15px"
+                                                rel="tooltip"
+                                                title="" data-original-title="Delete this Group/Role"></span> Delete</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No data available...</td>
+            </tr>
+        {% endif %}
+
+        <tr id="errorDivVoms" style="display: none">
+            <div style="display: none" class="card card-danger card-body"></div>
+        </tr>
+
+        </tbody>
+    </table>
+    <input type="button" class="btn btn-primary btn-sm"
+           onclick="entityAction('{{ path("vomsGroupForm") }}', {{ serial }}, null,'VomsGroup')" value="Add">
+
+
+</div>
+<div id="divModalVomsGroup">
+
+</div>
+{#<script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>#}
+{#<script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>#}

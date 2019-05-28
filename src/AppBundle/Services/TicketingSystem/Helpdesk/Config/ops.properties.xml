@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+
+        <parameter key="ggus.ops.methods" type="collection">
+            <parameter key="create">OpCreateOps</parameter>
+            <parameter key="update">OpModifyOps</parameter>
+            <parameter key="get">OpGetOps</parameter>
+            <parameter key="list">OpGetListOps</parameter>
+        </parameter>
+
+
+        <parameter key="ggus.ops.communities" type="collection">
+            <parameter key="ROD" type="collection">
+                <parameter key="Middleware" type="collection">
+                    <parameter key="view">GGUS_MW</parameter>
+                </parameter>
+                <parameter key="view">GGUS_ROD</parameter>
+                <parameter key="view_orphangroups">GGUS_OPS_orphan_groups/ROD</parameter>
+            </parameter>
+            <parameter key="COD" type="collection">
+                <parameter key="view">GGUS_COD</parameter>
+                <parameter key="view_orphangroups">GGUS_OPS_orphan_groups/COD</parameter>
+            </parameter>
+            <parameter key="VOM" type="collection">
+                <parameter key="view">GGUS_VOM</parameter>
+            </parameter>
+            <parameter key="VDB" type="collection">
+                <parameter key="view">GGUS_VDB</parameter>
+            </parameter>
+        </parameter>
+
+        <parameter key="ggus.ops.maps" type="collection">
+            <parameter key="cMap" type="collection">
+                <parameter key="Vo">GHD_Affected_VO</parameter>
+                <parameter key="AuthorEmail">GHD_E_Mail</parameter>
+                <parameter key="Login">GHD_Last_Login</parameter>
+                <parameter key="Modifier">GHD_Last_Modifier</parameter>
+                <parameter key="AuthorDn">GHD_Cert_DN</parameter>
+                <parameter key="Author">GHD_Submitter</parameter>
+                <parameter key="Subject">GHD_Subject</parameter>
+                <parameter key="Type">GHD_Ticket_Type</parameter>
+                <parameter key="Status">GHD_Status</parameter>
+                <parameter key="ResponsibleUnit">GHD_Responsible_Unit</parameter>
+                <parameter key="Comment">GHD_Public_Diary</parameter>
+                <parameter key="Diary">GHD_Internal_Diary</parameter>
+                <parameter key="Involve">GHD_Involve</parameter>
+                <parameter key="Site">GHD_Affected_Site</parameter>
+                <parameter key="CarbonCopy">GHD_Carbon_Copy</parameter>
+                <parameter key="EXTENDED_FIELD_INDEX">GHD_Soap_Client_Data</parameter>
+                <parameter key="Description">GHD_Description</parameter>
+                <parameter key="Priority">GHD_Priority</parameter>
+                <parameter key="ProblemType">GHD_Problem_Type</parameter>
+                <parameter key="Id">GHD_Request_ID</parameter>
+                <parameter key="Solution">GHD_Detailed_Solution</parameter>
+                <parameter key="ResponsibleEmail">GHD_Assigned_To</parameter>
+                <parameter key="MetaStatus">GHD_Meta_Status</parameter>
+                <parameter key="ModificationDate">GHD_Modified_Date</parameter>
+                <parameter key="CreationDate">GHD_Create_Date</parameter>
+                <parameter key="NotificationStrategy">GHD_User_Notification</parameter>
+                <parameter key="RelatedIssue">GHD_Related_Issue</parameter>
+            </parameter>
+            <parameter key="xMap" type="collection">
+                <parameter key="Ngi"/>
+                <parameter key="Helpdesk"/>
+                <parameter key="Workflow"/>
+                <parameter key="Step"/>
+                <parameter key="StepLabel"/>
+                <parameter key="Community"/>
+                <parameter key="SubCommunity"/>
+                <parameter key="EndDate"/>
+                <parameter key="GroupId"/>
+                <parameter key="GroupUrl"/>
+                <parameter key="CloseDate"/>
+            </parameter>
+        </parameter>
+
+        <parameter key="ggus.ops.history.methods" type="collection">
+            <parameter key="list">OpGetOpsTicketHist</parameter>
+        </parameter>
+
+        <parameter key="ggus.ops.history.maps" type="collection">
+            <parameter key="cMap" type="collection">
+                <parameter key="ModificationDate">GHD_Modified_Date</parameter>
+                <parameter key="ResponsibleUnit">GHD_Responsible_Unit</parameter>
+                <parameter key="Status">GHD_Status</parameter>
+                <parameter key="Modifier">GHD_Last_Modifier</parameter>
+                <parameter key="Priority">GHD_Priority</parameter>
+                <parameter key="Solution">GHD_Solution</parameter>
+                <parameter key="ResponsibleEmail">GHD_Assigned_To</parameter>
+                <parameter key="DiaryOfSteps">GHD_Change_Diary</parameter>
+                <parameter key="Description">GHD_Description</parameter>
+                <parameter key="Involve">GHD_Involve</parameter>
+                <parameter key="ProblemType">GHD_Problem_Type</parameter>
+                <parameter key="VoSpecific">GHD_VO_Specific</parameter>
+                <parameter key="Comment">GHD_Public_Diary</parameter>
+                <parameter key="Diary">GHD_Internal_Diary</parameter>
+                <parameter key="InternalDiary">GHD_Internal_Diary</parameter>
+                <parameter key="Site">GHD_Affected_Site</parameter>
+                <parameter key="Vo">GHD_Affected_VO</parameter>
+                <parameter key="Type">GHD_Ticket_Type</parameter>
+                <parameter key="RelatedIssue">GHD_Related_Issue</parameter>
+                <parameter key="EXTENDED_FIELD_INDEX">GHD_Soap_Client_Data</parameter>
+            </parameter>
+            <parameter key="xMap" type="collection">
+                <parameter key="Ngi"/>
+                <parameter key="Helpdesk"/>
+                <parameter key="Workflow"/>
+                <parameter key="Step"/>
+                <parameter key="StepLabel"/>
+                <parameter key="Community"/>
+                <parameter key="SubCommunity"/>
+                <parameter key="EndDate"/>
+                <parameter key="GroupId"/>
+                <parameter key="GroupUrl"/>
+                <parameter key="CloseDate"/>
+            </parameter>
+        </parameter>
+
+    </parameters>
+</container>
+ 

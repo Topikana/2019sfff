@@ -1,0 +1,45 @@
+---------------------------------------------------
+{{ type }} : {{ ngi }} {{ classification }} downtime ({{ severity }})
+---------------------------------------------------
+
+
+---------------------------------------------------
+{{ classification }} Downtime period
+---------------------------------------------------
+
+Start of downtime [UTC]: {{ start_date|date("d/m/Y H:i e", "UTC") }}
+End downtime      [UTC]: {{ end_date|date("d/m/Y H:i e", "UTC") }}
+
+---------------------------------------------------
+Entities in downtime
+---------------------------------------------------
+
+Node
+---------------------------------------------------
+{% for host in hosts %}{{ host }}{% if not loop.last %}, {% endif %}{% endfor %}
+---------------------------------------------------
+
+VO
+---------------------------------------------------
+{% for service in services %}{{ service }}{% if not loop.last %}, {% endif %}{% endfor %}
+---------------------------------------------------
+
+---------------------------------------------------
+Details
+---------------------------------------------------
+
+Link : {{ link }}
+Severity : {{ severity }}
+Description :
+
+{{ description }}
+
+---------------------------------------------------
+Downtime notification system
+---------------------------------------------------
+
+According to rules assigned to the subscription {{ es.subscriptionId }} (more details : {{ url('app_downtime_downtime_overview', {'idSub' : es.subscriptionId, 'idES' : es.id, 'pk' : es.primaryKey }) }}), you have been defined as a relevant person for this downtime
+if you do not want to receive any notifications, please contact the Managers
+
+Note that if you are the owner of this subscription, you can filter the Downtime notifications by updating your subscription rules :
+{{ url('homepage') }}

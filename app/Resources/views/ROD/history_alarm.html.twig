@@ -1,0 +1,132 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+{% block title %}Operations-Portal | ROD Dashboard{% endblock %}
+
+{% block body %}
+    <h1 class="col-12 mb-4 card-header flex-row"><span class="fa fa-home"></span> History of the alarm</h1>
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+    <table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover history_history" >
+        <thead>
+        <tr>
+            <th class='sortable-text' rel="Site name">id</th>
+            <th class='sortable-text' rel="historys">test_name</th>
+            <th class='sortable-text' rel="historys">host_name</th>
+            <th class='sortable-text' rel="historys">service</th>
+            <th class="sortable-numeric" rel="history availability">start_date</th>
+            <th class="sortable-numeric" rel="history availability">end_date</th>
+            <th class="sortable-numeric" rel="history reliability">status</th>
+            <th class='sortable-text' rel="historys">summary</th>
+            <th class='sortable-text' rel="historys">ngi</th>
+            <th class='sortable-text' rel="historys">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for history in data_history %}
+            <tr>
+                <td>{{ history['id'] }}</td>
+                <td>{{ history['test_name'] }}</td>
+                <td>{{ history['host_name'] }}</td>
+                <td>{{ history['service'] }}</td>
+                <td>{{ history['start_date'] }}</td>
+                <td>{{ history['end_date'] }}</td>
+                {% if history['status'] == 0 %}
+                    <td>
+                        <span class="badge badge-success">ok</span>
+                    </td>
+                {% elseif history['status'] == 1 %}
+                    <td>
+                        <span class="badge badge-warning">warning</span>
+                    </td>
+                {% elseif history['status'] == 2 %}
+                    <td>
+                        <span class="badge badge-danger">critical</span>
+                    </td>
+                {% elseif history['status'] == 3 %}
+                    <td>
+                        <span class="badge badge-default">unknown</span>
+                    </td>
+                {% elseif history['status'] == 4 %}
+                    <td>
+                        <span class="badge badge-primary">assigned</span>
+                    </td>
+                {% endif %}
+
+                <td>{{ history['summary'] }}</td>
+                <td>{{ history['ngi'] }}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="{{ history['url_to_history'] }}" class="btn btn-primary btn-sm">
+                            <span class="fa fa-link"></span>
+                        </a>
+                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#myModal-{{ history['id'] }}">
+                            <span class="fa fa-search-plus"></span>
+                        </button>
+
+
+                    </div>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    {% for history in data_history %}
+
+        <div class="modal fade" id="myModal-{{ history['id'] }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel-{{ history['id'] }}" aria-hidden="true">
+            <div class="modal-dialog modal-details modal-dialog-centered" role="document" style="width: 60%;">
+                <div class="modal-content">
+                    <div class="modal-header col-12">
+                        <h3 class="modal-title" id="ModalLabel-{{ history['id'] }}">Details</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="card card-header">Output :</h5>
+                        <code class="text-left">{{  history['details'] |replace({"\\n": "<br>"})|raw }}</code>
+{#                        <h5 class="card card-header">Profiles :</h5>#}
+{#                        <ul>#}
+{#                            {% for profile in alarm['profiles'] %}#}
+{#                                <li class="badge badge-primary">{{ profile }}</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>                    #}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+ {% block javascripts %}
+
+     <script async type="application/javascript">
+         $(document).ready(function() {
+             $('.history_history').DataTable({
+                     "columnDefs": [
+                         {
+                             "targets": [0],
+                             "visible": false
+                         },
+                         {"className": "dt-center", "targets": [-1]}
+                     ]
+
+                 });
+         });
+     </script>
+ {% endblock %}

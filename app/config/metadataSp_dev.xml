@@ -1,0 +1,50 @@
+<md:EntityDescriptor entityID="https://operations-portal.egi.eu/next/app_dev.php/home/a/metadata"
+                     xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+    <md:SPSSODescriptor
+            protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        MIIFbTCCBFWgAwIBAgIRAOobAmLGWIrp80oTYw2a+s8wDQYJKoZIhvcNAQELBQAwgZAxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTYwNAYDVQQDEy1DT01PRE8gUlNBIERvbWFpbiBWYWxpZGF0aW9uIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTcwMzI3MDAwMDAwWhcNMTgwMzI3MjM1OTU5WjBcMSEwHwYDVQQLExhEb21haW4gQ29udHJvbCBWYWxpZGF0ZWQxFDASBgNVBAsTC1Bvc2l0aXZlU1NMMSEwHwYDVQQDExhvcGVyYXRpb25zLXBvcnRhbC5lZ2kuZXUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDDMsTzdmU12zrkv6Eg1bFmUWB2Guf18HNbfgnDZ2AqSCfWRIG8ZWA/JpMozxX5hi2/eSUPQoXtpAtI+H0V1+RDV4lK57Z7/ZzeDZYxnzYoAoKalV8wO6RzTd76Q1bM+1nssinKqH8RZPRpbNkRiTapR1YyV431iFDYZR+CAaTQvDmXCecuXfmw2CsVHc2OdXLuY/qZfiRYSLLMTKczZQFIkFu8Tc/zLAWgEpIqfiAyhY1ZwHn5xxzXPofNkTCookBK41uzVKnGjVAJoRusBlc+WCvtb7FeqyCcNLxqfFwO58s89FsnaNy0s1xfgfCaGT2yuaDroMMunzu4xxneGv0LAgMBAAGjggHzMIIB7zAfBgNVHSMEGDAWgBSQr2o6lFoL2JDqElZz30O0Oija5zAdBgNVHQ4EFgQUTyhZThO6tZjaNN2vjCxYIQjFUcowDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdIARIMEYwOgYLKwYBBAGyMQECAgcwKzApBggrBgEFBQcCARYdaHR0cHM6Ly9zZWN1cmUuY29tb2RvLmNvbS9DUFMwCAYGZ4EMAQIBMFQGA1UdHwRNMEswSaBHoEWGQ2h0dHA6Ly9jcmwuY29tb2RvY2EuY29tL0NPTU9ET1JTQURvbWFpblZhbGlkYXRpb25TZWN1cmVTZXJ2ZXJDQS5jcmwwgYUGCCsGAQUFBwEBBHkwdzBPBggrBgEFBQcwAoZDaHR0cDovL2NydC5jb21vZG9jYS5jb20vQ09NT0RPUlNBRG9tYWluVmFsaWRhdGlvblNlY3VyZVNlcnZlckNBLmNydDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuY29tb2RvY2EuY29tMEEGA1UdEQQ6MDiCGG9wZXJhdGlvbnMtcG9ydGFsLmVnaS5ldYIcd3d3Lm9wZXJhdGlvbnMtcG9ydGFsLmVnaS5ldTANBgkqhkiG9w0BAQsFAAOCAQEAc4Ly8oagATfdHUTJrkbm585UihzS7hDYKQZTnb8l1YD8jxBRZIta01BlRwtM+KV6GY7X/eU/sps4b6aHVgvV6bP95qb9PB+Xp/TGBw5DVCr3rCVcAf2MsVAkDUZzpA1YZpL4lG01MnUY2+rw2cJ2CJsKwPibvr/WvX5WIB4ypDoKwg0PA4ZRTJ9KC6BJLHM6TsFYkUYyYCO0bUZ3e0b3N4bZtsm6Y2Rd+E6yLZ0nn67yvU5dBBUnKE+bInBYt9/scFxZjgTFEo9Fj/cEFzN75V2JEyJ2pNBWBjgxWD88uejrJcbGa7MJH1wH9Jk55lGX5pl3amq+JSi4U6m/2evPVQ==
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:KeyDescriptor use="encryption">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        MIIFbTCCBFWgAwIBAgIRAOobAmLGWIrp80oTYw2a+s8wDQYJKoZIhvcNAQELBQAwgZAxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTYwNAYDVQQDEy1DT01PRE8gUlNBIERvbWFpbiBWYWxpZGF0aW9uIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTcwMzI3MDAwMDAwWhcNMTgwMzI3MjM1OTU5WjBcMSEwHwYDVQQLExhEb21haW4gQ29udHJvbCBWYWxpZGF0ZWQxFDASBgNVBAsTC1Bvc2l0aXZlU1NMMSEwHwYDVQQDExhvcGVyYXRpb25zLXBvcnRhbC5lZ2kuZXUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDDMsTzdmU12zrkv6Eg1bFmUWB2Guf18HNbfgnDZ2AqSCfWRIG8ZWA/JpMozxX5hi2/eSUPQoXtpAtI+H0V1+RDV4lK57Z7/ZzeDZYxnzYoAoKalV8wO6RzTd76Q1bM+1nssinKqH8RZPRpbNkRiTapR1YyV431iFDYZR+CAaTQvDmXCecuXfmw2CsVHc2OdXLuY/qZfiRYSLLMTKczZQFIkFu8Tc/zLAWgEpIqfiAyhY1ZwHn5xxzXPofNkTCookBK41uzVKnGjVAJoRusBlc+WCvtb7FeqyCcNLxqfFwO58s89FsnaNy0s1xfgfCaGT2yuaDroMMunzu4xxneGv0LAgMBAAGjggHzMIIB7zAfBgNVHSMEGDAWgBSQr2o6lFoL2JDqElZz30O0Oija5zAdBgNVHQ4EFgQUTyhZThO6tZjaNN2vjCxYIQjFUcowDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCME8GA1UdIARIMEYwOgYLKwYBBAGyMQECAgcwKzApBggrBgEFBQcCARYdaHR0cHM6Ly9zZWN1cmUuY29tb2RvLmNvbS9DUFMwCAYGZ4EMAQIBMFQGA1UdHwRNMEswSaBHoEWGQ2h0dHA6Ly9jcmwuY29tb2RvY2EuY29tL0NPTU9ET1JTQURvbWFpblZhbGlkYXRpb25TZWN1cmVTZXJ2ZXJDQS5jcmwwgYUGCCsGAQUFBwEBBHkwdzBPBggrBgEFBQcwAoZDaHR0cDovL2NydC5jb21vZG9jYS5jb20vQ09NT0RPUlNBRG9tYWluVmFsaWRhdGlvblNlY3VyZVNlcnZlckNBLmNydDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuY29tb2RvY2EuY29tMEEGA1UdEQQ6MDiCGG9wZXJhdGlvbnMtcG9ydGFsLmVnaS5ldYIcd3d3Lm9wZXJhdGlvbnMtcG9ydGFsLmVnaS5ldTANBgkqhkiG9w0BAQsFAAOCAQEAc4Ly8oagATfdHUTJrkbm585UihzS7hDYKQZTnb8l1YD8jxBRZIta01BlRwtM+KV6GY7X/eU/sps4b6aHVgvV6bP95qb9PB+Xp/TGBw5DVCr3rCVcAf2MsVAkDUZzpA1YZpL4lG01MnUY2+rw2cJ2CJsKwPibvr/WvX5WIB4ypDoKwg0PA4ZRTJ9KC6BJLHM6TsFYkUYyYCO0bUZ3e0b3N4bZtsm6Y2Rd+E6yLZ0nn67yvU5dBBUnKE+bInBYt9/scFxZjgTFEo9Fj/cEFzN75V2JEyJ2pNBWBjgxWD88uejrJcbGa7MJH1wH9Jk55lGX5pl3amq+JSi4U6m/2evPVQ==
+                    </ds:X509Certificate>
+
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+
+        <md:AssertionConsumerService index="0" isDefault="false" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://operations-portal.egi.eu/next/app_dev.php/saml/login_check"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://aai-dev/proxy/saml2/idp/SingleLogoutService.php"></md:SingleLogoutService>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://aai-dev/proxy/saml2/idp/SSOService.php"></md:SingleSignOnService>
+        <md:ServiceName xml:lang="en">OPERATIONS PORTAL</md:ServiceName>
+        <md:RequestedAttribute Name="urn:oid:2.5.4.49"
+                               NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                                FriendlyName="distinguishedName"></md:RequestedAttribute>
+        <md:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.13"
+                               NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                               FriendlyName="eduPersonUniqueId"/>
+        <md:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6"
+                               NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                               FriendlyName="eduPersonPrincipalName"/>
+        <md:RequestedAttribute Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10"
+                               NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                               FriendlyName="eduPersonTargetedID"/>
+        <md:RequestedAttribute Name="urn:oid:2.16.840.1.113730.3.1.241"
+                               NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" FriendlyName="displayName"/>
+
+    </md:SPSSODescriptor>
+    <md:ContactPerson contactType="technical">
+        <md:GivenName>Cyril</md:GivenName>
+        <md:SurName>Lorphelin</md:SurName>
+        <md:EmailAddress>cic-information@cc.in2p3.fr</md:EmailAddress>
+    </md:ContactPerson>
+</md:EntityDescriptor>

@@ -1,0 +1,18 @@
+/***************************************************/
+/*          home page                              */
+/***************************************************/
+
+
+#homeSection {
+    margin: 40px 0;
+}
+
+#homePageMap {
+    padding:25px;
+    text-align: center;
+}
+
+#homePageMap a {
+    margin : 5px;
+}
+

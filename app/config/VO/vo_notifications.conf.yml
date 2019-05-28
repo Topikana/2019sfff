@@ -1,0 +1,84 @@
+# for dynamic targets possible values are VoManagers | SiteManagers | NgiManagers
+# documentation : https://wiki.egi.eu/wiki/Operations_Portal_VO_ID_card_notifications
+parameters:
+  EGI_mail_strategy:
+      notifyPendingRegistration:
+        subject: "New registration of VO %%VONAME%%"
+        description: "A registration is waiting for validation"
+        dynamic_targets: [VoManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnPendingChange:
+        subject: "Update made on %%VONAME%% VO ID CARD"
+        decription: "A change in VO is waiting for validation"
+        dynamic_targets: [VoManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnChangeAccepted:
+        subject: "Modification on VO %%VONAME%% is accepted"
+        decription: "A change in VO have been accepted"
+        dynamic_targets: [VoManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+          "ucst@egi.eu": "UCST"
+      notifyOnChangeRejected:
+        subject: "Modification on VO %%VONAME%% is rejected"
+        decription: "A change in VO have been rejected"
+        dynamic_targets: [VoManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnCriticalStatusChanged:
+        subject: "Status of VO %%VONAME%% has changed"
+        decription: "Status of VO has been switched to 'delete' or 'production"
+        dynamic_targets: [VoManagers, NgiManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+          "ucst@egi.eu": "UCST"
+      notifyOnStatusChanged:
+        subject: "Status of VO %%VONAME%% has changed"
+        decription: "Status of VO has been changed"
+        dynamic_targets: [VoManagers, NgiManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnScopeChanged:
+        subject: "Scope of VO %%VONAME%% has changed"
+        decription: "Scope of VO has been changed"
+        dynamic_targets: [VoManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnVomsAdded:
+        subject: "A VOMS server has been added for VO %%VONAME%%"
+        decription: "A VOMS server has been added for a VO"
+        dynamic_targets: [VoManagers]
+        static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnVomsConfigurationChanged:
+       subject: "A VOMS server configuration has been changed  for VO %%VONAME%%"
+       decription: "A VOMS server configuration has been changed for a VO"
+       dynamic_targets: [VoManagers]
+       static_targets:
+         "operations@egi.eu": "EGI Operations"
+      notifyOnMsgToVoManager:
+        subject: "New message from VO supervisors concerning VO %%VONAME%%"
+        decription: "A new message has been sent to VO Manager"
+        dynamic_targets: [VoManagers]
+        static_static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnMsgToVoManagerAndDeputy:
+        subject: "New message from VO supervisors concerning VO %%VONAME%%"
+        decription: "A new message has been sent to VO Manager and VO Deputy"
+        dynamic_targets: [VoManagers, VoDeputies]
+        static_static_targets:
+          "operations@egi.eu": "EGI Operations"
+      notifyOnTooOldVO:
+         subject: "VO ID CARD Information for VO %%VONAME%%"
+         decription: "A new message has been sent to VO Manager and VO Deputy"
+         dynamic_targets: [VoManagers, VoDeputies]
+         static_static_targets:
+           "operations@egi.eu": "EGI Operations"
+      notifyOnRegistrationRejected:
+         subject: "Rejection on registration of VO %%VONAME%%"
+         decription: "Registration of VO %%VONAME%% has been rejected"
+         dynamic_targets: [VoManagers]
+         static_targets:
+           "operations@egi.eu": "EGI Operations"

@@ -1,0 +1,133 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    <button class="pull-right btn btn-primary" id="reload_page"><span class="fa fa-refresh"></span>&nbsp; Refresh</button>
+    <br><br>
+
+    <div class="row tile_count">
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-sitemap"></i> Lavoisier Global Status</span>
+
+            <div class="count">{{ nbLavoiserNOK }}</div>
+            <span class="count_bottom"><i class="red">Unreachables</i> lavoisier sites</span>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-globe"></i> cclavoisier01</span>
+
+            <div class="count">{{ nbViewsNOK01 }}</div>
+            <span class="count_bottom"><i class="red">NOK</i> Views </span>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-globe"></i> ccosvms0086</span>
+
+            <div class="count">{{ nbViewsNOK0086 }}</div>
+            <span class="count_bottom"><i class="red">NOK</i> Views </span>
+        </div>
+
+
+    </div>
+    {% if nbLavoiserNOK ==  0 %}
+
+        <div class="row">
+            <div class="col-md-7 col-sm-7 col-xs-7">
+                {{ render(controller('AppBundle:Backend/Backend:lastTenVoContactAdd')) }}
+            </div>
+
+            <div class="col-md-5 col-sm-5 col-xs-5">
+                {{ render(controller('AppBundle:Backend/Backend:lastUpdatedTable')) }}
+            </div>
+
+            <div class="col-md-5 col-sm-5 col-xs-5">
+                {{ render(controller('AppBundle:Backend/Backend:lastSpool')) }}
+            </div>
+
+            <div class="col-md-5 col-sm-5 col-xs-5">
+                {{ render(controller('AppBundle:Backend/Backend:lastDowntimeNotification')) }}
+            </div>
+
+        </div>
+
+        {% else %}
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                <div role="alert" class="alert alert-danger">Services are temporary unavailables... <br>We are sorry for the inconvenience.</div>
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock %}
+
+    {% block javascripts %}
+        <script>
+            $(document).ready(function () {
+
+
+                var table = $("#spoolTable");
+                if (table) {
+
+                    table.show();
+
+                    table.DataTable({
+                        "paging": false,
+                        "info": false,
+                        "searching": false
+                    });
+                }
+
+
+                var table1 = $("#lastUpdateTable");
+                if (table1) {
+
+                    table1.show();
+
+                    table1.DataTable({
+                        "paging": false,
+                        "info": false,
+                        "searching": false
+                    });
+                }
+
+                var table3 = $("#VoUsersTab");
+                if (table3) {
+
+                    table3.show();
+
+                    table3.DataTable({
+                        "paging": false,
+                        "info": false,
+                        "columnDefs": [{
+                            "targets": 5,
+                            "orderable": false
+                        }]
+                    });
+                }
+
+
+                $("#reload_page").click(function () {
+
+                    $(".loader").show();
+                    $(".loader-wrapper").show();
+
+                    setTimeout(
+                            function () {
+                                location.reload();
+                            }, 3000);
+
+                });
+
+            });
+        </script>
+    {% endblock %}

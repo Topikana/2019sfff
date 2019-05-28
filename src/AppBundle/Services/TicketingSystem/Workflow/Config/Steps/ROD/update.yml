@@ -1,0 +1,12 @@
+step:
+  Comments:
+    id : Comment
+    label: Comment
+    required: true
+    order: 20
+    quick: true
+    value: |
+
+
+                Thank you
+                +C.user+

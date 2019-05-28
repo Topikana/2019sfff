@@ -1,0 +1,22 @@
+AppBundle\Entity\VoYearlyValidation:
+  type: entity
+  table: vo_yearly_validation
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    date_validation:
+      type: datetime
+    date_last_email_sending:
+      type: datetime
+
+  oneToOne:
+    vo:
+      targetEntity: Vo
+      joinColumn:
+        name: serial
+        referencedColumnName: serial

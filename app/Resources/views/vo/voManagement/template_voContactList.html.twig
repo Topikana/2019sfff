@@ -1,0 +1,61 @@
+<div class="card-header">
+    <h2 class="portal text-primary">Contact List</h2>
+</div>
+    <div class="card-body">
+    {% if message is defined and message != null %}
+        <span class="alert alert-info">{{ message }}</span>
+        <br/><br/>
+    {% endif %}
+    <table id="contactTable" class="table table-responsive table-bordered table-striped">
+        <thead>
+        <th>Full Name</th>
+        <th>DN</th>
+        <th>Email</th>
+        <th>Comment</th>
+        <th>Profil</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for contact in voContactsList %}
+            <tr class="{{ contact.profile|replace({" ": ""})|lower }}">
+                <td>{{ contact.first_name }} {{ contact.last_name }}</td>
+                <td>{{ contact.dn }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.comment }}</td>
+                <td>{{ contact.profile }}</td>
+                <td>
+                    <div class="dropdown btn-group d-flex" role="group">
+                        <a id="dLabel" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="true">
+                            Action
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <li>
+                                <a onclick="entityAction('{{ path("contactForm") }}',{{ serial }}, '{{ contact.dn }}', 'Contact')"
+                                   href="#panelContact"><span
+                                            class="fas fa-pencil-alt" style="font-size:15px"
+                                            rel="tooltip"
+                                            title="" data-original-title="Edit this contact"></span> Edit</a>
+                            </li>
+                            <li>
+                                <a href="#panelContact"
+                                   onclick="deleteContactHasProfil('{{ path("deleteContactHasProfil") }}', {{ serial }}, {{ contact.id }},'{{ contact.first_name|escape('js')|raw }} {{ contact.last_name|escape('js')|raw }}','panelContact','{{ contact.profile }}')"><span
+                                            class="fas fa-times" style="font-size:15px"
+                                            rel="tooltip"
+                                            title="" data-original-title="Delete this Group/Role"></span> Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <input type="button" class="btn btn-sm btn-primary"
+           onclick="entityAction('{{ path("contactForm") }}',{{ serial }}, null, 'Contact')"
+           value="Add">
+</div>
+<div id="divModalContact">
+
+</div>

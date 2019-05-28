@@ -1,0 +1,41 @@
+<div class="mt-0 mb-0 col-sm-12">
+            <ul class="timeline">
+                {% for ticket in details %}
+                    {% if ticketId == ticket['GHD_Request_ID'] %}
+                        <li>
+                            <h5>Initial Submission</h5>
+                            <div class="d-flex d-inline">Création : &nbsp;<span class="text-primary">  {{ ticket['GHD_Create_Date'] | date('Y-m-d h:m') }}</span></div>
+                            <div class="d-flex d-inline">Expiration : &nbsp;<span class="text-primary">   {% if ticket['GHD_Soap_Client_Data']['EndDate'] is not empty %}
+                                        {{ ticket['GHD_Soap_Client_Data']['EndDate'] | date('Y-m-d h:m') }}
+                                    {% else %}
+                                        Undefined
+                                    {% endif %}</span></div>
+                            <div>SU : &nbsp;<span class="text-primary">{% if ticket['GHD_Responsible_Unit'] is not empty %}
+                                        {{ ticket['GHD_Responsible_Unit'] }}
+                                    {% else %}
+                                        N.A.
+                                    {% endif %}
+                            </span></div>
+
+                            <div class="d-flex d-inline">NGI : &nbsp;<span class="text-primary"> {{ ticket['GHD_Soap_Client_Data']['Ngi'] }}</span></div>
+                            <div class="d-flex d-inline">Site : &nbsp;<span class="text-primary"> {{ ticket['GHD_Affected_Site'] }}</span></div>
+                            <div class="d-flex d-inline">Status : &nbsp;<span class="text-primary"> {{ ticket['GHD_Priority'] }}</span></div>
+                            <div class="d-flex d-inline">Subject : &nbsp;<span class="text-primary">{{ ticket['GHD_Subject'] }}</span></div>
+                            <div class="">Detail description : &nbsp;<pre class="text-primary">{{ infoTicket.getDescription() }}</pre></div>
+                            <div class="d-flex d-inline">Author : &nbsp;<span class="text-primary">{{ infoTicket.getAuthor() }}</span></div>
+                            {#<a class="d-flex d-inline">Last modifer : &nbsp;<span class="text-primary">{{ ticket['GHD_Last_Modifier'] }}</span></a>#}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% for history in data_history|sort|reverse %}
+                    <li>
+                        <h5>Modification</h5>
+                        <div>Date:  &nbsp;<span class="text-primary">{{ history.getModificationDate() }}</span></div>
+                        <div class="d-flex d-inline">Author:  &nbsp;<span class="text-primary">{{ history.getModifier() }}</span></div>
+                        <div><pre>{{ history.getMetaEntry() | raw }}</pre></div>
+                    </li>
+                {% endfor %}
+            </ul>
+</div>
+

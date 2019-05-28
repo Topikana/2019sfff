@@ -1,0 +1,33 @@
+imports:
+    - { resource: config_dev.yml }
+    - { resource: GGUS/ggus_env.test.xml}
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: true
+        enabled: true
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+    delivery_address: "cic-information@in2p3.fr"
+    spool:
+      type: "%spool_test%"
+
+twig:
+    globals:
+        portalUrl: "%portalUrlTest%"
+        vaportUrl: "%vaporUrlTest%"
+parameters:
+    lavoisierUrl: "cclavoisierfr.in2p3.fr"
+    aupUrl: "%kernel.root_dir%/../src/AppBundle/Tests/Ressources/vo/AUP/"
+    ggusUrl: "https://test.ggus.eu/ggus/index.php"
+#    dirLogsApache: "%kernel.root_dir%/../../../log"
+#    dirLogsSymfony: "%kernel.root_dir%/../var/logs"
+

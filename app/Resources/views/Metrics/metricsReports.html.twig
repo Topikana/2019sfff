@@ -1,0 +1,133 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/metrics.min.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {% form_theme metricsReportsForm ':Metrics:templates/twig_display_template.html.twig' %}
+    <section id="homeSection">
+
+        <div id="flashes">
+            {% for label, flashes in app.session.flashbag.all %}
+                {% for flash in flashes %}
+                    <div role="alert" class="alert alert-{{ label }}">
+                        {{ flash|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <article class="card m-4">
+
+            <div class="card-header">
+                <div class="card-title"><h2>EGI Reports</h2></div>
+                <a data-toggle="collapse" href="#collapseHelp"
+                   aria-expanded="false">
+                    <span class="fas fa-flag"></span> Help
+                </a>
+
+                <div id="collapseHelp" class="collapse">
+                    <div class="card-body">
+                        <h4>Methodology to capture users</h4>
+
+                        The workflow to retrieve the list of users consists of the following steps:<br/><br/>
+                        1. The VO managers use the Operations Portal to record VO information in the VO ID cards<br/>
+                        2. The information related to VOMS servers is registered in the Operations Portal VO database and made
+                        available to the <a href="http://http://software.in2p3.fr/lavoisier/" title="lavoisier home page"></a> Lavoisier Web Service</a><br/>
+                        3. Lavoisier builds the VOMS contact URL list from the data<br/>
+                        4. Lavoisier contacts the VOMSes via a SOAP method and retrieves the list of registered users
+                        certificate DNs for each VO<br/>
+
+                        5. The users list is recorded in the CIC database and a cache is also kept in <a href="http://software.in2p3.fr/lavoisier">Lavoisier</a><br/>
+                        6. The records are aggregated and sorted to expose consistent VO user statistics on the Web Interface.
+                        <br/><br/>
+                        If the VOMS server is not reachable the Web Service is not able to retrieve the list of users .
+                        <hr/>
+
+                        <h4>User accounting</h4>
+
+                        For the first 3 metrics (user metrics) we use the same method to count users :<br/>
+                        - we count at the 1st day of the reported month the number of unique CN group by VO, CA or disciplines<br/>
+                        - consequently a user represented by a CN could be reported several times (in different VOs , CAs or disciplines)<br/>
+                        - consequently the sum of the users group by VO, CA, disciplines is not corresponding to the total of users<br/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+
+                <form id="metricsReportsForm" method="post" action="{{ path("redirectToReportsList") }}">
+                    <div id="beginDateRow" class="row">
+                        <div class="form-group ">
+
+                            <div class="col-12">
+                                {{ form_widget(metricsReportsForm.begin_date) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group ">
+                        {{ form_widget(metricsReportsForm.entity) }}
+                    </div>
+
+                    <div id="datesRow" class="form-inline" style="display:none">
+
+                        <div class="form-group">
+                            <div class="card card-body">
+                                {{ form_label(metricsReportsForm.start_date) }}
+                                {{ form_widget(metricsReportsForm.start_date) }}
+
+                                {{ form_label(metricsReportsForm.end_date) }}
+                                {{ form_widget(metricsReportsForm.end_date) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <hr>
+                    <div class="form-group text-center">
+
+                        {{ form_widget(metricsReportsForm.submit) }}
+                    </div>
+
+
+                    {{ form_rest(metricsReportsForm) }}
+
+                </form>
+
+            </div>
+
+        </article>
+
+        {% if isSuUser %}
+            {{ render(controller('AppBundle:Metrics/Metrics:metricsDump')) }}
+        {% endif %}
+
+    </section>
+
+{% block javascripts %}
+
+
+    <script>
+
+        $("input:radio").change(function () {
+
+            if ($("#metrics_report_entity li input[value='voActivities']").is(":checked")) {
+                $("#datesRow").show();
+                $("#beginDateRow").hide();
+            } else {
+                $("#datesRow").hide();
+                $("#beginDateRow").show();
+            }
+
+        });
+    </script>
+{% endblock %}
+{% endblock %}

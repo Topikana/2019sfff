@@ -1,0 +1,29 @@
+    {% extends 'base_bootstrap_4.html.twig' %}
+    {% block body %}
+
+
+        <div id="homeSection" class="card m-4">
+            <div class="card-header bg-primary text-white">
+                <h1><em><span class="fa fa-exclamation-triangle"></span> Error 404: The file you requested was not found</em></h1>
+
+            </div>
+            <div class="card-body">
+                <h2 class="font-weight-light">
+                    <p class="lead"> You may have followed an old link, typed in the address incorrectly, or are just trying to make us feel bad. </p>
+
+                </h2>
+
+            </div>
+
+
+            <div class="card-footer"> For more information, please contact us at &nbsp;&nbsp;&nbsp;
+                <a href="mailto:{{ webMasterMail }}">
+                    <span class='badge  badge-primary'>{{ webMasterMail }}</span></a>
+                &nbsp;&nbsp;
+
+            </div>
+
+        </div>
+
+    {% endblock %}
+

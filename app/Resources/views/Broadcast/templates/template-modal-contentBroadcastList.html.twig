@@ -1,0 +1,40 @@
+<h4>Registred Models</h4>
+
+{% if models is defined and models is iterable %}
+
+{% set countM = models|length %}
+
+    {% if countM == 0 %}
+        <div class="badge badge-danger" style="margin:8px">
+            <span>Sorry no Model found.</span>
+        </div>
+
+    {% else %}
+
+        <div class="badge badge-success p-2" >{{ countM }} model(s) found.</div> <br/> <br/>
+        {%  include ":Broadcast/templates:template_tab_broadcastDisplayList.html.twig" with
+        {"broadcasts":models, "displayHead": displayHead, "type": "modelBd"}
+        %}
+    {% endif  %}
+{% endif %}
+
+<hr>
+<h4>Your Broadcasts sent</h4>
+
+{% if broadcasts is defined and broadcasts is iterable %}
+
+{% set countBD = broadcasts|length %}
+
+    {% if countBD == 0 %}
+        <div class="badge badge-danger p-2">
+            <span>Sorry no Broadcast found.</span>
+        </div>
+
+    {% else %}
+        <div class="badge badge-success p-2">{{ countBD }} broadcast(s) found.</div> <br/> <br/>
+
+        {%  include ":Broadcast/templates:template_tab_broadcastDisplayList.html.twig" with
+        {"broadcasts":broadcasts, "displayHead": displayHead, "targets": targets, "type": "userBd"}
+        %}
+    {% endif  %}
+{% endif %}

@@ -1,0 +1,105 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/metrics.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="homeSection">
+
+        <article>
+            <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <H2>User metrics per {{ entity|upper }}</H2>
+                </div>
+            </div>
+            <div class="card-body" >
+                {% include ":Metrics/templates:template_breadCrumbs_metricsReports.html.twig" %}
+
+                <ul class="nav nav-tabs">
+                    <li  class="nav-item">
+                        <a class="nav-link active text-primary" href="#table" id="tab-table" aria-controls="table" role="tab" data-toggle="tab">Table</a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link text-primary" href="#chart1" id="tab-chart1" aria-controls="chart1" role="tab" data-toggle="tab">Line Chart</a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link text-primary" href="#chart2" id="tab-chart2" aria-controls="chart2" role="tab" data-toggle="tab">Area & Bar Charts</a>
+                        </li>
+
+                    <li class="nav-item">
+
+                        <form action="{{ path("toCsv") }}" method="post">
+                        <input type="hidden" id="csv" name="csv" value="{{ csv }}">
+                        <button type="submit" class="btn btn-primary p-1">
+                            CSV
+                        </button>
+                        </form>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+
+                    <div role="tabpanel" class="tab-pane fade show active m-2" id="table" aria-labelledby="tab-table">
+                        {% include ":Metrics/templates:template_tab_disciplinesMetricsReportsList.html.twig" %}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane fade m-2"  id="chart1" aria-labelledby="tab-chart1">
+                        <div   id="UsersMetricschart_div"></div>
+                        <div class="dataCSV d-none">{{ csv }}</div>
+                        <div id="chart_div_png"></div>
+
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane fade m-2"  id="chart2" aria-labelledby="tab-chart2">
+                        <div class="row">
+                            <div  id="UsersMetricschart_Area" class="col-5"></div>
+
+                            <div id="UsersMetricschart_Bar" class="col-5"></div>
+
+                            <div id="chart_div_png"></div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </article>
+
+
+    </section>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+
+    <script type="text/javascript" src="{{ asset('build/js/metrics/metrics.min.js') }}"></script>
+    <script type="text/javascript"
+            src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['line', 'bar', 'corechart']}]}"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            buildUsersMetricsTable();
+
+
+            buildUserMetricsChart("User Metrics per Discipline");
+
+            buildUserMetricsAreaBarColumn('{{ tabArea|json_encode|raw }}', 'area');
+
+            buildUserMetricsAreaBarColumn('{{ voMetricsraw["nbUsersDiff"]|json_encode|raw }}', 'bar');
+
+        });
+    </script>
+{% endblock %}

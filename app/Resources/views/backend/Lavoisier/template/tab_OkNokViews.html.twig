@@ -1,0 +1,60 @@
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>{{ lavoisierProdName }}
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                {% if error is defined %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="alert alert-danger">{{ error }}</div>
+                    </div>
+
+                {% elseif  lavoiserArrayFailed is defined and lavoiserArraySuccess is defined %}
+
+
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs tabs-left">
+                            <li class="active"><a href="#{{ lavoisierProdName }}NOK" data-toggle="tab"><i style="color: red" class="fa fa-close"></i> Views NON OK</a></li>
+                            <li><a href="#{{ lavoisierProdName }}OK" data-toggle="tab"><i style="color : green" class="fa fa-check"></i> Views OK</a></li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-md-9 col-sm-9 col-xs-9">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+
+                            <!-- CC LAVOISIER  NOK -->
+                            {% include ":backend/Lavoisier/template:tab_status_nok.html.twig" with {"lavoiserArray" : lavoiserArrayFailed} %}
+                            <!-- END CC LAVOISIER  NOK -->
+
+
+                            <!-- CC LAVOISIER  OK -->
+                            {% include ":backend/Lavoisier/template:tab_status_ok.html.twig" with {"lavoiserArray" : lavoiserArraySuccess} %}
+                            <!-- END CC LAVOISIER  OK -->
+
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="alert alert-danger">Error on cclavoisier01 views OK NOK tab...</div>
+                    </div>
+
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+

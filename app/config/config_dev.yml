@@ -1,0 +1,93 @@
+imports:
+    - { resource: config.yml }
+    - { resource: GGUS/ggus_env.dev.xml}
+
+parameters:
+    #  Custom lavoisier
+    lavoisierUrl: "cclavoisierfr.in2p3.fr"
+#    fakeDn: /C=FR/O=CNRS/OU=USR6402/CN=Thibaut Salanon/emailAddress=thibaut.salanon@cc.in2p3.fr
+#    fakeDn: /C=GR/O=HellasGrid/OU=auth.gr/CN=Paschalis Korosoglou # EGI CSIRT Officer
+#    fakeDn: /C=AM/O=ArmeSFo/O=IIAP NAR RA/OU=HPC Laboratory/CN=Wahi Narsisian # NGI Security Officer
+#    fakeDn: /O=GRID-FR/C=FR/O=CNRS/OU=IPGP/CN=Marc Hufschmitt # Site Security Officer
+ #   fakeDn: /O=GRID-FR/C=FR/O=CNRS/OU=CC-IN2P3/CN=Cyril Lorphelin
+#    fakeDn: /C=test/O=fake/CN=Usersite
+#    fakeDn: /C=FR/O=CNRS/OU=USR6402/CN=Evelyne Rasamoelina/emailAddress=evelyne.rasamoelina@cc.in2p3.fr
+    aupUrl: "%kernel.root_dir%/../src/AppBundle/Tests/Ressources/vo/AUP/"
+    ggusUrl: "https://test.ggus.eu/ggus/index.php"
+    dirLogsApache: "/var/log/apache2"
+    dirLogsSymfony3: "%kernel.root_dir%/../var/logs"
+    dirLogsSymfony1: "%kernel.root_dir%/../../opsportal_sf1/log"
+    metadataFile : "%saml_metadata_file_dev%"
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        main:
+            type:   rotating_file
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+        console:
+            type:   console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: INFO
+                VERBOSITY_VERY_VERBOSE: DEBUG
+            channels: ["!doctrine"]
+        console_very_verbose:
+            type:   console
+            bubble: false
+            verbosity_levels:
+                VERBOSITY_VERBOSE: NOTICE
+                VERBOSITY_VERY_VERBOSE: NOTICE
+                VERBOSITY_DEBUG: DEBUG
+            channels: ["doctrine"]
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type:   firephp
+        #    level:  info
+        #chromephp:
+        #    type:   chromephp
+        #    level:  info
+
+#swiftmailer:
+#    delivery_address: me@example.com
+
+# Twig Configuration
+twig:
+    globals:
+        #  Custom URL from local portal
+        portalUrl: "%portalUrlTest%"
+        #  Custom URL from local vapor
+        vaporUrl: "%vaporUrlTest%"
+        # Custom URL for test ggus
+        ggusUrl: "%ggusUrl%"
+
+swiftmailer:
+    transport: %swift.transport%
+    username:  %swift.username%
+    password:  %swift.password%
+    spool:
+        type: "%spool_test%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host_test%"
+        port:     "%database_port_test%"
+        dbname:   "%database_name_test%"
+        user:     "%database_user_test%"
+        password: "%database_password%"
+        charset:  UTF8
+        mapping_types:
+            enum: string

@@ -1,0 +1,44 @@
+AppBundle\Entity\VoContactHasProfile:
+  type: entity
+  table: vo_contact_has_profile
+  connection: dashboardConnection
+  id:
+    serial:
+      type: integer
+      options:
+        unsigned: false
+    user_profile_id:
+      type: integer
+      options:
+        unsigned: false
+    contact_id:
+      type: integer
+      options:
+        unsigned: false
+  fields:
+    comment:
+      type: string
+      length: 500
+      options:
+        fixed: false
+
+  oneToOne:
+     voUserProfile:
+       targetEntity: VoUserProfile
+       joinColumn:
+         name: user_profile_id
+         referencedColumnName: id
+
+  manyToOne:
+     vo:
+       targetEntity: Vo
+       inversedBy: voContactHasProfile
+       joinColumn:
+         name: vo_id
+         referencedColumnName: serial
+     voContacts:
+        targetEntity: VoContacts
+        inversedBy: voContactHasProfile
+        joinColumn:
+          name: vo_contacts_id
+          referencedColumnName: id

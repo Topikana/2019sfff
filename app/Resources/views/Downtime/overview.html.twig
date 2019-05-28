@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}Operations portal - Downtime{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div class="page-header">
+            <h4>Communication overview</h4>
+        </div>
+
+        <div class="row">
+        	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Subscription (n°{{ subscription.id }})</div>
+                    <div class="panel-body">
+                        <strong>Region : </strong> {{ subscription.region }}<br/>
+                        <strong>Site : </strong> {{ subscription.site }}<br/>
+                        <strong>Node : </strong> {{ subscription.node }}<br/>
+                        <strong>VO : </strong> {{ subscription.vo }}<br/>
+                    </div>
+                </div>
+
+        	</div>
+        	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Subscriber's information</div>
+                    <div class="panel-body">
+                        <strong>Name : </strong>{{ subscription.user.name }}<br/>
+                        <strong>Email address : </strong>({{ subscription.user.email }})<br/>
+                    </div>
+                </div>
+
+        	</div>
+        </div>
+
+    </div>
+{% endblock %}
+

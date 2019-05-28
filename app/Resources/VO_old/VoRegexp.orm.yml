@@ -1,0 +1,26 @@
+AppBundle\Entity\VoRegexp:
+  type: entity
+  table: vo_regexp
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    regexpression:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    description:
+      type: string
+      length: 100
+      options:
+        fixed: false
+
+  oneToMany:
+    voFields:
+      targetEntity: VoRegexp
+      mappedBy: voRegexps

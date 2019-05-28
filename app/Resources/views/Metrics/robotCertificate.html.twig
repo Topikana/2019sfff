@@ -1,0 +1,79 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/metrics.min.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+
+    <div id="flashes">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+    {% if error is defined %}
+        <article class="alert alert-danger">{{ error }}</article>
+    {% else %}
+
+
+            <article>
+                <div class="card">
+                <!-- VO WITH ROBOT CERTIFICATE -->
+                    <div class="card-header" role="tab" id="headingVOWithCert">
+                        <div class="card-title">
+                            <h3>Robot Certificate(s)</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% if rbList is defined %}
+                            {% include ":Metrics/templates:template_tab_robotCertificate.html.twig" %}
+                        {% else %}
+                            <p class="alert alert-danger">None of your VO has a robot certificate.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- END VO WITH ROBOT CERTIFICATE -->
+
+
+            </article>
+
+        {% include ":Metrics/templates:template_modal_RbCert.html.twig"%}
+
+    {% endif %}
+
+{% endblock %}
+{% block javascripts %}
+
+    <script src="{{ asset('build/vendor/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+{#    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>#}
+    <script src="{{ asset('build/js/metrics/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('build/js/metrics/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('build/js/metrics/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('build/js/metrics/metrics.min.js') }}"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //build vo tables with datatables plugin
+            buildRbCertificateTable();
+
+
+        });
+    </script>
+{% endblock %}

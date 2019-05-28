@@ -1,0 +1,135 @@
+<h3 class="card card-header mb-4">Tickets :</h3>
+<table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover details_tickets" >
+    <thead>
+    <tr>
+        <th class='sortable-text' rel="Site name">id</th>
+        <th class='sortable-text' rel="ticket name">Priority</th>
+        <th class='sortable-text' rel="tickets">Status</th>
+        <th class='sortable-text' rel="tickets">Last Update</th>
+        <th class="sortable-text" rel="ticket availability">Subject</th>
+        <th class="sortable-text" rel="ticket reliability">Last Modifier</th>
+        <th class="sortable-text" rel="ticket reliability">Alarms Group</th>
+        <th class="sortable-text" rel="ticket reliability">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ticket in details['tickets'] %}
+
+        <tr>
+            <td><a target="_blank" href="{{ helpdesk.getTicketPermalink(ticket['GHD_Request_ID']) }}">{{ ticket['GHD_Request_ID'] }}</a></td>
+            <td>
+                <span class="badge badge-warning">
+                    {{ ticket['GHD_Priority'] }}
+                </span>
+            </td>
+            <td>
+                <code>{{ ticket['GHD_Status'] }}</code>
+            </td>
+            <td>{{ ticket['GHD_Modified_Date'] }}</td>
+            <td>{{ ticket['GHD_Subject'] }}</td>
+            <td>{{ ticket['GHD_Last_Modifier'] }}</td>
+            <td>
+                {% for alarm in alarms['alarms'] %}
+                    {% for tickAlarm in ticketAlarm  %}
+                        {% if tickAlarm.idTicket == ticket['GHD_Request_ID'] and alarm.id == tickAlarm.idAlarm %}
+                            {% if alarm['status'] == 0 %}
+                                <a class="badge badge-success" href="{{ alarm['url_to_history'] }}">{{ alarm['test_name'] }}</a><br>
+
+                            {% elseif alarm['status'] == 1 %}
+                                <a  class="badge badge-warning" href="{{ alarm['url_to_history'] }}">{{ alarm['test_name'] }}</a><br>
+
+                            {% elseif alarm['status'] == 2 %}
+                                <a class="badge badge-danger"  href="{{ alarm['url_to_history'] }}">{{ alarm['test_name'] }}</a><br>
+
+                            {% elseif alarm['status'] == 3 %}
+                                <a class="badge badge-secondary"  href="{{ alarm['url_to_history'] }}">{{ alarm['test_name'] }}</a><br>
+                            {% endif %}
+
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </td>
+            <td>
+                <div class="btn-group d-flex justify-content-center" role="group">
+                    <a href="{{ path('ticketAlarmGroupe', {'site': site, 'ticketId': ticket['GHD_Request_ID']}) }}" title="Alarms associated to the ticket" class="btn btn-primary btn-sm">
+                        <span class="fas fa-bell mr-1"></span>
+
+                    </a>
+                    <button type="button" class="btn btn-warning btn-sm" title="History of the ticket" data-toggle="modal" data-target="#histoty_ticket-{{ ticket['GHD_Request_ID'] }}">
+                        <span class="fa fa-history"></span>
+                    </button>
+
+                {% if ticket['GHD_Status'] == 'solved' %}
+                <button type="button" class="btn btn-danger btn-sm close-ticket" title="Verify" data-etat="verify" data-ticket="{{ ticket['GHD_Request_ID'] }}" >
+                    <span class="fas fa-check"></span>
+                </button>
+                    {% else %}
+
+                        <button type="button" class="btn btn-danger btn-sm close-ticket" title="Close Ticket" data-etat="close" data-ticket="{{ ticket['GHD_Request_ID'] }}" >
+                            <span class="fa fa-window-close"></span>
+                        </button>
+                    {% endif %}
+                </div>
+
+                {#<a href="{{ path('ticket_history', {'TicketId': ticket['GHD_Request_ID']}) }}" class="btn btn-danger btn-sm">#}
+                    {#<span class="fa fa-window-close mr-1"></span>#}
+                    {#Close#}
+                {#</a>#}
+            </td>
+            {#<td>{{ ticket['GHD_Submitter'] }}</td>#}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% for ticket in details['tickets'] %}
+
+<!-- Modal -->
+<div class="modal fade" id="histoty_ticket-{{ ticket['GHD_Request_ID'] }}" tabindex="-1" role="dialog" aria-labelledby="histoty_ticket_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel"><span class="fa fa-history mr-2"></span>Ticket history</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ render(controller('AppBundle:ROD:getTicketHistory', {'TicketId': ticket['GHD_Request_ID'], 'details': details['tickets'] })) }}
+            </div>
+            <div class="modal-footer">
+                {% if ticket['GHD_Status'] == 'solved' %}
+                    <button type="button" class="btn btn-danger btn-sm close-ticket" data-etat="verify" data-ticket="{{ ticket['GHD_Request_ID'] }}" >
+                        <span class="fa fa-window-close mr-1"></span> Verify
+                    </button>
+                {% else %}
+
+                    <button type="button" class="btn btn-danger btn-sm close-ticket" data-etat="close" data-ticket="{{ ticket['GHD_Request_ID'] }}" >
+                        <span class="fa fa-window-close mr-1"></span> Solve and close the ticket
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<script type="application/javascript">
+         $(document).ready(function() {
+             $('.details_tickets').DataTable();
+         });
+
+
+         $('.close-ticket').click(function () {
+             $('#appbundle_rod_close_ticket_ticketId').val($(this).data('ticket'));
+
+             if ($(this).data('etat') === 'close'){
+                 $('#close-ticket').modal();
+             }else {
+                 $('#form-delete-ticket').submit();
+             }
+         });
+
+
+
+</script>

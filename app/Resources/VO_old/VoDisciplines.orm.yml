@@ -1,0 +1,28 @@
+AppBundle\Entity\VoDisciplines:
+  type: entity
+  table: vo_disciplines
+  connection: dashboardConnection
+  id:
+     vo_id:
+       type: integer
+       options:
+         unsigned: false
+     discipline_id:
+       type: integer
+       options:
+         unsigned: false
+       nullable: true
+
+  manyToOne:
+    vo:
+      targetEntity: Vo
+      inversedBy: voDisciplines
+      joinColumn:
+        name: vo_id
+        referencedColumnName: serial
+    discipline:
+      targetEntity: Disciplines
+      inversedBy : voDisciplines
+      joinColumn:
+        name: discipline_id
+        referencedColumnName: discipline_id

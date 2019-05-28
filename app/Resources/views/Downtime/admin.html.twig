@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{% block title %}Operations portal - Downtime{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div class="page-header">
+            <h4>Administration</h4>
+        </div>
+
+        <div class="row">
+        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <table id="table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Rule</th>
+                        <th>Region</th>
+                        <th>Site</th>
+                        <th>Node</th>
+                        <th>VO</th>
+                        <th>Communication</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for subscription in subscriptions %}
+                        <tr>
+                            <td>{{ subscription.user.name }}</td>
+                            <td>{{ subscription.user.email }}</td>
+                            <td>{{ subscription.rule }}</td>
+                            <td>{{ subscription.region }}</td>
+                            <td>{{ subscription.site }}</td>
+                            <td>{{ subscription.node }}</td>
+                            <td>{{ subscription.vo }}</td>
+                            <td>
+                                {% for communication in subscription.communications %}
+                                    {{ communication.value }}<br/>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-default" href="{{ path('admin_update', {'id': subscription.user.id}) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Show / Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        	</div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var table;
+
+        $(document).ready(function(){
+            table = $('#table').DataTable({
+            });
+
+        });
+
+    </script>
+{% endblock %}

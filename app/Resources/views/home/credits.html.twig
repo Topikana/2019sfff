@@ -1,0 +1,54 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/home.min.css') }}">
+
+{% endblock %}
+{% block body %}
+    <section id="homeSection">
+
+        {% for key, part in credits %}
+            <div class="card m-5">
+
+                {% if key == "webapp" %}
+                    <div class="card-header">
+                        <div class="card-title">
+                            <img src="{{ asset(part["icon"]) }}" width="35" alt="logo vapor"/>
+                            &nbsp;&nbsp;{{ part["title"]|raw }} <img class="ml-4" src="{{ asset('images/egi_logo.png') }}" height="60" alt="logo egi"/>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        {% for key2,item in part["items"] %}
+
+                            {% if "{{path(&quot;contact&quot;)}}" in item["txt"]|raw %}
+                                {{ item["txt"]|raw|replace({"{{path(&quot;contact&quot;)}}" :  path('contact')})|raw }}
+                            {% else %}
+                                {{ item["txt"]|raw }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer">
+                        <img class="ml-4 mb-3" src="{{ asset('images/cc_cnrs.png') }}" height="60" alt="logo ccin2p3"/>
+
+                        <img class="ml-4 mb-3" src="{{ asset('images/logoeosc.png') }}" height="60" alt="logo eosc"/>
+                    </div>
+                {% else %}
+                    <div class="card-header">
+                        <div class="card-title"><span class="{{ part["icon"] }}"></span>&nbsp;&nbsp;{{ part["title"]|raw }}</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for key2,item in part["items"] %}
+
+                                <li>{{ item["txt"]|raw }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+    </section>
+{% endblock %}
+
+

@@ -1,0 +1,8 @@
+<ul class="timeline">
+    {% for interComment in internalComments %}
+        <li>
+            <a class="text-primary">{{ interComment.dateCreate | date('Y-m-d H:i:s') }}</a>
+            <p>{{ interComment.getBody()}}</p>
+        </li>
+    {% endfor %}
+</ul>

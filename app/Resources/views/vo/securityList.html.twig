@@ -1,0 +1,72 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/buttons/css/buttons.dataTables.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/select/css/select.dataTables.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/buttons/css/buttons.dataTables.min.css') }}" />
+    {% endblock %}
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+
+    <div id="flashes">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+
+    <article class="card">
+        <div class="card-header">
+            <h2>Security List</h2>
+        </div>
+
+        <div class="card-body">
+            <a href="{{ path("broadcast") }}" title="go to broadcast page to send mail" class="btn-sm btn btn-primary">Send global mail</a>
+            <br>
+            <br>
+            <hr>
+
+            <div id="errorDivSecurity" class="errorDiv card card-danger card-body"></div>
+
+            {%  include ":vo/templates:template_tab_securityList.html.twig" %}
+        </div>
+    </article>
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/vo/voList.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/dataTables.buttons.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/dataTables.buttons.1.5.4.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/dataTables.buttons.1.5.2.colVis.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/dataTables.buttons.1.5.2.flash.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/dataTables.buttons.1.5.2.html5.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/datatables/js/dataTables.buttons.1.5.2.print.min.js') }}"></script>
+
+    <script src="{{ asset('vendor/datatables/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/buttons.colVis.min.js') }}"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //build vo tables with datatables plugin
+            buildSecurityTable();
+
+
+
+        });
+    </script>
+{% endblock %}

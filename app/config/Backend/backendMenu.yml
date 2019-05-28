@@ -1,0 +1,24 @@
+parameters:
+  backendMenu:
+    #############################################################################################
+    #SF3
+    #############################################################################################
+    Lavoisier:
+        title: Lavoisier Status
+        icon : fas fa-sitemap
+        items:
+            - { title: Global Status, action: globalStatus }
+            - { title: Failed and Succeed Builds,  action: OkNokViews }
+    VoUsersContact:
+        title: Vo Users Contact
+        icon : fas fa-user
+        items:
+            - { title: Global List, action: voUsersContactList }
+
+    LogAccess:
+        title: Available logs
+        icon : fas fa-cogs
+        items:
+            - {title: apache, action: tableView, parameter: apache }
+            - {title: symfony1, action: tableView, parameter: symfony1 }
+            - {title: symfony3, action: tableView, parameter: symfony3 }

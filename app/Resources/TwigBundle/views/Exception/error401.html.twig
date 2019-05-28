@@ -1,0 +1,28 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block body %}
+
+    <div id="homeSection" class="card m-4">
+        <div class="card-header bg-danger text-white">
+            <h1><em><span class="fa fa-user-lock"></span> Error 401: Unauthorized.</em></h1>
+
+        </div>
+        <div class="card-body">
+            <h1 class="font-weight-light">
+                You don't have permission to access this page
+                <br/>
+                <small>{{ message|raw }}</small>
+            </h1>
+
+        </div>
+
+
+
+        <div class="card-footer"> For more information, please contact us at &nbsp;&nbsp;&nbsp;
+            <a href="mailto:{{ webMasterMail }}">
+                <span class='badge  badge-danger'>{{ webMasterMail }}</span></a>
+            &nbsp;&nbsp;
+
+        </div>
+
+    </div>
+{% endblock %}

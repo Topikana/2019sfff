@@ -1,0 +1,467 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block title %}Operations portal - Downtime{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('/css/bootstrap-tour.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+        <div class="row">
+        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {{ form_start(form, {'attr' : {'class':'form-horizontal'}}) }}
+
+                <div class="page-header">
+                    <h4>Subscriber</h4>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group row">
+                            {{ form_label(form.name,'User', {'label_attr' : {'class':'col-sm-3 control-label text-right'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.name, {'attr' : {'class':'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.email,'Email', {'label_attr' : {'class':'col-sm-3 control-label text-right'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.email, {'attr' : {'class':'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label(form.dn,'DN', {'label_attr' : {'class':'col-sm-3 control-label text-right'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.dn, {'attr' : {'class':'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+                        <div class="alert alert-info" role="alert">
+                            <h4>Need some help ?</h4>
+                            If you need help to add downtime subscriptions, please click on the button below.<br/><br/>
+                            <a onclick="startTour()" class="btn btn-primary text-white">How to add downtime subscriptions ?</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-header">
+                    <h4>Rules specifications</h4>
+                </div>
+
+                <table class="table table-condensed" id="table_subscription">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Rule</th>
+                            <th>Region</th>
+                            <th>Site</th>
+                            <th>Node</th>
+                            <th>VO</th>
+                            <th>
+                                Comm. channels
+                                <a tabindex="0" id="help-comm-channels" data-placement="top" data-toggle="popover" data-trigger="focus" title="Help" data-content="Add communication channels to receive downtime notifications.">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="subscription-fields-list" data-prototype="{% filter escape %}
+                    {{ include(':Downtime/form:prototype_subscription.html.twig', { 'form': form.subscriptions.vars.prototype, 'prototype': true }) }}
+                    {% endfilter %}">
+
+                        {% for subscriptionField in form.subscriptions %}
+                            <tr id="{{ loop.index-1 }}">
+                                {{ include(':Downtime/form:prototype_subscription.html.twig', { 'form': subscriptionField, 'form_index': loop.index-1 }) }}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+                <a href="#" id="add-another-subscription"><i class="fa fa-plus"></i> Add subscription</a>
+
+                <div class="form-group" style="margin-top: 10px;">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.save) }}
+                    </div>
+                </div>
+
+                {{ form_end(form) }}
+        	</div>
+        </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('build/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('build/js/bootstrap-tour.min.js') }}"></script>
+    <script type="text/javascript">
+        var subCount = '{{ form.subscriptions|length }}';
+
+        jQuery(document).ready(function() {
+
+            $('#help-comm-channels').popover();
+
+            $('.modal').on('hide.bs.modal', function (e) {
+                var modal = this;
+                $(this).find("input.input-sm").each(function () {
+                   console.log($(this));
+                    if($(this).val() == '' || $(this).val() == null){
+
+                        $(modal).find(".divalert").html('<div class="alert alert-danger" role="alert">Please fill email field to receive downtime communications.</div>');
+                        setTimeout(function () {
+                            $(modal).find(".divalert").html('');
+                        }, 5000)
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return false;
+                    }
+                });
+            });
+
+            if(subCount == 0){
+                var subList = $('#subscription-fields-list');
+
+                // grab the prototype template
+                var newWidget = subList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/_name_/g, subCount);
+                subCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<tr></tr>').html(newWidget);
+                newLi.appendTo(subList);
+            }
+
+            jQuery('#add-another-subscription').click(function(e) {
+                e.preventDefault();
+
+                var subList = $('#subscription-fields-list');
+
+                // grab the prototype template
+                var newWidget = subList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/_name_/g, subCount);
+                subCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<tr></tr>').html(newWidget);
+                newLi.appendTo(subList);
+            });
+
+            $('.modal-body select').each(function(){
+                var strChannel = this.options[this.selectedIndex].text;
+                var $parent = $(this).parent().parent();
+
+                if(strChannel == 'RSS'){
+                    $parent.find('input').prop('readonly', true);
+                }else if(strChannel == 'ICAL'){
+                    $parent.find('input').prop('readonly', true);
+                }else{
+                    $parent.find('input').prop('readonly', false);
+                }
+            });
+
+            $.getJSON('{{ url('subscriptionsjson') }}', function(result) {
+                $('#table_subscription > tbody  > tr').each(function() {
+                    var row = $(this).attr("id");
+                    var optionsSite = $("#user_form_subscriptions_"+row+"_site");
+                    var optionsNode = $("#user_form_subscriptions_"+row+"_node");
+
+                    if(parseInt(row) in result && 'site' in result[parseInt(row)] && result[parseInt(row)]['site'] != 'ALL'){
+                        optionsSite.append($("<option />").val(result[parseInt(row)]['site']).text(result[parseInt(row)]['site']).prop('selected', true));
+                    }
+                    if(parseInt(row) in result && 'node' in result[parseInt(row)] && result[parseInt(row)]['node'] != 'ALL'){
+                        optionsNode.append($("<option />").val(result[parseInt(row)]['node']).text(result[parseInt(row)]['node']).prop('selected', true));
+                    }
+                });
+            });
+
+            $.getJSON('{{ url('feedinfos') }}', function(result) {
+                $('#table_subscription > tbody  > tr').each(function() {
+                    var row = $(this).attr("id");
+                    var rss = $("#rss"+row+"");
+                    var ical = $("#ical"+row+"");
+                    var email = $("#email"+row+"");
+                    var none = $("#none"+row+"");
+                    if(parseInt(row) in result && 'none' in result[parseInt(row)] && result[parseInt(row)]['none']['value']){
+                        none.html('<a data-toggle="modal" data-target="#myModal'+row+'" title="No communication channel provided"><i class="fa fa-exclamation-triangle fa-lg text-warning" style="color:#e6b047; cursor: pointer;"></i> <i class="fa fa-times fa-lg text-danger" style="cursor: pointer;"></i></a>');
+                    }
+                    if(parseInt(row) in result && 'email' in result[parseInt(row)] && result[parseInt(row)]['email']['value']){
+                        email.html('<a data-toggle="modal" data-target="#myModal'+row+'" title="Email provided"><i class="fa fa-envelope fa-lg" style="color:#65c9e6; cursor: pointer;"></i></a>');
+                    }
+                    if(parseInt(row) in result && 'rss' in result[parseInt(row)] && result[parseInt(row)]['rss']['value']){
+                        rss.html('<a href="{{ url('feedrss', {'id': user.id}) }}" title="RSS feed" target="_blank"><i class="fa fa-rss-square fa-lg" style="color:#FF6600;"></i></a>');
+                    }
+                    if(parseInt(row) in result && 'ical' in result[parseInt(row)] && result[parseInt(row)]['ical']['value']){
+                        ical.html('<a href="{{ url('feedical', {'id': user.id}) }}" title="iCal feed" target="_blank"><i class="fa fa-calendar fa-lg text-danger"></i></a>');
+                    }
+                });
+            });
+        });
+
+        function startTour(){
+            var tour = new Tour({
+                steps: [
+                    {
+                        element: "#user_form_subscriptions_0_rule",
+                        title: "Step 1/12 - Rule",
+                        content: "Select if you want to receive or disable downtime notifications.",
+                        placement: 'bottom',
+                        next: 1
+                    },
+
+                    {
+                        element: "#user_form_subscriptions_0_region",
+                        title: "Step 2/12 Region",
+                        content: "Select the region for which you want to be notified.",
+                        placement: 'bottom',
+                        prev: 0,
+                        next: 2
+                    },
+
+                    {
+                        element: "#user_form_subscriptions_0_site",
+                        title: "Step 3/12 - Site",
+                        content: "Select the site for which you want to be notified.",
+                        placement: 'bottom',
+                        prev: 1,
+                        next: 3
+                    },
+
+                    {
+                        element: "#user_form_subscriptions_0_node",
+                        title: "Step 4/12 - Node",
+                        content: "Select the node for which you want to be notified.",
+                        placement: 'bottom',
+                        prev: 2,
+                        next: 4
+                    },
+
+                    {
+                        element: "#user_form_subscriptions_0_vo",
+                        title: "Step 5/12 - VO",
+                        content: "You can also select a VO for which you want to be notified.",
+                        placement: 'bottom',
+                        prev: 3,
+                        next: 5
+                    },
+
+                    {
+                        element: "#btncomm0",
+                        title: "Step 6/12 - Add communication channel(s)",
+                        content: "Now you have to add communication channel(s) to receive downtime notifications. <br/><br/><em>Please click on \"Add comm.\" button then \"Next\" button below.</em>",
+                        placement: 'bottom',
+                        prev: 4,
+                        next: 6
+                    },
+
+                    {
+                        element: "#add-another-communication0",
+                        title: "Step 7/12 - Add new communication channel",
+                        content: "Add new communication channel. <br/><br/><em>Please click on \"Add new\" button then \"Next\" button below.</em>",
+                        placement: 'bottom',
+                        prev: 5,
+                        next: 7
+                    },
+
+                    {
+                        element: "#user_form_subscriptions_0_communications_0_type",
+                        title: "Step 8/12 - Type",
+                        content: "Select how you want to be notified : either by email, RSS feed or iCal feed.",
+                        placement: 'bottom',
+                        prev: 6,
+                        next: 8
+                    },
+
+                    {
+                        element: "#user_form_subscriptions_0_communications_0_value",
+                        title: "Step 9/12 - Value",
+                        content: "If you choose email, you have to enter an email address. If you choose RSS or iCal feed, you have nothing more to do.",
+                        placement: 'bottom',
+                        prev: 7,
+                        next: 9
+                    },
+
+                    {
+                        element: "#closebtn0",
+                        title: "Step 10/12 - Close",
+                        content: "Now you can close the window. <br/><br/><em>Please click on \"Close\" button then \"Next\" button below.</em>",
+                        placement: 'bottom',
+                        prev: 8,
+                        next: 10
+                    },
+
+                    {
+                        element: "#add-another-subscription",
+                        title: "Step 11/12 - Add subscription",
+                        content: "Add another subscription (optionnal)",
+                        placement: 'bottom',
+                        prev: 9,
+                        next: 11
+                    },
+
+                    {
+                        element: "#user_form_save",
+                        title: "Step 12/12 - Save !",
+                        content: "Save your rules specifications ! That's it !",
+                        placement: 'bottom',
+                        prev: 10
+                    }
+
+                ]});
+
+
+            // Initialize the tour
+            tour.init();
+
+            // Start the tour
+            tour.start(true);
+            tour.goTo(0);
+        }
+
+        function addRow(id, rowNb) {
+
+            var subListComm = $('#'+id);
+            var subCountComm = subListComm.children().length;
+
+            $('#nbComm'+rowNb).html(subCountComm+1);
+            if(subCountComm+1 == 0){
+                $('#nbComm'+rowNb).html('Add ');
+            }
+
+            // grab the prototype template
+            var newWidgetComm = subListComm.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidgetComm = newWidgetComm.replace(/_namec_/g, subCountComm);
+            newWidgetComm = newWidgetComm.replace(/_name_/g, rowNb);
+
+            // create a new list element and add it to the list
+            var newTrComm = jQuery('<tr></tr>').html(newWidgetComm);
+            newTrComm.appendTo(subListComm);
+            newTrComm.children('.col-md-6').children('input').val("{{ user.email }}");
+        };
+
+
+        function changeNGI(select){
+
+            var idSelectStr = select.getAttribute('id');
+            var numrow = idSelectStr.match(/\d+/)[0];
+            var strNGI = select.options[select.selectedIndex].value;
+
+            var options = $("#user_form_subscriptions_"+numrow+"_site");
+            var $parent = options.parent();
+            $parent.children("i").css('display','');
+            options.css('display','none');
+
+            var optionsnodes = $("#user_form_subscriptions_"+numrow+"_node");
+            var $parentnodes = optionsnodes.parent();
+            $parentnodes.children("i").css('display','');
+            optionsnodes.css('display','none');
+
+            var url = "{{ url("listsite", {'ngi': 'ngi_id'}) }}";
+            url = url.replace("ngi_id", strNGI);
+
+            $.getJSON(url, function(result) {
+                options.find('option')
+                        .remove()
+                        .end()
+                        .append($("<option />").val('ALL').text('All sites'));
+                optionsnodes.find('option')
+                        .remove()
+                        .end()
+                        .append($("<option />").val('ALL').text('All nodes'));
+                $.each(result, function() {
+                    options.append($("<option />").val(this.NAME).text(this.NAME));
+                });
+            }).always(function() {
+                $parent.children("i").css('display','none');
+                options.css('display','');
+
+                $parentnodes.children("i").css('display','none');
+                optionsnodes.css('display','');
+            });
+
+        }
+
+        function changeSite(select){
+
+            var idSelectStr = select.getAttribute('id');
+            var numrow = idSelectStr.match(/\d+/)[0];
+            var strSite = select.options[select.selectedIndex].text;
+
+            var options = $("#user_form_subscriptions_"+numrow+"_node");
+            var $parent = options.parent();
+            $parent.children("i").css('display','');
+            options.css('display','none');
+
+
+            var url = "{{ url("listns", {'site': 'site_id'}) }}";
+            url = url.replace("site_id", strSite);
+
+            $.getJSON(url, function(result) {
+
+                options.find('option')
+                        .remove()
+                        .end()
+                        .append($("<option />").val('ALL').text('All nodes'));
+                $.each(result, function() {
+                    options.append($("<option />").val(this.HOSTNAME+'-'+this.SERVICE_TYPE).text(this.HOSTNAME+'-'+this.SERVICE_TYPE));
+                });
+            }).always(function() {
+                $parent.children("i").css('display','none');
+                options.css('display','');
+            });
+
+        }
+
+        function removeLine(selection){
+
+            var line = $(selection).parent().parent();
+            line.remove();
+
+        }
+
+        function changeChannel(select){
+            var strChannel = select.options[select.selectedIndex].text;
+            var $parent = $(select).parent().parent();
+
+            if(strChannel == 'RSS'){
+                $parent.find('input').prop('readonly', true);
+                $parent.find('input').val('{{ url('feedrss', {'id': user.id}) }}')
+                $(select).closest(".cemailpref").find('.email_prefs').hide();
+            }else if(strChannel == 'ICAL'){
+                $parent.find('input').prop('readonly', true);
+                $parent.find('input').val('{{ url('feedical', {'id': user.id}) }}')
+                $(select).closest(".cemailpref").find('.email_prefs').hide();
+            }else{
+                $parent.find('input').prop('readonly', false);
+                $parent.find('input').val('{{ user.email }}');
+                $(select).closest(".cemailpref").find('.email_prefs').show();
+            }
+
+        }
+
+        function removeLineComm(selection, rowNb){
+
+            var line = $(selection).parent().parent();
+            line.remove();
+
+            var nbComm = parseInt($('#nbComm'+rowNb).text()) - 1;
+            $('#nbComm'+rowNb).html(nbComm);
+            if(nbComm == 0){
+                $('#nbComm'+rowNb).html('Add ');
+            }
+
+        }
+
+    </script>
+
+{% endblock %}

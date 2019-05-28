@@ -1,0 +1,58 @@
+step:
+  Step:
+    id: Step
+    value: +C.Step+
+  Subject:
+    id: Subject
+    value: |
+            [Dashboard] Issues detected at +C.site_name+
+    required: true
+    order: '10'
+    quick: true
+  Site:
+    id: Site
+    visibility: false
+    value: +C.site_name+
+  Ngi:
+    id: Ngi
+    visibility: false
+    value: +C.ngi_name+
+  EndDate: # override behaviour defined in 'default' step using widget default behaviour (in3days)
+    id: EndDate
+    value: ~
+    quick: true
+  Community:
+    id: Community
+    value: ROD
+    visibility: false
+  Author:
+    id: Author
+    value: +C.user+
+    visibility: false
+  Description:
+    id: Description
+    order: 20
+    label: Problem description
+    value: |
+     Dear site administrator,
+
+     We have detected +C.pb_number+ problem(s) at +C.site_name+.
+     Please find below a list of attached problems :
+
+     +C.group+
+
+     Reach ticket on dashboard :
+     +C.ticket_link+
+
+     Could you please have a look ?
+     Thank you
+     +C.user+
+  Priority:
+    id: Priority
+    value: "less urgent"
+    visibility: true
+  Modifier:
+    id: Modifier
+    label: Modifier
+    value: +C.user+
+    visibility: false

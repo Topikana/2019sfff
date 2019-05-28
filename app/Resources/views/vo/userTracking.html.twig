@@ -1,0 +1,180 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+    {% endblock %}
+
+
+{% block body %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+
+    <div id="flashes">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+
+    <article class="card mr-5 ml-5 mb-5">
+        <div class="card-header">
+            <h2 style="font-size: 30px;">User Tracking</h2>
+            <a role="button" data-toggle="collapse"
+               href="#collapseHelp" aria-expanded="true" aria-controls="collapseHelp" style="font-size: 14px;">
+                <span class="fa fa-flag"></span>&nbsp;&nbsp; How to use the tool
+
+            </a>
+        </div>
+
+        <div class="card-body">
+
+            <!-- HELP -->
+            <div id="collapseHelp" class="panel-collapse collapse" role="tabpanel" style="font-size: 14px">
+                <div class="card-body">
+                    {{ help["pages"]["userTracking"]|raw }}
+                </div>
+                <hr>
+            </div>
+            <!-- END HELP -->
+
+
+            <!-- FORM -->
+            <form id='userTrackingForm' class="d-flex justify-content-center"  method="POST">
+                <div class="row col-md-10">
+                    <div class="form-control" style="border: none; font-size: 14px">
+                        <label class="col-form-label">{{ form_label(form.DN) }}</label>
+
+                        <div class="input-group input-group-sm">
+                            {{ form_widget(form.DN) }}
+                            {{ form_errors(form.DN) }}
+
+
+                            <div class="input-group-append">
+                                <a href="#" id="searchDN" class="btn btn-primary" onclick="searchDN('{{ path("DNTrackingAjax") }}')"
+                                   role="button" style="font-size: 14px">Search DN</a>
+                            </div>
+                        </div>
+
+
+                    <!-- show email if is SecurityOfficer -->
+                    {% if app.user.isSecurityOfficer("egi") %}
+                        <div id="email_securityOfficier" class="alert" role="alert"></div>
+                    {% endif %}
+
+
+                        <label class="col-form-label">{{ form_label(form.vo) }}</label>
+
+                        <div  class="input-group input-group-sm">
+                            {{ form_widget(form.vo) }}
+                            {{ form_errors(form.vo) }}
+
+                        </div>
+
+
+
+                        <label class="col-form-label">{{ form_label(form.name) }}</label>
+
+                        <div  class="input-group input-group-sm">
+                            {{ form_widget(form.name, {'attr' : {'value': app.user.username} }) }}
+                            {{ form_errors(form.name) }}
+
+                        </div>
+
+
+
+                        <label class="col-form-label">{{ form_label(form.email) }}</label>
+
+                        <div  class="input-group input-group-sm">
+                            {{ form_widget(form.email) }}
+                            {{ form_errors(form.email) }}
+
+                        </div>
+
+
+
+                        <label class="col-form-label">{{ form_label(form.subject) }}</label>
+
+                        <div  class="input-group input-group-sm">
+                            {{ form_widget(form.subject) }}
+                            {{ form_errors(form.subject) }}
+
+                        </div>
+
+
+
+                        <label class="col-form-label">{{ form_label(form.body) }}</label>
+
+                        <div  class="input-group input-group-sm">
+                            {{ form_widget(form.body) }}
+                            {{ form_errors(form.body) }}
+
+                        </div>
+
+                    <br>
+                    <br>
+
+                        <div class="d-flex justify-content-end">
+                            <span>{{ form_widget(form.send) }}</span>
+                        </div>
+
+                    </div>
+                    {{ form_rest(form) }}
+                </div>
+            </form>
+
+            <!-- END FORM -->
+        </div>
+    </article>
+
+
+    <div class="modal fade out" id="modalDN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">Select DN </h3>
+                    <button type="button" class="close" style="font-size: 40px; color: red" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                </div>
+
+                <div id="modal-body" class="modal-body" style="font-size: small;margin-left: 30px">
+
+
+                    <div class="ball"></div>
+                    <div class="ball1"></div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <a class="btn btn-primary btn-sm" onclick="selectDN('{{ path("EmailTrackingAjax") }}')" data-dismiss="modal" style="color: white;">select DN</a>
+                    <a class="btn btn-danger btn-sm" data-dismiss="modal"  style="color: white;">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/vo/voList.min.js') }}"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //build vo tables with datatables plugin
+            buildInvalidVOTable();
+
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+AppBundle\Entity\Disciplines:
+  type: entity
+  table: disciplines
+  connection: dashboardConnection
+  id:
+    discipline_id:
+      type: integer
+      options:
+        unsigned: false
+    discipline_label:
+      type: string
+      length: 100
+      options:
+        fixed: false
+      nullable: true
+  oneToMany:
+    voDisciplines:
+      targetEntity: VoDisciplines
+      mappedBy: vo

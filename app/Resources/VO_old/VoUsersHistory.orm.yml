@@ -1,0 +1,26 @@
+AppBundle\Entity\VoUsersHistory:
+  type: entity
+  table: vo_users_history
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+     vo:
+       type: string
+       length : 255
+       options:
+         fixed: false
+     u_month:
+       type: integer
+     u_year:
+       type: integer
+     nbtotal:
+       type: integer
+     nbremoved:
+       type: integer
+     nbadded:
+       type: integer

@@ -1,0 +1,114 @@
+<div class="mt-0 mb-0 col-sm-12 d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+        <div>
+            <ul class="timeline">
+                {% for infos in history|sort %}
+                    {% if infos.notepadId == id %}
+                        {% if infos.status == 1 %}
+                            <li class=""><h5>Creation notepad to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            <h7>Alarm group: </h7>
+                            {% for alarmName in ragiosAlarm %}
+{#                                {% set splitAlarmId = infos.alarmId | split(',') %}#}
+                                {% for alarmKey in infos.alarmId %}
+                                    {% if alarmKey == alarmName.id %}
+                                        {% if alarmName.status == 0 %}
+                                            <a class="badge badge-success text-white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 1 %}
+                                            <a class="badge badge-warning text-white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 2 %}
+                                            <a class="badge badge-danger text-white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 3 %}
+                                            <a class="badge badge-default text-white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 4 %}
+                                            <a class="badge badge-primary text-white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <p>
+                                {%  for notepadComment in notepad %}
+                                    {% if infos.notepadId == notepadComment.id %}
+                                        <h7>Subject : </h7>
+                                        <a class="text-primary">{{ notepadComment.comment }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                        </li>
+
+                        {% if infos.status == 2 %}
+                            <li class=""><h5>Add alarm to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            <h7>Alarm group: </h7>
+                            {% for alarmName in ragiosAlarm %}
+                                {% for alarmKey in infos.alarmId %}
+                                    {% if alarmKey == alarmName.id %}
+                                        {% if alarmName.status == 0 %}
+                                            <a class="badge badge-success" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 1 %}
+                                            <a class="badge badge-warning" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 2 %}
+                                            <a class="badge badge-danger" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 3 %}
+                                            <a class="badge badge-default" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 4 %}
+                                            <a class="badge badge-primary" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        </li>
+
+                        {% if infos.status == 3 %}
+                            <li class=""><h5>Remove alarm to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            <h7>Alarm group: </h7>
+                            {% for alarmName in ragiosAlarm %}
+                                {% for alarmKey in infos.alarmId %}
+                                    {% if alarmKey == alarmName.id %}
+
+                                        {% if alarmName.status == 0 %}
+                                            <a class="badge badge-success" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 1 %}
+                                            <a class="badge badge-warning" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 2 %}
+                                            <a class="badge badge-danger" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 3 %}
+                                            <a class="badge badge-default" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                        {% if alarmName.status == 4 %}
+                                            <a class="badge badge-primary" style="color: white">{{ alarmName.testName }}</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        </li>
+
+                        {% if infos.status == 4 %}
+                            <li class=""><h5>Add comment to {{ infos.creationDate | date("F jS \\a\\t g:ia")}} : </h5>
+                            {% for commentary in comment %}
+                                {% if commentary.id == infos.commentId %}
+                                    <h7>Author :</h7>
+                                    <a class="text-primary">{{ commentary.author }}</a>
+                                    <p class="text-primary">{{ commentary.commentary }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

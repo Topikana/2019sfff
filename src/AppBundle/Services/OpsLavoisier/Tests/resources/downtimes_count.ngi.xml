@@ -1,0 +1,5 @@
+<e:entries xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <e:entry key="NGI_FRANCE">1.0</e:entry>
+    <e:entry key="NGI_ARMGRID">1.0</e:entry>
+    <e:entry key="ROC_LA">2.0</e:entry>
+</e:entries>

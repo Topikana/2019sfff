@@ -1,0 +1,75 @@
+body {
+    padding: 0;
+}
+
+#backendDate {
+    margin-top: 21px;
+    border-left : 2px solid;
+    border-right: 2px solid;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight : bold;
+    margin-right:10px;
+}
+
+/*-------------------------*/
+/*          MODALES        */
+/*-------------------------*/
+.modal-body {
+    word-wrap: break-word;
+}
+
+/*-------------------------*/
+/*      TAB VERTICAL       */
+/*-------------------------*/
+.tabs-left > li:not(.active) > a {
+    background : none !important;
+}
+.tabs-left {
+    min-height : 600px;
+    padding-top : 10px !important;
+}
+
+/*-------------------------*/
+/*      PAGE TITLE         */
+/*-------------------------*/
+.page_title {
+    font-weight: bold;
+    font-size: 150%;
+    padding-top : 15px;
+    float: left;
+}
+
+/*-------------------------*/
+/*      TEXT               */
+/*-------------------------*/
+.urlStatus {
+    font-size : 80%;
+}
+
+/*-------------------------*/
+/*      LINK               */
+/*-------------------------*/
+.disabled {
+    cursor: default;
+    color: #888888 !important;
+}
+
+/*-------------------------*/
+/*      LOADER               */
+/*-------------------------*/
+.fa-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+

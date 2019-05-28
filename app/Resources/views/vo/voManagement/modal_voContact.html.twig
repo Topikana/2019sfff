@@ -1,0 +1,88 @@
+<div id="modalContact" class="modal fade mt-5 pt-5" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                {% if mode == "create" %}
+                    <h3 class="modal-title">Add new Contact</h3>
+                {% else %}
+                    <h3 class="modal-title">Edit {{ dn }}</h3>
+                {% endif %}
+            </div>
+            {{ form_start(contactForm, {'attr': {'id': 'contactForm'}}) }}
+            <div class="modal-body">
+              <div class="d-flex justify-content-between pl-0 pr-0 col-md-12">
+                <div class="col-md-4 font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(contactForm.VoContacts.first_name) }}
+                    {{ form_widget(contactForm.VoContacts.first_name , {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-4 font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(contactForm.VoContacts.last_name) }}
+                    {{ form_widget(contactForm.VoContacts.last_name, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-4 font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(contactForm.VoUserProfile) }}
+                    {{ form_widget(contactForm.VoUserProfile, {'attr' : { 'class' : 'form-control form-control-sm w-100'}}) }}
+                </div>
+            </div>
+                <div class="col-md-12 font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(contactForm.VoContacts.dn) }}
+                    {{ form_widget(contactForm.VoContacts.dn, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-12 font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(contactForm.VoContacts.email) }}
+                    {{ form_widget(contactForm.VoContacts.email, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-12 font-weight-bold" style="font-size: 14px;">
+                    {{ form_label(contactForm.comment) }}
+                    {{ form_widget(contactForm.comment, {'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+                </div>
+
+                {% if mode == "update" %}
+                    <div class="col-md-12 font-weight-bold" style="font-size: 14px;">
+                        <input id="vo_contact_has_profile_oldDN" type="hidden"  value="{{ dn }}" name="oldDN">
+                    </div>
+
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" value="{{ dn }}" name="id" id="contactDn">
+                <input type="hidden" name="serial" value="{{ serial }}" id="serial">
+                {{ form_widget(contactForm.serial) }}
+                {{ form_widget(contactForm.user_profile_id) }}
+                {{ form_widget(contactForm.VoContacts.grid_body) }}
+                <button type="button" class="pull-right btn btn-default" data-dismiss="modal"
+                        onclick="$('#header').slideDown('slow');">Close
+                </button>
+                <input type="submit" class="pull-right btn btn-success" id="VOVG_form_submit" value="Save">
+            </div>
+            {{ form_end(contactForm) }}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    $(document).ready(function () {
+        $("#vo_contact_has_profile_VoUserProfile option[value={{ profileId }}]").prop('selected', true);
+
+        $("#vo_contact_has_profile_user_profile_id").val({{ profileId }});
+        $('#header').slideUp("slow");
+        $("#contactForm").validate();
+
+        $("#contactForm").submit(function (event) {
+            if ($("#contactForm").valid()) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'html',
+                    data: $("#modalContact :input").serialize(),
+                    url: "{{ path("contactForm") }}",
+                    success: function (data, textStatus) {
+                        $('#panelContact').html(data);
+                        $('#header').slideDown("slow");
+                    }
+                });
+                $('#modalContact').modal('toggle');
+            }
+        });
+    });
+
+</script>

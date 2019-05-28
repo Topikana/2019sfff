@@ -1,0 +1,47 @@
+step:
+  Author:
+    id: Author
+    value: +C.user+
+  Modifier:
+    id: Modifier
+    value: +C.user+
+  AuthorEmail:
+    id: AuthorEmail
+    value: +C.manager_email+
+  Involve:
+    id: Involve
+    value: +C.manager_email+
+  Priority:
+    id: Priority
+    value: less urgent
+  Subject:
+    id: Subject
+    value: New VO +C.vo_name+ wants GGUS dedicated support
+  NotificationStrategy:
+    id: NotificationStrategy
+    value: Every Change
+  Description:
+    id: Description
+    value: |
+         Dear VO Support Team,
+
+         A new VO registration request has been made on the EGI Operations Portal.
+         Name of the new VO : +C.vo_name+
+
+         This VO asked for dedicated GGUS support.
+
+         Please contact the responsibles of this VO to setup their integration process in GGUS.
+         Needed contact information is provided below :
+
+         +C.manager_list+
+
+         Link to Operations-portal : +C.perma_link+
+  Status:
+    id: Status
+    value: assigned
+  Step:
+    id: Step
+    value: ggus_su_request
+  Community:
+    id: Community
+    value: VOM

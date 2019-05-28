@@ -1,0 +1,53 @@
+
+<div id="accordion_news" style="font-size: small">
+    {% set cpt = 0 %}
+    {% for news in tabNews %}
+        {% if cpt >= min and cpt <= max %}
+            <div class="border-left">
+                <h6 class="m-3">{{ news.subject }}</h6>
+                <blockquote class="m-2 ">
+
+                    <div class="text-right">
+                        <small class='muted'>
+                            {{ news.createdat|date }} |   {{ news.authorcn }}
+                        </small>
+                        <br/>
+                        <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#modal{{ cpt }}">
+                            <span class="fa fa-plus-circle"></span> More details
+                        </a>
+                    </div>
+                </blockquote>
+            </div>
+
+
+
+            <div id="modal{{ cpt }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new{{ cpt }}Title">
+                <div class="modal-dialog modal-dialog-centered" role="document" style="width: 60%;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 style="color:#2e6da4; font-weight: bold" class="modal-title" id="new{{ cpt }}Title">
+                                {{ news.subject }}
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                        </div>
+                        <div class="modal-body" style="overflow-y:scroll;" >
+                            <p>{{ news.body|nl2br }}</p>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <small class='muted' style="color: #777;text-decoration:none">
+                                {{ news.createdat|date }}
+                                <br>
+                                by {{ news.authorcn }}
+                            </small>
+                        </div>
+
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        {% endif %}
+        {% set cpt = cpt + 1 %}
+    {% endfor %}
+</div>

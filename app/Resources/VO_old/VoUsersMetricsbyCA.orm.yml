@@ -1,0 +1,21 @@
+AppBundle\Entity\VoUsersMetricsbyCA:
+  type: entity
+  table: vo_users_metrics_ca
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    ca:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    day_date:
+      type: string
+      length: 10
+    nbtotal:
+      type: integer

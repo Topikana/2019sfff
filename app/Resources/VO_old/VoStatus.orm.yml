@@ -1,0 +1,27 @@
+AppBundle\Entity\VoStatus:
+  type: entity
+  table: vo_status
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    scope:
+      type: string
+      options:
+        fixed: false
+    roc:
+      type: string
+      options:
+        fixed: false
+    decommissioned:
+      type: smallint
+      options:
+        unsigned: false
+  oneToMany:
+    voHeaders:
+      targetEntity: VoHeader
+      mappedBy: voStatus

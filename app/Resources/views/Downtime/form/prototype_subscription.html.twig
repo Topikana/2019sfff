@@ -1,0 +1,69 @@
+<td class="text-center">
+    <span id="none{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}"></span>
+    <span id="email{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}"></span>
+    <span id="rss{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}"></span>
+    <span id="ical{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}"></span>
+</td>
+<td class="text-center">{{ form_widget(form.rule) }}</td>
+<td class="text-center">{{ form_widget(form.region) }}</td>
+<td class="text-center">{{ form_widget(form.site) }}<i id="siteSpinner" class="fa fa-spinner fa-pulse" style="display: none;"></i></td>
+<td class="text-center">{{ form_widget(form.node) }}<i id="nodeSpinner" class="fa fa-spinner fa-pulse" style="display: none;"></i></td>
+<td class="text-center">{{ form_widget(form.vo) }}</td>
+<td>
+    <a id="btncomm{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}" class="btn btn-default btn-sm btn-block" data-toggle="modal" data-target="#myModal{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}"><span id="nbComm{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}">{% if form.communications|length > 0 %}{{ form.communications|length }}{% else %}Add {% endif %}</span> comm.</a>
+
+
+    <div class="modal fade" id="myModal{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Communication channels</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cemailpref">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="communication-fields-list{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}" data-prototype="{% filter escape %}
+                                {{ include(':Downtime/form:prototype_communication.html.twig', { 'form': form.communications.vars.prototype }) }}
+                                {% endfilter %}">
+
+                                {% for communicationField in form.communications %}
+                                    <tr>
+                                        {{ include(':Downtime/form:prototype_communication.html.twig', { 'form': communicationField, 'form_index_comm': loop.index, 'form_index_sub': form_index }) }}
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            <div class="divalert"></div>
+                            <button type="button" class="btn btn-link" onclick="addRow('communication-fields-list{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}', {% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}); $(this).closest('.cemailpref').find('.email_prefs').show();" id="add-another-communication{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}"><i class="fa fa-plus"></i> Add new</button>
+                            <hr>
+                            <div class="email_prefs">
+                                <h4>Email preferences</h4>
+                                {% if prototype is defined %}{{ form_widget(form.adding, {'attr': {'checked': 'true'}}) }} {% else %}{{ form_widget(form.adding) }}{% endif %} {{ form_label(form.adding) }}<br/>
+                                {% if prototype is defined %}{{ form_widget(form.beginning, {'attr': {'checked': 'true'}}) }} {% else %}{{ form_widget(form.beginning) }}{% endif %} {{ form_label(form.beginning) }}<br/>
+                                {% if prototype is defined %}{{ form_widget(form.ending, {'attr': {'checked': 'true'}}) }} {% else %}{{ form_widget(form.ending) }}{% endif %} {{ form_label(form.ending) }}<br/>
+                                <br/><br/>
+                            </div>
+                    	</div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="closebtn{% if form_index is defined %}{{ form_index }}{% else %}_name_{% endif %}" type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</td>
+<td><a onclick="removeLine(this)" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a></td>
+

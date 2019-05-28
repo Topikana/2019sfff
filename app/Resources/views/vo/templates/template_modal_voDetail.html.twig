@@ -1,0 +1,38 @@
+<div id="modalVo{{ tabgeneral.serial }}" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="max-width: 60% !important;">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="modal-title" style="font-size: 24px;">{{ tabgeneral.name }} &nbsp; <a href="{{ path("VoDetailPermalink", {"voName" : tabgeneral.name}) }}"><span class="fa fa-link"></span></a></h3>
+            </div>
+            <div class="modal-body">
+                {% include ":vo/templates:template_tab_VODetails.html.twig" with
+                {"name" : tabgeneral.name,
+                "scope" : tabgeneral.scope,
+                "status" :tabgeneral.status,
+                "validationDate" : tabgeneral.validationDate,
+                "disciplines": tabgeneral.disciplines,
+                "supportedServices": tabgeneral.supportedServices,
+                "enrollmentUrl": tabgeneral.enrollmentUrl,
+                "homepageUrl": tabgeneral.homepageUrl,
+                "supportProcedureUrl": tabgeneral.supportProcedureUrl,
+                "ggus" :tabgeneral.ggus,
+                "voms":tabgeneral.voms,
+                "description": description,
+                "aup": aup,
+                "acknowledgment": acknowledgment,
+                "resources": resources,
+                "cloud" : cloud,
+                "otherrequirements": otherrequirements,
+                "contacts" : contacts,
+                "mailinglist" : mailinglist,
+                "vomslist": vomslist,
+                "vomsgroup": vomsgroup
+                }
+                %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

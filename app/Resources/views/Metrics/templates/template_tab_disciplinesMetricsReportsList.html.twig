@@ -1,0 +1,80 @@
+<table id="usersMetricsTable" cellspacing="0" width="100%"
+       class="table table-bordered table-striped table-condensed">
+    <thead>
+    <tr>
+        <th rowspan="2">Discipline</th>
+
+        {% for date in tabdates %}
+            <th colspan="2" style="text-align: center; border-bottom: none">
+                {{ date }}
+            </th>
+        {% endfor %}
+    </tr>
+
+    <tr style="font-weight: bold;">
+        {% for date in tabdates %}
+            <th class="float-left" style="height: 20px;border-top: none;border-right: none;"></th>
+
+        <th style="height: 20px;border-top: none;border-left: none;"></th>
+        {% endfor %}
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {% set return = false %}
+    {% for disciplineId, discipline in voMetricsraw %}
+    {% if discipline['level'] is defined %}
+        {% if (discipline['level']!=3 and return == false) %}
+            {% set return = true %}
+        {% endif %}
+
+        <tr id="{{ discipline["label"] }}">
+
+            <td style="color:gray;">
+                <span>
+                    {% if discipline['level']!=1 and discipline['label']!= 'Other' %}
+                        <a href="{{ path("disciplineMetricsReports", {"entity": entity,"date" : tabdates[3]|date("Y-m-d H:i:s"), "id" : disciplineId }) }}"
+                           title="discipline metrics report for {{ discipline["label"] }}">
+                            {{ discipline["label"] }}
+                        </a>
+                    {% else %}
+                        {{ discipline["label"] }}
+                    {% endif %}
+                </span>
+                <span class="float-right">
+
+                    {% set display = 'none' %}
+                    {% for month, ddate in tabdates %}
+                        {% if discipline["dates"][ddate] != 0 %}
+                            {% set display = 'block' %}
+                        {% endif %}
+                    {% endfor %}
+
+
+                    <a style="display:{{display  }};font-size:smaller;padding-right:20px; font-style:italic"     href="{{ path("oneYearDisciplinesMetricsReports", {"entity": entity, "name" : discipline["label"], "date" : tabdates[3]}) }}">History
+                    </a>
+                </span>
+            </td>
+
+            {% for month, ddate in tabdates %}
+
+                <td style="border-right: none">
+                    <span style="{{ voMetricsraw["nbUsersStyle"][discipline["label"]][ddate] }}">
+                    {{ voMetricsraw["nbUsersDiff"][discipline["label"]][ddate] }}
+                    </span>
+                </td>
+                <td style="border-left: none">
+                    <span class="pull-right">
+                        {{ discipline["dates"][ddate] }}
+                    </span>
+                </td>
+
+            {% endfor %}
+
+        </tr>
+            {% endif %}
+    {% endfor %}
+    </tbody>
+
+</table>

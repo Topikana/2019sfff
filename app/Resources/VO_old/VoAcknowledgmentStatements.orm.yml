@@ -1,0 +1,39 @@
+AppBundle\Entity\VoAcknowledgmentStatements:
+  type: entity
+  table: vo_acknowledgment_statements
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    type_as:
+      type: string
+      length: 255
+    grantid:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    suggested:
+      type: string
+      options:
+        fixed: false
+    relationShip:
+      type: string
+      options:
+        fixed: false
+    publicationUrl:
+      type: string
+      length: 255
+      options:
+        fixed: false
+
+  oneToOne:
+    vo:
+      targetEntity: Vo
+      joinColumn:
+        name: serial
+        referencedColumnName: serial

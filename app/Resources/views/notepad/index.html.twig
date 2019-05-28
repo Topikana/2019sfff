@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Notepads list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Subject</th>
+                <th>Comment</th>
+                <th>site</th>
+                <th>Carboncopy</th>
+                <th>Curent place</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for notepad in notepads %}
+            <tr>
+                <td><a href="{{ path('notepad_show', { 'id': notepad.id }) }}">{{ notepad.id }}</a></td>
+                <td>{{ notepad.subject }}</td>
+                <td>{{ notepad.comment }}</td>
+                <td>{{ notepad.site }}</td>
+                <td>
+                    {% for carbon in notepad.carbonCopy %}
+                        {{ carbon }}
+                    {% endfor %}
+                </td>
+                <td>{{ notepad.currentPlace }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('notepad_show', { 'id': notepad.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('notepad_edit', { 'id': notepad.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('notepad_new') }}">Create a new notepad</a>
+        </li>
+    </ul>
+{% endblock %}

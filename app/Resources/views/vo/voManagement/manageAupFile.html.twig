@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Manage AUP file for : {{ voname }}</h1>
+    <div class='well-lg panel panel-default col-md-12'>
+        <div>
+            <h2 class="portal">Files List</h2>
+        </div>
+        {% if message is defined %}
+            {% if  "Error" not in message %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% else %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+        {% endif %}
+
+        {% if aupFileList|length > 0 %}
+            <table id="tableAupManage" class="table table-bordered table-striped" border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                <th><h3 style="text-align: center">File Name</h3></th>
+                <th><h3 style="text-align: center">Upload date</h3></th>
+                <th><h3 style="text-align: center">Use</h3></th>
+                </thead>
+                <tbody>
+                {% for file in aupFileList %}
+                    <tr>
+                        <td style="text-align: left"> {{ file.filename }}</td>
+                        <td style="text-align: center">
+                            {{ file.cTime|date("M d Y - h:i:s") }}
+                        </td>
+                        <td style="text-align: center">
+                            {% if aupValue == file.filename %}
+                                <span class="glyphicon glyphicon-ok"
+                                      style="color: green;font-size: 20px"></span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class='alert alert-warning' style="font-size: 25px">
+                There is currently no AUP file uploaded for this VO.
+            </div>
+        {% endif %}
+        <div>
+            <h2 class="portal">Upload new File</h2>
+        </div>
+        <input id="voName" type="hidden" value="{{ voname }}"/>
+
+        <form id="aupManageForm" method="post" enctype="multipart/form-data">
+            <div class="col-md-offset-1">
+                <div class="col-md-4 form-group">
+                    <label>{{ form_label(aupFileForm.aupFile) }}</label>
+                    <div>
+                        {{ form_widget(aupFileForm.aupFile) }}
+                        <div id="fileError" class="alert alert-danger">
+                            {{ form_errors(aupFileForm.aupFile) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>{{ form_label(aupFileForm.name) }}</label>
+                    <div>
+                        {{ form_widget(aupFileForm.name) }}
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center">
+                    <br>
+                    <input class="btn btn-large btn-primary" id="submit_file" type="submit"
+                           value="Upload this file">
+                </div>
+            </div>
+            {{ form_widget(aupFileForm._token) }}
+        </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('dist/js/vo/aup.min.js') }}"></script>
+    <script language="JavaScript">
+        $(document).ready(function () {
+            $("#manage_aup_file_aupFile").change(function () {
+                showNewAupFile();
+            });
+
+
+            if ($("#fileError").find("ul").length == 0) {
+                $("#fileError").hide();
+            }
+        });
+    </script>
+{% endblock %}

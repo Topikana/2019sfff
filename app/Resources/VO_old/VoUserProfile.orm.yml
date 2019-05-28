@@ -1,0 +1,26 @@
+AppBundle\Entity\VoUserProfile:
+  type: entity
+  table: vo_user_profile
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    profile:
+      type: string
+      length: 100
+      options:
+        fixed: false
+    description:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    help_msg:
+      type: string
+      length: 1000
+      options:
+        fixed: false

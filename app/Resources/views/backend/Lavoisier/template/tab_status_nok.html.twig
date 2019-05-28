@@ -1,0 +1,66 @@
+<!-- CC LAVOISIER  NOK -->
+<div class="tab-pane active" id="{{ lavoisierProdName }}NOK">
+
+    <table class="tabResult table">
+        <thead>
+        <tr>
+            <th>View</th>
+            <th>Last Build Date</th>
+            <th>Last Error Date</th>
+            <th>Last Exception</th>
+            <th>Last Stack Trace</th>
+            <th>Notify</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, value in lavoiserArray %}
+            <tr>
+
+                <td>{{ value["view"] }}</td>
+                <td>{% if value["lastBuildDate"] != "null" %}{{ value["lastBuildDate"]|date("Y-m-d h:m:s") }}{% else %}N.A{% endif %}</td>
+                <td>{% if value["lastErrorDate"] != "null" %}{{ value["lastErrorDate"]|date("Y-m-d h:m:s") }}{% else %}N.A{% endif %}</td>
+                <td>
+                    <button data-target="#modalLastException{{ value["view"] }}" data-toggle="modal" class="btn btn-sm btn-primary" type="button">
+                        Details
+                    </button>
+                </td>
+                <td>
+                    <button data-target="#modalLastStackTrace{{ value["view"] }}" data-toggle="modal" class="btn btn-sm btn-primary" type="button">
+                        Details
+                    </button>
+                </td>
+                <td>{% if  value["notifiable"] == "1" %}<button id="notifyButton{{ value["view"]  }}" class="btn btn-sm btn-default" onclick="callLavoisierNotify('{{ lavoisierProdName }}', '{{ value["view"] }}')">Notify</button>{% else %}Not notifiable {% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- END CC LAVOISIER  NOK -->
+
+<script>
+
+    //TODO call ajax for notify view and reload page
+    function callLavoisierNotify(lavoisier, view) {
+        $.ajax({
+            url: '{{ path("notifyLavoisierAjax") }}',
+            data: {"lavoisier" : lavoisier, "view" : view},
+            method: "POST",
+            beforeSend: function() {
+                $("#notifyButton"+view).clear().append("<span class='fa fa-refresh fa-refresh-animate'></span>");
+            },
+            success : function(data) {
+                $("#reload_page").after('<div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-success">'+data.responseText+'</div>');
+                setTimeout(
+                        function () {
+                            location.reload();
+                        }, 5000);
+            },
+            error: function(data) {
+                $("#reload_page").after('<div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">'+data.responseText+'</div>');
+
+            }
+
+        });
+    }
+</script>
+

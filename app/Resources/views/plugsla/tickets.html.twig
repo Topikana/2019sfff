@@ -1,0 +1,215 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
+{% block body %}
+
+<div class="mb-4">
+    {% if app.user.isSuUser() == true %}
+        <a href="{{ path('userGroupe') }}" class="btn btn-outline-primary">Manage authorisation</a>
+    {% endif %}
+    <a href="{{ path('refresh') }}" class="btn btn-info"><i class="fa fa-refresh mr-1"></i>Refresh</a>
+</div>
+
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h5 class="mb-0">
+                On going requests
+                <span class="badge badge-info">{{ nombreTotal['incoming'] }}</span>
+            </h5>
+        </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table" id="incoming" >
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">DateCreated</th>
+                            <th scope="col">DateUpdated</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Service(s)</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if  tickets['New'] is defined or tickets['In progress'] is defined or tickets['Waiting for respond'] is defined %}
+                            {% for clef,value in tickets %}
+                                {% for ticket in value if clef == 'New' or clef == 'In progress' or clef == 'Waiting for respond' %}
+                                    {% if types[ticket['id']]['allow'] == true %}
+                                    <tr>
+                                {% else %}
+                                    <tr class="table-dark">
+                                {% endif %}
+                                    <td>{{ ticket['id'] }}</td>
+                                    <td>{{ ticket['author']}}</td>
+                                    <td>{{ ticket['summary'] }}</td>
+                                    <td>{{ ticket['Creation Date'] | date('Y-m-d H:i:s')}}</td>
+                                    <td>{{ ticket['Last Update'] | date('Y-m-d H:i:s')}}</td>
+                                    <td>
+                                        {% if clef == 'New' %}
+                                            <span class="badge badge-success">{{ ticket['status']  }}</span>
+                                        {% elseif clef == 'In progress' %}
+                                            <span class="badge badge-info">{{ ticket['status']  }}</span>
+                                        {% elseif clef == 'Waiting for respond' %}
+                                            <span class="badge badge-warning">{{ ticket['status']  }}</span>
+                                        {% endif %}
+                                    </td>
+                                        <td>
+                                        {% for clef,type in types[ticket['id']]['type'] %}
+                                            <span class="badge badge-light text-dark border border-secondary ">{{ type }}</span><br>
+                                             {% endfor %}
+                                        </td>
+                                        <td>
+                                        {% if types[ticket['id']]['allow'] == true %}
+                                            <a href="{{ path('modify_ticket',   {'id' : ticket['id'] }) }}" class="btn btn-primary fa fa-search-plus m-1" title="browse Jira issue details"></a>
+                                            <a href="{{ path('detail_ticket',   {'idTicket' : ticket['id'] }) }}" class="btn btn-primary m-1 fa fa-concierge-bell " title="manage service order">  </a>
+                                            <a target="_blank" href="{{ ticket['link'] }}" class="btn btn-primary m-1 fa fa-link m-1 " title="go to JIRA"></a>
+                                                {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                    {% endfor %}
+
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <h5 class="mb-0">
+                Accepted
+                <span class="badge badge-success">{{ nombreTotal['accepted'] }}</span>
+
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+
+                <table class="table" id="accepted">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Subject</th>
+                            <th scope="col">DateCreated</th>
+                            <th scope="col">DateUpdated</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Service(s)</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if tickets['Approved'] is defined %}
+                            {% for ticket in tickets['Approved'] %}
+                                {% if types[ticket['id']]['allow'] == true %}
+                                    <tr>
+                                {% else %}
+                                    <tr class="table-dark">
+                                {% endif %}
+                                <td>{{ ticket['id'] }}</td>
+                                <td>{{ ticket['author']}}</td>
+                                <td>{{ ticket['summary'] }}</td>
+                                <td>{{ ticket['Creation Date'] | date('Y-m-d H:i:s')}}</td>
+                                <td>{{ ticket['Last Update'] | date('Y-m-d H:i:s')}}</td>
+                                <td><span class="badge badge-success">{{ ticket['status']  }}</span></td>
+                                    <td>
+                                    {% for type in types[ticket['id']]['type'] %}
+                                        <span class="badge badge-light text-dark border border-secondary ">{{ type }}</span><br>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                    {% if types[ticket['id']]['allow'] == true %}
+                                        <a href="{{ path('modify_ticket',   {'id' : ticket['id'] }) }}" class="btn btn-primary fa fa-search-plus m-1" title="browse Jira issue details"></a>
+                                        <a href="{{ path('detail_ticket',   {'idTicket' : ticket['id'] }) }}" class="btn btn-primary m-1 fa fa-concierge-bell " title="manage service order">  </a>
+                                        <a target="_blank" href="{{ ticket['link'] }}" class="btn btn-primary m-1 fa fa-link m-1 " title="go to JIRA"></a>
+
+                                    {% endif %}
+                            </td>
+                            </tr>
+
+                        {% endfor %}
+
+                        {% endif %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <h5 class="mb-0">
+                        rejected
+                        <span class="badge badge-danger">{{ nombreTotal['rejected'] }}</span>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+
+                        <table class="table" id="rejected">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">DateCreated</th>
+                                <th scope="col">DateUpdated</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Service(s)</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if  tickets['Rejected'] is defined %}
+                                {% for ticket in tickets['Rejected']  %}
+                                    {% if types[ticket['id']]['allow'] == true %}
+                                        <tr>
+                                    {% else %}
+                                        <tr class="table-dark">
+                                    {% endif %}
+                                    <td>{{ ticket['id'] }}</td>
+                                    <td>{{ ticket['author']}}</td>
+                                    <td>{{ ticket['summary'] }}</td>
+                                    <td>{{ ticket['Creation Date'] | date('Y-m-d H:i:s')}}</td>
+                                    <td>{{ ticket['Last Update'] | date('Y-m-d H:i:s')}}</td>
+                                    <td><span class="badge badge-danger">{{ ticket['status'] }}</span></td>
+                                        <td>
+                                        {% for type in types[ticket['id']]['type'] %}
+                                            <span class="badge badge-light text-dark border border-secondary ">{{ type }}</span><br>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                        {% if types[ticket['id']]['allow'] == true %}
+                                            <a href="{{ path('modify_ticket',   {'id' : ticket['id'] }) }}" class="btn btn-primary fa fa-search-plus m-1" title="browse Jira issue details"></a>
+                                            <a href="{{ path('detail_ticket',   {'idTicket' : ticket['id'] }) }}" class="btn btn-primary m-1 fa fa-concierge-bell " title="manage service order">  </a>
+                                            <a target="_blank" href="{{ ticket['link'] }}" class="btn btn-primary m-1 fa fa-link m-1 " title="go to JIRA"></a>
+
+                                                {% endif %}
+                                        </td>
+                                </tr>
+                            {% endfor %}
+
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#incoming,#accepted, #rejected').DataTable({
+                "order": [[ 7, "desc" ]]
+            });
+        });
+    </script>
+{% endblock %}

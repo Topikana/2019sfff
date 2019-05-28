@@ -1,0 +1,19 @@
+twig:
+  globals:
+    enabled: true
+    gstat_vo: http://gstat.egi.eu/gstat/vo
+    gstat_about: http://gstat.egi.eu/gstat/about
+    user_certificate_import_procedure: http://www.eugridpma.org/members/worldmap/
+    user_certificate_obtain_procedure: http://www.eugridpma.org/members/worldmap/
+    registration_procedure: 'https://wiki.egi.eu/wiki/PROC14'
+    voms_registration: 'https://goc.egi.eu/portal/index.php?Page_Type=New_Service_Endpoint'
+    lifecycle: 'https://forge.in2p3.fr/projects/opsportaluser/wiki/Vo_Life_Cycle_in_the_Portal'
+    voms_documentation: 'http://italiangrid.github.io/voms/documentation.html'
+    gocdb_visualization: 'http://goc.egi.eu/'
+    grid_policy: 'https://documents.egi.eu/public/ShowDocument?docid=85'
+    security_policy: 'https://documents.egi.eu/public/ShowDocument?docid=78'
+    deregistration_procedure: 'https://wiki.egi.eu/wiki/PROC13'
+    management_policy: 'https://documents.egi.eu/public/ShowDocument?docid=79'
+    grid_aup_policy: 'https://documents.egi.eu/public/ShowDocument?docid=74'
+    operations_policy: 'https://wiki.egi.eu/wiki/User_Documentation#VO_Procedures_and_Policies'
+#    operations_policy: 'https://documents.egi.eu/public/ShowDocument?docid=77'

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="endpoint_service" class="OpsLavoisier\Services\EndpointService">
+            <argument key="hostname">%lavoisier_host_core%</argument>
+        </service>
+        <service id="entity_service" class="OpsLavoisier\Services\EntityService">
+            <argument key="hostname">%lavoisier_host_core%</argument>
+        </service>
+    </services>
+
+</container>
+

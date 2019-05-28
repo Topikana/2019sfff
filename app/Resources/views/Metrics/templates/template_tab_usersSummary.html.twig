@@ -1,0 +1,115 @@
+{% if tabusers is defined %}
+    <table id="tableUsersSummary" width="100%" class="table">
+        <thead>
+        <tr>
+            <th class="text-center">
+                <a class="btn btn-primary" title="Export in a CSV file" href="{{ baseUrl }}&download=true">
+                    CSV
+                </a>
+            </th>
+            <th>Discipline</th>
+            <th>Nb VO</th>
+            <th>Nb Users</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for key2, item in tabusers['disciplines'] %}
+            {% if item['discipline'] is defined %}
+                <tr>
+
+                        <td>
+                            {% if item['NbVo'] !=  0 %}
+
+                            <button type='button' class='change btn-link fas fa-plus-square' style='font-size: 24px;color:darkblue;text-decoration:none;'
+                                    onclick='$("{{ "#tr_"~item['id'] }}").slideToggle("slow"); $(this).toggleClass("fa-minus-square", "fa-plus-square")'>
+                            </button>
+                            {% endif %}
+
+                        </td>
+
+                    <td>
+                        {% if item['value'] != 'Other' and item['level']|number_format !=1 %}
+                            <a href="{{ path("usersSummary", {"disciplineId" : item["id"]} ) }}">{{ item["value"] }}</a>
+                        {% else %}
+                            {{ item["value"] }}
+                        {% endif %}
+                    </td>
+                    {% if item['NbVo'] is defined %}
+                        <td>
+                                 <span class="label label-{% if item["NbVo"]|number_format>0 %}primary{% else %}default{% endif %}">
+                                    {{ item["NbVo"] }}
+                                 </span>
+                        </td>
+                        <td>
+                            {% if item["TotalSumNbUsers"]|number_format > 0 %}
+                                <span class="label label-success">{{ item["TotalSumNbUsers"] }}</span>
+                            {% else %}
+                                <span class="label label-default">N.A</span>
+                            {% endif %}
+
+                        </td>
+                    {% else %}
+                        <td><span class="label label-default">0</span></td>
+                        <td><span class="label label-default">N.A</span></td>
+                    {% endif %}
+                </tr>
+                <tr style="padding:0;">
+                    <td style="padding:0; border-top: none;" colspan="4">
+                        <div id="tr_{{ item['id'] }}" style="display: none; padding: 1% 20% 0 20%;">
+                            <table class="table table-bordered table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>VO</th>
+                                    <th>NB Users</th>
+                                </tr>
+                                </thead>
+                                {% for vo in item['discipline'] %}
+                                    {% if vo['row'] is defined %}
+                                        <tr>
+                                            <td>{{ vo['name'] }}</td>
+                                            <td>
+                                                {% if (vo['NbUsers']|number_format > 0 ) %}
+                                                    <span class="label label-success">{{ vo['NbUsers'] }}</span>
+                                                {% else %}
+                                                    <span class="label label-default">N.A</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-15 text-center">
+            <div id="chartPngNbVO"></div>
+            <br>
+
+            <div id="pieChartNbVo" style="width: 1100px; height: 500px;"></div>
+        </div>
+
+        <div class="col-md-15 text-center">
+            <div id="chartPngNbUsers"></div>
+            <br>
+
+            <div id="pieChartNbUsers" style="width: 1100px; height: 500px;"></div>
+            <div>
+
+            </div>
+
+        </div>
+    </div>
+{% else %}
+    <p>Noting to be displayed here...</p>
+
+{% endif %}
+

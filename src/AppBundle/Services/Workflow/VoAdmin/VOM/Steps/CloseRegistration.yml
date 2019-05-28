@@ -1,0 +1,17 @@
+step:
+  Modifier:
+    id: Modifier
+    value: +C.user+
+  Solution:
+    id: Solution
+    value: The VO is now in production.
+  Status:
+    id: Status
+    value: solved
+  Step:
+    id: Step
+    value: close_registration
+  Community:
+    id: Community
+    value: VOM
+

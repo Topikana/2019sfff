@@ -1,0 +1,377 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+{% block body %}
+    <h3 class="card card-header mb-4">Issues from : {{ site }}</h3>
+    <div id="error"></div>
+
+    <table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover alarm_notepad" >
+        <thead>
+        <tr>
+            <th class='sortable-text' rel="Site name">id</th>
+            <th class='sortable-text' rel="Site name">site</th>
+            <th class='sortable-text' rel="Site name">url_to_history</th>
+            <th class='sortable-text' rel="alarm name">Alarm's name</th>
+            <th class='sortable-text' rel="Alarms">Nagios status</th>
+            <th class='sortable-text' rel="alarm name">Execution date</th>
+            <th class='sortable-text' rel="Alarms">Host name</th>
+            <th class="sortable-numeric" rel="alarm availability">Service status</th>
+            <th class="sortable-numeric" rel="alarm availability">Service flavour</th>
+            <th class="sortable-numeric" rel="alarm reliability">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for alarm in alarms['alarms'] %}
+            {% for notepadAlarm in notepadAlarms  %}
+                {% if alarm['id'] == notepadAlarm.idAlarm %}
+                    <tr>
+                        <td>{{ alarm['id'] }}</td>
+                        <td>{{ alarm['site'] }}</td>
+                        <td>{{ alarm['url_to_history'] }}</td>
+                        <td>{{ alarm['test_name'] }}</td>
+                        {% if alarm['status'] == 0 %}
+                            <td>
+                                <span class="badge badge-success">ok</span>
+                            </td>
+                        {% elseif alarm['status'] == 1 %}
+                            <td>
+                                <span class="badge badge-warning">warning</span>
+                            </td>
+                        {% elseif alarm['status'] == 2 %}
+                            <td>
+                                <span class="badge badge-danger">critical</span>
+                            </td>
+                        {% elseif alarm['status'] == 3 %}
+                            <td>
+                                <span class="badge badge-default">unknown</span>
+                            </td>
+                        {% elseif alarm['status'] == 4 %}
+                            <td>
+                                <span class="badge badge-primary">assigned</span>
+                            </td>
+                        {% endif %}
+                        <td>{{ alarm['start_date'] }}</td>
+                        <td>{{ alarm['host_name'] }}</td>
+                        <td>
+                            {% if alarm['monitored'] == 1 and alarm['in_production'] == 1 %}
+                                <span class="badge badge-success">prod & monit</span>
+                            {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 1) %}
+                                <span class="badge badge-warning">prod & not monit</span>
+                            {% elseif (alarm['monitored'] == 1 and alarm['in_production'] == 0) %}
+                                <span class="badge badge-warning">not prod & monit</span>
+                            {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 0) %}
+                                <span class="badge badge-danger">not prod & not monit</span>
+                            {% endif %}
+                            {% if alarm['monitored'] == -1 or alarm['in_production'] == -1 %}
+                                <span class="badge badge-light border border-secondary">endpoint not registered</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ alarm['service'] }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{{ alarm['url_to_history'] }}" title="Argo" class="btn btn-primary btn-sm">
+                                    <span class="fa fa-link"></span>
+
+                                </a>
+                                <button type="button" class="btn btn-secondary btn-sm" title="Alarm details" data-toggle="modal" data-target="#detailAlarm-{{ alarm['id'] }}">
+                                    <span class="fa fa-search-plus"></span>
+                                </button>
+                                <a href="{{ path('rod_history_alarm', {'id': alarm['id']}) }}" title="Alarm history" class="btn btn-warning btn-sm">
+                                    <span class="fa fa-history mr-1"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h3 class="card card-header mb-4">Add alarm(s) associated to the site</span></h3>
+
+    <table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover notepad" >
+        <thead>
+        <tr>
+            <th class='sortable-text' rel="Site name">id</th>
+            <th class='sortable-text' rel="Site name">site</th>
+            <th class='sortable-text' rel="Site name">url_to_history</th>
+            <th class='sortable-text' rel="alarm name">Alarm's name</th>
+            <th class='sortable-text' rel="Alarms">Nagios status</th>
+            <th class='sortable-text' rel="alarm name">Execution date</th>
+            <th class='sortable-text' rel="Alarms">Host name</th>
+            <th class="sortable-numeric" rel="alarm availability">Service status</th>
+            <th class="sortable-numeric" rel="alarm availability">Service flavour</th>
+            <th class="sortable-numeric" rel="alarm reliability">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for alarm in alarms['alarms'] %}
+            {% if alarm['ops_flag'] != 2  %}
+                <tr>
+                    <td>{{ alarm['id'] }}</td>
+                    <td>{{ alarm['site'] }}</td>
+                    <td>{{ alarm['url_to_history'] }}</td>
+                    <td>{{ alarm['test_name'] }}</td>
+                    {% if alarm['status'] == 0 %}
+                        <td>
+                            <span class="badge badge-success">ok</span>
+                        </td>
+                    {% elseif alarm['status'] == 1 %}
+                        <td>
+                            <span class="badge badge-warning">warning</span>
+                        </td>
+                    {% elseif alarm['status'] == 2 %}
+                        <td>
+                            <span class="badge badge-danger">critical</span>
+                        </td>
+                    {% elseif alarm['status'] == 3 %}
+                        <td>
+                            <span class="badge badge-default">unknown</span>
+                        </td>
+                    {% elseif alarm['status'] == 4 %}
+                        <td>
+                            <span class="badge badge-primary">assigned</span>
+                        </td>
+                    {% endif %}
+                    <td>{{ alarm['start_date'] }}</td>
+                    <td>{{ alarm['host_name'] }}</td>
+                    <td>
+                        {% if alarm['monitored'] == 1 and alarm['in_production'] == 1 %}
+                            <span class="badge badge-success">prod & monit</span>
+                        {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 1) %}
+                            <span class="badge badge-warning">prod & not monit</span>
+                        {% elseif (alarm['monitored'] == 1 and alarm['in_production'] == 0) %}
+                            <span class="badge badge-warning">not prod & monit</span>
+                        {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 0) %}
+                            <span class="badge badge-danger">not prod & not monit</span>
+                        {% endif %}
+                        {% if alarm['monitored'] == -1 or alarm['in_production'] == -1 %}
+                            <span class="badge badge-light border border-secondary">endpoint not registered</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ alarm['service'] }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{{ alarm['url_to_history'] }}" title="Argo" class="btn btn-primary btn-sm">
+                                <span class="fa fa-link mr-1"></span>
+                            </a>
+                            <button type="button" class="btn btn-secondary btn-sm" title="Alarm details" data-toggle="modal" data-target="#detailAlarm-{{ alarm['id'] }}">
+                                <span class="fa fa-search-plus mr-1"></span>
+                            </button>
+                            <a href="{{ path('rod_history_alarm', {'id': alarm['id']}) }}" title="Alarm history" class="btn btn-warning btn-sm">
+                                <span class="fa fa-history mr-1"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% for alarm in alarms['alarms'] %}
+        <div class="modal fade" id="detailAlarm-{{ alarm['id'] }}" tabindex="-1" role="dialog" aria-badgeledby="detailAlarmbadge">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 60%;">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h3 class="modal-title" id="detailAlarmbadge">Details</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="well">Output :</h5>
+                        <code class="text-left">{{  alarm['details'] |replace({"\\n": "<br>"})|raw }}</code>
+                        <h5>Profiles :</h5>
+                        <ul>
+                            {% for profile in alarm['profiles'] %}
+                                <li class="badge badge-primary">{{ profile }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block javascripts %}
+    <script src="{{ asset('build/vendor/datatables/select/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+
+    <script async type="application/javascript">
+
+        $(document).ready(function() {
+            var url_rod = "{{ url('rod') }}";
+            var datatable_alarmNotepad = $('.alarm_notepad').DataTable({
+
+                "columnDefs": [
+                    {"className": "dt-left", "targets": [3]},
+                    {"className": "dt-center", "targets": "_all"},
+                    {
+                        "targets": [0,1,2],
+                        "visible": false
+                    }
+                ],
+                "columns": [
+                    {"data": "id"},
+                    {"data": "site"},
+                    {"data": "url_to_history"},
+                    { "data": "name" },
+                    { "data": "nagios_status" },
+                    { "data": "execution_date" },
+                    { "data": "host_name" },
+                    { "data": "service_status" },
+                    { "data": "service_flavour" },
+                    { "data": "Action" }
+                ],
+                select: 'multi',
+                rowId: 'id',
+
+                dom: "<<'row  col-sm-12'Bl<'ml-3 mt-2'f>>>" + "<<'col-sm-12 pl-0 pr-0'tr>>" + "<'row'<'col-sm-5 ml-3'i><'col-sm-6 d-flex justify-content-start'p>>",
+
+                // dom: 'lftiprB',
+
+                buttons: [
+                    {
+                        extend: 'selected',
+                        className: 'btn btn-danger m-2 delete-alarm',
+                        text: "<span class='fa fa-tags mr-1'></span> Remove alarm",
+                        action: function ( e, dt, button, config ) {
+
+                            var alarm = dt.rows( { selected: true } ).ids().toArray();
+                            var site = "{{ site }}";
+                            var notepad = "{{ notepadId }}";
+
+                            $.ajax({
+                                url : "{{ url('remove_alarm_to_notepad') }}",
+                                type : 'POST',
+                                data : 'site='+site+'&alarms='+alarm+'&notepad='+notepad,
+                                beforeSend: function () {
+                                    $('.delete-alarm span').html("<span class='spinner-border spinner-border-sm mr-1' role='status' aria-hidden='true'></span>  Remove alarm");
+                                },
+                                success : function(data, statut){ // code_html contient le HTML renvoyé
+                                    window.location.reload();
+                                },
+
+                                error : function(resultat, statut, erreur){
+                                    $('#error').html("<div class='alert alert-warning alert-dismissible fade show' role='alert'>\n" +
+                                        statut+ " "+erreur +
+                                        "    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\n" +
+                                        "         <span aria-hidden='true'>&times;</span>\n" +
+                                        "    </button>\n" +
+                                        "</div>");
+                                }
+                            });
+
+                        }
+                    },
+                    {
+                        text: 'Back to the list',
+                        className: 'btn btn-primary',
+                        action: function ( e, dt, button, config ) {
+                            window.location.href = url_rod;
+                        }
+                    }
+
+                ]
+
+            });
+
+
+            // $('.alarm_notepad input[type="button"]').click(function(e) {
+            //     var dtab = $('.alarm_notepad').dataTable();
+            //     var position = dtab.fnGetPosition(this);
+            //     var contactId = dtab.fnGetData(position)[7];
+            //     e.stopPropagation();
+            // });
+
+
+            var datatable_alarm = $('.notepad').DataTable({
+
+                "columnDefs": [
+                    {"className": "dt-left", "targets": [3]},
+                    {"className": "dt-center", "targets": "_all"},
+                    {
+                        "targets": [0,1,2],
+                        "visible": false
+                    }
+                ],
+                "columns": [
+                    {"data": "id"},
+                    {"data": "site"},
+                    {"data": "url_to_history"},
+                    { "data": "name" },
+                    { "data": "nagios_status" },
+                    { "data": "execution_date" },
+                    { "data": "host_name" },
+                    { "data": "service_status" },
+                    { "data": "service_flavour" },
+                    { "data": "Action" }
+                ],
+                select: 'multi',
+                rowId: 'id',
+                // dom: 'Blftipr',
+                dom: "<<'row  col-sm-12'Bl<'ml-3 mt-2'f>>>" + "<<'col-sm-12 pl-0 pr-0'tr>>" + "<'row'<'col-sm-5 ml-3'i><'col-sm-6 d-flex justify-content-start'p>>",
+
+                buttons: [
+                    {
+                        extend: 'selected',
+                        className: 'btn btn-success m-2 add-alarm',
+                        text: "<span class='fa fa-tags mr-1'></span>Add alarm",
+                        action: function ( e, dt, button, config ) {
+
+                            var alarm = dt.rows( { selected: true } ).ids().toArray();
+                            var site = "{{ site }}";
+                            var notepad = "{{ notepadId }}";
+
+                            $.ajax({
+                                url : "{{ url('add_alarm_to_notepad') }}",
+                                type : 'POST',
+                                data : 'site='+site+'&alarms='+alarm+'&notepad='+notepad,
+                                beforeSend: function () {
+                                    $('.add-alarm span').html("<span class='spinner-border spinner-border-sm mr-1' role='status' aria-hidden='true'></span>  Add alarm");
+                                },
+                                success : function(data, statut){ // code_html contient le HTML renvoyé
+                                    window.location.reload();
+                                },
+
+                                error : function(resultat, statut, erreur){
+                                    $('#error').html("<div class='alert alert-warning alert-dismissible fade show' role='alert'>\n" +
+                                        statut+ " "+erreur +
+                                        "    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\n" +
+                                        "         <span aria-hidden='true'>&times;</span>\n" +
+                                        "    </button>\n" +
+                                        "</div>");
+                                }
+                            });
+
+
+                        }
+                    }
+                ]
+
+            });
+
+            $('.dt-buttons').addClass('d-inline-block');
+
+            datatable_alarmNotepad.buttons().container()
+                .appendTo( $('.dataTables_length:eq(0)', datatable_alarmNotepad.table().container() ) );
+
+
+            datatable_alarm.buttons().container()
+                .appendTo( $('.dataTables_length:eq(0)', datatable_alarm.table().container() ) );
+
+        });
+    </script>
+{% endblock %}

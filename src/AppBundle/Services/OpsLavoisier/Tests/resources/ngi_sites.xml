@@ -1,0 +1,490 @@
+<NGIs>
+    <NGI name="AsiaPacific" ggus_su="ROC_Asia/Pacific" rod_email="roc@lists.grid.sinica.edu.tw" contact_email="roc@lists.grid.sinica.edu.tw">
+        <Sites>
+            <Site id="147" primary_key="320G0" name="Australia-ATLAS" contact_email="tier2@physics.unimelb.edu.au" ngi="AsiaPacific" csirt_email="csirt@physics.unimelb.edu.au"/>
+            <Site id="315" primary_key="319G0" name="HK-HKU-CC-01" contact_email="lilianyl@hku.hk" ngi="AsiaPacific" csirt_email="lilianyl@hku.hk"/>
+            <Site id="148" primary_key="307G0" name="IN-DAE-VECC-02" contact_email="vikasssinghal@gmail.com" ngi="AsiaPacific" csirt_email="vikas@vecc.gov.in"/>
+            <Site id="640" primary_key="322G0" name="INDIACMS-TIFR" contact_email="support@indiacms.res.in" ngi="AsiaPacific" csirt_email="csirt@indiacms.res.in"/>
+            <Site id="466" primary_key="56161G0" name="IR-IPM-HEP" contact_email="grid-hep@ipm.ir" ngi="AsiaPacific" csirt_email="grid-hep-sec@ipm.ir"/>
+            <Site id="55" primary_key="343G0" name="JP-HIROSHIMA-WLCG" contact_email="wlcg-hiro@ml.hepl.hiroshima-u.ac.jp" ngi="AsiaPacific" csirt_email="wlcg-hiro@ml.hepl.hiroshima-u.ac.jp"/>
+            <Site id="268" primary_key="273G0" name="JP-KEK-CRC-02" contact_email="dgteam@ml.post.kek.jp" ngi="AsiaPacific" csirt_email="dgteam@ml.post.kek.jp"/>
+            <Site id="373" primary_key="368G0" name="KR-KISTI-GCRT-01" contact_email="gcrt-01@kisti.re.kr" ngi="AsiaPacific" csirt_email="gcrt-01@kisti.re.kr"/>
+            <Site id="284" primary_key="32731G0" name="KR-KISTI-GSDC-01" contact_email="gsdc-01@kisti.re.kr" ngi="AsiaPacific" csirt_email="gsdc-01@kisti.re.kr"/>
+            <Site id="650" primary_key="54626G0" name="KR-KNU-T3" contact_email="lcg_knu@knu.ac.kr" ngi="AsiaPacific" csirt_email="lcg_knu@knu.ac.kr"/>
+            <Site id="688" primary_key="47398G0" name="KR-UOS-SSCC" contact_email="unclok123@gmail.com" ngi="AsiaPacific" csirt_email="unclok123@gmail.com"/>
+            <Site id="46" primary_key="321G0" name="LCG_KNU" contact_email="hanbi@knu.ac.kr" ngi="AsiaPacific" csirt_email="lcg_knu@knu.ac.kr"/>
+            <Site id="606" primary_key="309G0" name="MY-UM-CRYSTAL" contact_email="crystal@um.edu.my" ngi="AsiaPacific" csirt_email="norainib@um.edu.my"/>
+            <Site id="189" primary_key="311G0" name="MY-UPM-BIRUNI-01" contact_email="support@biruni.upm.my" ngi="AsiaPacific" csirt_email="support@biruni.upm.my"/>
+            <Site id="294" primary_key="516G0" name="MY-UTM-GRID" contact_email="subha@utm.my" ngi="AsiaPacific" csirt_email="subha@utm.my"/>
+            <Site id="546" primary_key="101G0" name="NCP-LCG2" contact_email="pk-ncp@ncp.edu.pk" ngi="AsiaPacific" csirt_email="pk-ncp@ncp.edu.pk"/>
+            <Site id="656" primary_key="54821G0" name="PK-CIIT" contact_email="alizahir@comsats.edu.pk" ngi="AsiaPacific" csirt_email="mwaqar@comsats.edu.pk"/>
+            <Site id="439" primary_key="64789G0" name="T2-TH-CUNSTDA" contact_email="atom@lsr.nectec.or.th" ngi="AsiaPacific" csirt_email="atom@lsr.nectec.or.th"/>
+            <Site id="138" primary_key="179G0" name="TH-HAII" contact_email="atip@haii.or.th" ngi="AsiaPacific" csirt_email="jarumon@haii.or.th"/>
+            <Site id="637" primary_key="350G0" name="TH-NECTEC-LSR" contact_email="suriya.u-ruekolan@nectec.or.th" ngi="AsiaPacific" csirt_email="euasiagridteam@hpcc.nectec.or.th"/>
+            <Site id="357" primary_key="192G0" name="TOKYO-LCG2" contact_email="lcg-admin@icepp.s.u-tokyo.ac.jp" ngi="AsiaPacific" csirt_email="security@icepp.s.u-tokyo.ac.jp"/>
+            <Site id="152" primary_key="369G0" name="TW-EMI-PPS" contact_email="roc@lists.grid.sinica.edu.tw" ngi="AsiaPacific" csirt_email="roc@lists.grid.sinica.edu.tw"/>
+            <Site id="527" primary_key="366G0" name="TW-FTT" contact_email="ops@lists.grid.sinica.edu.tw" ngi="AsiaPacific" csirt_email="Aproc-security@lists.grid.sinica.edu.tw"/>
+            <Site id="526" primary_key="275G0" name="TW-NCUHEP" contact_email="cmkuo@mail.cern.ch" ngi="AsiaPacific" csirt_email="cmkuo@mail.cern.ch"/>
+            <Site id="642" primary_key="33209G0" name="TW-NTU-HEP" contact_email="sysadmin@hep1.phys.ntu.edu.tw" ngi="AsiaPacific" csirt_email="sysadmin@hep1.phys.ntu.edu.tw"/>
+            <Site id="591" primary_key="39420G0" name="TW-eScience" contact_email="ops@lists.grid.sinica.edu.tw" ngi="AsiaPacific" csirt_email="Aproc-security@lists.grid.sinica.edu.tw"/>
+            <Site id="451" primary_key="367G0" name="Taiwan-LCG2" contact_email="ops@lists.grid.sinica.edu.tw" ngi="AsiaPacific" csirt_email="Aproc-security@lists.grid.sinica.edu.tw"/>
+        </Sites>
+    </NGI>
+    <NGI name="CERN" ggus_su="ROC_CERN" rod_email="egee-rcod-cern@cern.ch" contact_email="egee-roc-cern@cern.ch">
+        <Sites>
+            <Site id="270" primary_key="268G0" name="CERN-PROD" contact_email="grid-cern-prod-admins@cern.ch" ngi="CERN" csirt_email="cert-op@cern.ch"/>
+        </Sites>
+    </NGI>
+    <NGI name="EGI.eu" ggus_su="EGI.eu" rod_email="egi-rod@mailman.egi.eu" contact_email="operations@egi.eu">
+        <Sites>
+            <Site id="646" primary_key="49965G0" name="GRIDOPS-ACCPORTAL" contact_email="grid-admin@cesga.es" ngi="EGI.eu" csirt_email="grid-admin@cesga.es"/>
+            <Site id="237" primary_key="140G0" name="GRIDOPS-APEL" contact_email="apel-admins@stfc.ac.uk" ngi="EGI.eu" csirt_email="apel-admins@stfc.ac.uk"/>
+            <Site id="430" primary_key="69399G0" name="GRIDOPS-APPDB" contact_email="appdb-support@iasa.gr" ngi="EGI.eu" csirt_email="appdb-support@iasa.gr"/>
+            <Site id="541" primary_key="69396G0" name="GRIDOPS-CRM" contact_email="egicrm.helpdesk@lip.pt" ngi="EGI.eu"/>
+            <Site id="247" primary_key="298G0" name="GRIDOPS-GGUS" contact_email="support@ggus.org" ngi="EGI.eu" csirt_email="oleg.dulov@kit.edu"/>
+            <Site id="335" primary_key="123G0" name="GRIDOPS-GOCDB" contact_email="gocdb-admins@mailman.egi.eu" ngi="EGI.eu" csirt_email="gocdb-admins@mailman.egi.eu"/>
+            <Site id="149" primary_key="617G0" name="GRIDOPS-GRIDVIEW" contact_email="gridview-admin@cern.ch" ngi="EGI.eu"/>
+            <Site id="597" primary_key="49971G0" name="GRIDOPS-GSTAT" contact_email="project-grid-info-support@cern.ch" ngi="EGI.eu"/>
+            <Site id="160" primary_key="49967G0" name="GRIDOPS-METRICSPORTAL" contact_email="grid-admin@cesga.es" ngi="EGI.eu" csirt_email="grid-admin@cesga.es"/>
+            <Site id="429" primary_key="49969G0" name="GRIDOPS-MSG" contact_email="prod-broker-network@lists.grid.auth.gr" ngi="EGI.eu" csirt_email="csirt@grid.auth.gr"/>
+            <Site id="568" primary_key="43629G0" name="GRIDOPS-OPSPORTAL" contact_email="cic-information@in2p3.fr" ngi="EGI.eu" csirt_email="cic-information@in2p3.fr"/>
+            <Site id="641" primary_key="126G0" name="GRIDOPS-SAM" contact_email="sam-support@cern.ch" ngi="EGI.eu" csirt_email="sam-support@cern.ch"/>
+            <Site id="574" primary_key="69403G0" name="GRIDOPS-TMP" contact_email="claire.devereux@stfc.ac.uk" ngi="EGI.eu"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_AEGIS" ggus_su="NGI_AEGIS" rod_email="ngi_aegis-grid-support@ipb.ac.rs" contact_email="ngi_aegis-grid-management@ipb.ac.rs">
+        <Sites>
+            <Site id="442" primary_key="302G0" name="AEGIS01-IPB-SCL" contact_email="grid-admin@ipb.ac.rs" ngi="NGI_AEGIS" csirt_email="grid-security@ipb.ac.rs"/>
+            <Site id="639" primary_key="32330G0" name="AEGIS02-RCUB" contact_email="grid-admin@rcub.bg.ac.rs" ngi="NGI_AEGIS" csirt_email="grid-admin@rcub.bg.ac.rs"/>
+            <Site id="489" primary_key="23699G0" name="AEGIS03-ELEF-LEDA" contact_email="grid-admin@elfak.ni.ac.rs" ngi="NGI_AEGIS" csirt_email="grid-admin@elfak.ni.ac.rs"/>
+            <Site id="583" primary_key="23770G0" name="AEGIS04-KG" contact_email="grid-admin@kg.ac.rs" ngi="NGI_AEGIS" csirt_email="grid-admin@kg.ac.rs"/>
+            <Site id="518" primary_key="44734G0" name="AEGIS09-FTN-KM" contact_email="grid-admin@pr.ac.rs" ngi="NGI_AEGIS" csirt_email="grid-admin-security@pr.ac.rs"/>
+            <Site id="261" primary_key="23462G0" name="AEGIS11-MISANU" contact_email="klaster@mi.sanu.ac.rs" ngi="NGI_AEGIS" csirt_email="klaster@mi.sanu.ac.rs"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_ARMGRID" ggus_su="NGI_ARMGRID" rod_email="grid-admin@sci.am" contact_email="grid-admin@sci.am">
+        <Sites>
+            <Site id="283" primary_key="24595G0" name="AM-02-SEUA" contact_email="admin@grid.am" ngi="NGI_ARMGRID" csirt_email="security@grid.am"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_BA" ID="495" PRIMARY_KEY="24067G0" NAME="BA-01-ETFBL" CONTACT_EMAIL="grid-admin@etfbl.net" ROC="NGI_BA" CSIRT_EMAIL="grid-security@etfbl.net">
+        <Sites/>
+    </NGI>
+    <NGI name="NGI_BG" ggus_su="NGI_BG" rod_email="bg-ngi-rod@bas.bg" contact_email="bg-ngi-manager@bas.bg">
+        <Sites>
+            <Site id="510" primary_key="271G0" name="BG01-IPP" contact_email="emanouil@parallel.bas.bg" ngi="NGI_BG" csirt_email="egee-security@parallel.bas.bg"/>
+            <Site id="128" primary_key="84G0" name="BG03-NGCC" contact_email="ngcc-admins@acad.bg" ngi="NGI_BG" csirt_email="ngcc-admins@acad.bg"/>
+            <Site id="511" primary_key="207G0" name="BG05-SUGrid" contact_email="egi-support@grid.uni-sofia.bg" ngi="NGI_BG" csirt_email="egi-support@grid.uni-sofia.bg"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_BY" ggus_su="NGI_BY" rod_email="glite-opsteam@lists.grid.by" contact_email="belarus-ngi-management@newman.bas-net.by">
+        <Sites>
+            <Site id="134" primary_key="83G0" name="BY-NCPHEP" contact_email="grid-admin@hep.by" ngi="NGI_BY" csirt_email="grid-admin@hep.by"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_CH" ggus_su="NGI_CH" rod_email="ngi-de-on-duty@listserv.dfn.de" contact_email="ngi-contact@swing-grid.ch">
+        <Sites>
+            <Site id="150" primary_key="237G0" name="CSCS-LCG2" contact_email="grid@cscs.ch" ngi="NGI_CH" csirt_email="lcg-security@cscs.ch"/>
+            <Site id="271" primary_key="312G0" name="T3_CH_PSI" contact_email="cms-tier3@lists.psi.ch" ngi="NGI_CH" csirt_email="cms-tier3@lists.psi.ch"/>
+            <Site id="359" primary_key="489G0" name="UNIBE-ID" contact_email="grid-admin@id.unibe.ch" ngi="NGI_CH" csirt_email="grid-admin@id.unibe.ch"/>
+            <Site id="524" primary_key="476G0" name="UNIBE-LHEP" contact_email="gianfranco.sciacca@lhep.unibe.ch" ngi="NGI_CH" csirt_email="gianfranco.sciacca@lhep.unibe.ch"/>
+            <Site id="272" primary_key="354G0" name="UNIGE-DPNC" contact_email="dpnc-grid@unige.ch" ngi="NGI_CH" csirt_email="dpnc-grid@unige.ch"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_CYGRID" ID="675" PRIMARY_KEY="134G0" NAME="CY-01-KIMON" CONTACT_EMAIL="grid@cs.ucy.ac.cy" ROC="NGI_CYGRID" CSIRT_EMAIL="grid@cs.ucy.ac.cy">
+        <Sites/>
+    </NGI>
+    <NGI name="NGI_CZ" ggus_su="NGI_CZ" rod_email="ngi-rod@metacentrum.cz" contact_email="ngi-roc@metacentrum.cz">
+        <Sites>
+            <Site id="289" primary_key="166G0" name="prague_cesnet_lcg2" contact_email="ngi-firstline@metacentrum.cz" ngi="NGI_CZ" csirt_email="certs-ngi@cesnet.cz"/>
+            <Site id="288" primary_key="294G0" name="praguelcg2" contact_email="ngi-firstline@metacentrum.cz" ngi="NGI_CZ" csirt_email="certs-ngi@cesnet.cz"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_DE" ggus_su="NGI_DE" rod_email="ngi-de-on-duty@listserv.dfn.de" contact_email="ngi-de-jru-leitung@listserv.dfn.de">
+        <Sites>
+            <Site id="342" primary_key="181G0" name="BMRZ-FRANKFURT" contact_email="enmr-bmrz@dlist.uni-frankfurt.de" ngi="NGI_DE" csirt_email="enmr-bmrz@dlist.uni-frankfurt.de"/>
+            <Site id="339" primary_key="330G0" name="DESY-HH" contact_email="grid@desy.de" ngi="NGI_DE" csirt_email="lcg-security@desy.de"/>
+            <Site id="424" primary_key="65G0" name="DESY-ZN" contact_email="grid-admin@ifh.de" ngi="NGI_DE" csirt_email="lcg-security@ifh.de"/>
+            <Site id="576" primary_key="26175G0" name="FZJ" contact_email="ngi-de@fz-juelich.de" ngi="NGI_DE" csirt_email="security@fz-juelich.de"/>
+            <Site id="116" primary_key="376G0" name="FZK-LCG2" contact_email="lcg-admin@lists.kit.edu" ngi="NGI_DE" csirt_email="NGI-DE-CSIRT@LISTSERV.DFN.DE"/>
+            <Site id="248" primary_key="124G0" name="GoeGrid" contact_email="goegrid_admin@physik.uni-goettingen.de" ngi="NGI_DE" csirt_email="goegrid_admin@physik.uni-goettingen.de"/>
+            <Site id="115" primary_key="108G0" name="ITWM" contact_email="egee-admin@itwm.fraunhofer.de" ngi="NGI_DE" csirt_email="egee-security@itwm.fraunhofer.de"/>
+            <Site id="425" primary_key="81527G0" name="LRZ" contact_email="grid-admin@lrz.de" ngi="NGI_DE" csirt_email="grid-admin@lrz.de"/>
+            <Site id="340" primary_key="195G0" name="LRZ-LMU" contact_email="lcg-admin@lists.lrz.de" ngi="NGI_DE" csirt_email="lcg-admin@lists.lrz.de"/>
+            <Site id="341" primary_key="331G0" name="MPPMU" contact_email="lcg-support@rzg.mpg.de" ngi="NGI_DE" csirt_email="security-lcg@rzg.mpg.de"/>
+            <Site id="119" primary_key="13281G0" name="MaiGRID" contact_email="etapadmins@lists.uni-mainz.de" ngi="NGI_DE" csirt_email="etapadmins@lists.uni-mainz.de"/>
+            <Site id="632" primary_key="111G0" name="RWTH-Aachen" contact_email="lcg-contact@physik.rwth-aachen.de" ngi="NGI_DE" csirt_email="lcg-contact@physik.rwth-aachen.de"/>
+            <Site id="244" primary_key="112G0" name="SCAI" contact_email="egee@scai.fraunhofer.de" ngi="NGI_DE" csirt_email="egee@scai.fraunhofer.de"/>
+            <Site id="118" primary_key="308G0" name="TUDresden-ZIH" contact_email="dgrid-support@tu-dresden.de" ngi="NGI_DE" csirt_email="dgrid-support@tu-dresden.de"/>
+            <Site id="246" primary_key="169G0" name="UNI-BONN" contact_email="grid-admin@physik.uni-bonn.de" ngi="NGI_DE" csirt_email="grid-admin@physik.uni-bonn.de"/>
+            <Site id="243" primary_key="110G0" name="UNI-DORTMUND" contact_email="dgrid-admin@grid.tu-dortmund.de" ngi="NGI_DE" csirt_email="dgrid-admin@grid.tu-dortmund.de"/>
+            <Site id="575" primary_key="373G0" name="UNI-FREIBURG" contact_email="lcg-admin@bfg.uni-freiburg.de" ngi="NGI_DE" csirt_email="lcg-security@bfg.uni-freiburg.de"/>
+            <Site id="245" primary_key="281G0" name="UNI-SIEGEN-HEP" contact_email="lcg-admin@lists.hep.physik.uni-siegen.de" ngi="NGI_DE" csirt_email="lcg-admin@lists.hep.physik.uni-siegen.de"/>
+            <Site id="249" primary_key="81518G0" name="mainzgrid" contact_email="etapadmins@lists.uni-mainz.de" ngi="NGI_DE" csirt_email="etapadmins@lists.uni-mainz.de"/>
+            <Site id="117" primary_key="196G0" name="wuppertalprod" contact_email="lcg-admin@physik.uni-wuppertal.de" ngi="NGI_DE" csirt_email="lcg-admin@physik.uni-wuppertal.de"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_FI" ggus_su="NGI_FI" rod_email="ngi-fi-support@csc.fi" contact_email="ngi-fi-management@csc.fi">
+        <Sites>
+            <Site id="87" primary_key="45607G0" name="CSC" contact_email="ngi-fi-support@csc.fi" ngi="NGI_FI" csirt_email="grid-sec@csc.fi"/>
+            <Site id="492" primary_key="49521G0" name="FI_AA" contact_email="aa-fgi-admin@abo.fi" ngi="NGI_FI" csirt_email="aa-fgi-sec@abo.fi"/>
+            <Site id="89" primary_key="50513G0" name="FI_Aalto" contact_email="triton-grid@list.aalto.fi" ngi="NGI_FI" csirt_email="security@aalto.fi"/>
+            <Site id="88" primary_key="54390G0" name="FI_Helsinki" contact_email="alcyone-admin@helsinki.fi" ngi="NGI_FI" csirt_email="atk-turva@helsinki.fi"/>
+            <Site id="313" primary_key="50998G0" name="FI_JYU" contact_email="fgi.jyu@gmail.com" ngi="NGI_FI" csirt_email="vesa.apaja@jyu.fi"/>
+            <Site id="314" primary_key="51093G0" name="FI_LUT" contact_email="celaeno-admins@lists.lut.fi" ngi="NGI_FI" csirt_email="noc@lut.fi"/>
+            <Site id="660" primary_key="50875G0" name="FI_Oulu" contact_email="fgi-admin@oulu.fi" ngi="NGI_FI" csirt_email="fgi-sec@oulu.fi"/>
+            <Site id="397" primary_key="51228G0" name="FI_TUT" contact_email="tcsc@tut.fi" ngi="NGI_FI" csirt_email="merope-security@listmail.tut.fi"/>
+            <Site id="491" primary_key="50909G0" name="FI_UEF" contact_email="fgi.admin@uef.fi" ngi="NGI_FI" csirt_email="olavi.manninen@uef.fi"/>
+            <Site id="90" primary_key="51357G0" name="FI_UTU" contact_email="fgi-admins@lists.utu.fi" ngi="NGI_FI" csirt_email="mats.kommonen@utu.fi"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_FRANCE" ggus_su="NGI_FRANCE" rod_email="NGI-france-rod-l@france-grilles.fr" contact_email="ngi-contact@france-grilles.fr">
+        <Sites>
+            <Site id="101" primary_key="235G0" name="AUVERGRID" contact_email="auvergrid-admin@clermont.in2p3.fr" ngi="NGI_FRANCE" csirt_email="auvergrid-security@clermont.in2p3.fr"/>
+            <Site id="416" primary_key="26844G0" name="BRGM-ORLEANS" contact_email="egi-admin@brgm.fr" ngi="NGI_FRANCE" csirt_email="egi-securite@brgm.fr"/>
+            <Site id="500" primary_key="66609G0" name="CREATIS-INSA-LYON" contact_email="grid-admin@creatis.insa-lyon.fr" ngi="NGI_FRANCE" csirt_email="grid-security@creatis.insa-lyon.fr"/>
+            <Site id="231" primary_key="60G0" name="GRIF" contact_email="grid.admin@grif.fr" ngi="NGI_FRANCE" csirt_email="grid.security@grif.fr"/>
+            <Site id="415" primary_key="371G0" name="IN2P3-CC" contact_email="grid.admin@cc.in2p3.fr" ngi="NGI_FRANCE" csirt_email="grid.security@cc.in2p3.fr"/>
+            <Site id="230" primary_key="105G0" name="IN2P3-CC-T2" contact_email="grid.admin@cc.in2p3.fr" ngi="NGI_FRANCE" csirt_email="grid.security@cc.in2p3.fr"/>
+            <Site id="102" primary_key="155G0" name="IN2P3-CPPM" contact_email="gridadmin@cppm.in2p3.fr" ngi="NGI_FRANCE" csirt_email="gridadmin@cppm.in2p3.fr"/>
+            <Site id="331" primary_key="153G0" name="IN2P3-IPNL" contact_email="gridsupport@ipnl.in2p3.fr" ngi="NGI_FRANCE" csirt_email="gridsupport@ipnl.in2p3.fr"/>
+            <Site id="414" primary_key="152G0" name="IN2P3-IRES" contact_email="grid.admin@iphc.cnrs.fr" ngi="NGI_FRANCE" csirt_email="grid.security@iphc.cnrs.fr"/>
+            <Site id="329" primary_key="154G0" name="IN2P3-LAPP" contact_email="support-grid@lapp.in2p3.fr" ngi="NGI_FRANCE" csirt_email="support-grid@lapp.in2p3.fr"/>
+            <Site id="411" primary_key="370G0" name="IN2P3-LPC" contact_email="grid-admin@clermont.in2p3.fr" ngi="NGI_FRANCE" csirt_email="security-lcg@clermont.in2p3.fr"/>
+            <Site id="412" primary_key="104G0" name="IN2P3-LPSC" contact_email="grid.admin@lpsc.in2p3.fr" ngi="NGI_FRANCE" csirt_email="grid.security@lpsc.in2p3.fr"/>
+            <Site id="413" primary_key="151G0" name="IN2P3-SUBATECH" contact_email="grid.admin@subatech.in2p3.fr" ngi="NGI_FRANCE" csirt_email="abuse@subatech.in2p3.fr"/>
+            <Site id="671" primary_key="46162G0" name="INSU01-PARIS" contact_email="grid-admin@ipgp.fr" ngi="NGI_FRANCE" csirt_email="grid-security@ipgp.fr"/>
+            <Site id="567" primary_key="186G0" name="M3PEC" contact_email="grid.support.m3pec@listes.u-bordeaux1.fr" ngi="NGI_FRANCE" csirt_email="grid.security.m3pec@listes.u-bordeaux1.fr"/>
+            <Site id="100" primary_key="478G0" name="MSFG-OPEN" contact_email="open.msfg@lupm.univ-montp2.fr" ngi="NGI_FRANCE" csirt_email="open.msfg-sec@lupm.univ-montp2.fr"/>
+            <Site id="103" primary_key="416G0" name="OBSPM" contact_email="admin.grid@obspm.fr" ngi="NGI_FRANCE" csirt_email="secu.grid@obspm.fr"/>
+            <Site id="332" primary_key="28946G0" name="UNIV-LILLE" contact_email="admin-calcul@univ-lille1.fr" ngi="NGI_FRANCE" csirt_email="admin-calcul@univ-lille1.fr"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_GE" ggus_su="NGI_GE" rod_email="grid-admin@grena.ge" contact_email="grid-admin@grena.ge">
+        <Sites>
+            <Site id="269" primary_key="23547G0" name="GE-01-GRENA" contact_email="ngamtsemlidze@grena.ge" ngi="NGI_GE" csirt_email="ngamtsemlidze@grena.ge"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_GRNET" ggus_su="NGI_GRNET" rod_email="roc-hq@hellasgrid.gr" contact_email="roc-hq@hellasgrid.gr">
+        <Sites>
+            <Site id="124" primary_key="257G0" name="GR-01-AUTH" contact_email="contact@grid.auth.gr" ngi="NGI_GRNET" csirt_email="csirt@grid.auth.gr"/>
+            <Site id="122" primary_key="147G0" name="GR-04-FORTH-ICS" contact_email="cpapachr@ics.forth.gr" ngi="NGI_GRNET" csirt_email="cirt-hellasgrid@ics.forth.gr"/>
+            <Site id="250" primary_key="305G0" name="GR-06-IASA" contact_email="grid-support@iasa.gr" ngi="NGI_GRNET" csirt_email="mhaggel@iasa.gr"/>
+            <Site id="578" primary_key="132G0" name="GR-07-UOI-HEPLAB" contact_email="grid@alpha.physics.uoi.gr" ngi="NGI_GRNET" csirt_email="grid-csirt@alpha.physics.uoi.gr"/>
+            <Site id="343" primary_key="261G0" name="GR-09-UoA" contact_email="diligent-pps-admin@di.uoa.gr" ngi="NGI_GRNET" csirt_email="diligent-pps-sec@di.uoa.gr"/>
+            <Site id="506" primary_key="177G0" name="GR-10-UOI" contact_email="xcsimul@cc.uoi.gr" ngi="NGI_GRNET" csirt_email="xcsimul@cc.uoi.gr"/>
+            <Site id="345" primary_key="40084G0" name="GR-11-UPATRAS" contact_email="GR-11-UPATRAS@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="egee-grid@ece.upatras.gr"/>
+            <Site id="344" primary_key="304G0" name="HG-01-GRNET" contact_email="hg-01-grnet@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="hg-01-grnet-csirt@hellasgrid.gr"/>
+            <Site id="125" primary_key="347G0" name="HG-02-IASA" contact_email="hg-02-iasa@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="hg-02-iasa-csirt@hellasgrid.gr"/>
+            <Site id="123" primary_key="129G0" name="HG-03-AUTH" contact_email="hg-03-auth@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="hg-03-auth-csirt@hellasgrid.gr"/>
+            <Site id="507" primary_key="171G0" name="HG-04-CTI-CEID" contact_email="HG-04-CTI-CEID@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="HG-04-CTI-CEID-CSIRT@hellasgrid.gr"/>
+            <Site id="428" primary_key="303G0" name="HG-05-FORTH" contact_email="hg-05-forth@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="hg-05-forth-csirt@hellasgrid.gr"/>
+            <Site id="427" primary_key="209G0" name="HG-06-EKT" contact_email="hg-06-ekt@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="hg-06-ekt-csirt@hellasgrid.gr"/>
+            <Site id="509" primary_key="43638G0" name="HG-08-Okeanos" contact_email="hg-08-okeanos@hellasgrid.gr" ngi="NGI_GRNET" csirt_email="hg-08-okeanos-csrt@hellasgrid.gr"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_HR" ggus_su="NGI_HR" rod_email="egi-fls@cro-ngi.hr" contact_email="egi-ops@cro-ngi.hr">
+        <Sites>
+            <Site id="52" primary_key="200G0" name="egee.fesb.hr" contact_email="egee-siteadmin@fesb.hr" ngi="NGI_HR" csirt_email="egee-siteadmin@fesb.hr"/>
+            <Site id="475" primary_key="244G0" name="egee.irb.hr" contact_email="lcg-admin@irb.hr" ngi="NGI_HR" csirt_email="lcg-admin@irb.hr"/>
+            <Site id="378" primary_key="119G0" name="egee.srce.hr" contact_email="egee-cegc-sa1-siteadmin@srce.hr" ngi="NGI_HR" csirt_email="egee-cegc-sa1-siteadmin@srce.hr"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_HU" ggus_su="NGI_HU" rod_email="ngi-rod@listserv.niif.hu" contact_email="ngi-managment@listserv.niif.hu">
+        <Sites>
+            <Site id="356" primary_key="199G0" name="BMEGrid" contact_email="gridsite@ik.bme.hu" ngi="NGI_HU" csirt_email="csirtik@ik.bme.hu"/>
+            <Site id="445" primary_key="165G0" name="BUDAPEST" contact_email="gridadm@rmki.kfki.hu" ngi="NGI_HU" csirt_email="grid-security@rmki.kfki.hu"/>
+            <Site id="586" primary_key="442G0" name="SZTAKI" contact_email="lcg2@lpds.sztaki.hu" ngi="NGI_HU" csirt_email="lcg2-security@lpds.sztaki.hu"/>
+            <Site id="263" primary_key="68246G0" name="T3_HU_Debrecen" contact_email="debgrid@atomki.hu" ngi="NGI_HU" csirt_email="debgrid-security@atomki.hu"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_IBERGRID" ggus_su="NGI_IBERGRID" rod_email="ibergrid-tickets@listas.cesga.es" contact_email="ibergrid-management@listas.cesga.es">
+        <Sites>
+            <Site id="460" primary_key="48713G0" name="ARAGRID-CIENCIAS" contact_email="egee-admin@bifi.es" ngi="NGI_IBERGRID" csirt_email="egee-admin@bifi.es"/>
+            <Site id="366" primary_key="341G0" name="BIFI" contact_email="egee-admin@bifi.es" ngi="NGI_IBERGRID" csirt_email="ngi-admin@bifi.es"/>
+            <Site id="159" primary_key="36466G0" name="CAFPE-GRANADA" contact_email="cafpegrid-admin@listas.ugr.es" ngi="NGI_IBERGRID" csirt_email="cafpegrid-security@listas.ugr.es"/>
+            <Site id="155" primary_key="173G0" name="CESGA" contact_email="grid-admin@cesga.es" ngi="NGI_IBERGRID" csirt_email="grid-admin@cesga.es"/>
+            <Site id="682" primary_key="53807G0" name="CETA-GRID" contact_email="use.other@ceta-ciemat.es" ngi="NGI_IBERGRID" csirt_email="use.other@ceta-ciemat.es"/>
+            <Site id="358" primary_key="384G0" name="CFP-IST" contact_email="paulotex@ist.utl.pt" ngi="NGI_IBERGRID" csirt_email="paulotex@ist.utl.pt"/>
+            <Site id="534" primary_key="262G0" name="CIEMAT-LCG2" contact_email="lcg.support@ciemat.es" ngi="NGI_IBERGRID" csirt_email="lcg.security@ciemat.es"/>
+            <Site id="158" primary_key="25915G0" name="CIEMAT-TIC" contact_email="ciemat-tic-support@ciemat.es" ngi="NGI_IBERGRID" csirt_email="ciemat-tic-support@ciemat.es"/>
+            <Site id="277" primary_key="383G0" name="ESA-ESAC" contact_email="esacgrid@sciops.esa.int" ngi="NGI_IBERGRID" csirt_email="ruben.alvarez@sciops.esa.int"/>
+            <Site id="43" primary_key="75G0" name="IEETA" contact_email="grid-Admin@ieeta.pt" ngi="NGI_IBERGRID" csirt_email="grid-Admin@ieeta.pt"/>
+            <Site id="156" primary_key="247G0" name="IFCA-LCG2" contact_email="lcg.support@ifca.unican.es" ngi="NGI_IBERGRID" csirt_email="lcg.support@ifca.unican.es"/>
+            <Site id="532" primary_key="248G0" name="IFIC-LCG2" contact_email="lcg.support@ific.uv.es" ngi="NGI_IBERGRID" csirt_email="lcg.security@ific.uv.es"/>
+            <Site id="368" primary_key="26290G0" name="IFISC-GRID" contact_email="gridadmin@ifisc.uib-csic.es" ngi="NGI_IBERGRID" csirt_email="gridsecurity@ifisc.uib-csic.es"/>
+            <Site id="469" primary_key="296G0" name="LIP-Coimbra" contact_email="grid.admin@lip.pt" ngi="NGI_IBERGRID" csirt_email="grid.security@lip.pt"/>
+            <Site id="180" primary_key="121G0" name="LIP-Lisbon" contact_email="grid.admin@lip.pt" ngi="NGI_IBERGRID" csirt_email="grid.security@lip.pt"/>
+            <Site id="129" primary_key="265G0" name="NCG-INGRID-PT" contact_email="grid.admin@lip.pt" ngi="NGI_IBERGRID" csirt_email="grid.security@lip.pt"/>
+            <Site id="533" primary_key="310G0" name="RedIRIS" contact_email="grid@rediris.es" ngi="NGI_IBERGRID" csirt_email="cert@rediris.es"/>
+            <Site id="157" primary_key="120G0" name="UAM-LCG2" contact_email="lcg.support@uam.es" ngi="NGI_IBERGRID" csirt_email="lcg.support@uam.es"/>
+            <Site id="367" primary_key="203G0" name="UB-LCG2" contact_email="lcg.support@ecm.ub.es" ngi="NGI_IBERGRID" csirt_email="lcg.support@ecm.ub.es"/>
+            <Site id="276" primary_key="300G0" name="UNICAN" contact_email="grid-prod@unican.es" ngi="NGI_IBERGRID" csirt_email="alfonso.iglesias@gestion.unican.es"/>
+            <Site id="458" primary_key="135G0" name="UPV-GRyCAP" contact_email="lcgrbadmin@grycap.upv.es" ngi="NGI_IBERGRID" csirt_email="lcgrbadmin@grycap.upv.es"/>
+            <Site id="179" primary_key="342G0" name="UPorto" contact_email="gridup.admin@up.pt" ngi="NGI_IBERGRID" csirt_email="gridup.admin@up.pt"/>
+            <Site id="459" primary_key="74G0" name="USC-LCG2" contact_email="lcg.support@igfae.usc.es" ngi="NGI_IBERGRID" csirt_email="lcg.support@igfae.usc.es"/>
+            <Site id="457" primary_key="349G0" name="ifae" contact_email="lcg.support@pic.es" ngi="NGI_IBERGRID" csirt_email="security@pic.es"/>
+            <Site id="278" primary_key="394G0" name="pic" contact_email="lcg.support@pic.es" ngi="NGI_IBERGRID" csirt_email="security@pic.es"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_IL" ggus_su="NGI_IL" rod_email="ngi-support@isragrid.org.il" contact_email="ngi-managers@isragrid.org.il">
+        <Sites>
+            <Site id="544" primary_key="78445G0" name="HRL_KZ" contact_email="support@isragrid.org.il" ngi="NGI_IL" csirt_email="teperman@il.ibm.com"/>
+            <Site id="470" primary_key="213G0" name="IL-TAU-HEP" contact_email="lcg-managers-L@listserv.technion.ac.il" ngi="NGI_IL" csirt_email="lcg-managers-L@listserv.technion.ac.il"/>
+            <Site id="182" primary_key="76632G0" name="IL_COMP" contact_email="support@isragrid.org.il" ngi="NGI_IL" csirt_email="support@isragrid.org.il"/>
+            <Site id="602" primary_key="52105G0" name="IL_IUCC_IG" contact_email="ngi-support@isragrid.org.il" ngi="NGI_IL" csirt_email="yossi.baruch@isragrid.org.il"/>
+            <Site id="181" primary_key="51184G0" name="NGI_IL" contact_email="ngi-support@isragrid.org.il" ngi="NGI_IL" csirt_email="ngi-security@isragrid.org.il"/>
+            <Site id="603" primary_key="52103G0" name="NGI_IL_MED1" contact_email="ngi-support@isragrid.org.il" ngi="NGI_IL" csirt_email="yossi.baruch@isragrid.org.il"/>
+            <Site id="543" primary_key="212G0" name="TECHNION-HEP" contact_email="lcg-managers-L@listserv.technion.ac.il" ngi="NGI_IL" csirt_email="lcg-managers-L@listserv.technion.ac.il"/>
+            <Site id="291" primary_key="133G0" name="WEIZMANN-LCG2" contact_email="lcg-managers-L@listserv.technion.ac.il" ngi="NGI_IL" csirt_email="lcg-managers-L@listserv.technion.ac.il"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_IT" ggus_su="NGI_IT" rod_email="igi-ops-support@lists.italiangrid.it" contact_email="igi-noc@lists.italiangrid.it">
+        <Sites>
+            <Site id="554" primary_key="26963G0" name="AREA-BO" contact_email="grid-prod@area.bo.cnr.it" ngi="NGI_IT" csirt_email="grid-sec@area.bo.cnr.it"/>
+            <Site id="202" primary_key="353G0" name="CIRMMP" contact_email="grid-prod@cerm.unifi.it" ngi="NGI_IT" csirt_email="grid-sec@cerm.unifi.it"/>
+            <Site id="67" primary_key="284G0" name="CNR-ILC-PISA" contact_email="grid-prod@ilc.cnr.it" ngi="NGI_IT" csirt_email="grid-sec@ilc.cnr.it"/>
+            <Site id="552" primary_key="164G0" name="CNR-PROD-PISA" contact_email="grid-prod@research-infrastructures.eu" ngi="NGI_IT" csirt_email="grid-sec@research-infrastructures.eu"/>
+            <Site id="390" primary_key="57108G0" name="CRS4" contact_email="grid-prod@crs4.it" ngi="NGI_IT" csirt_email="grid-sec@crs4.it"/>
+            <Site id="391" primary_key="74799G0" name="FBF-Brescia-IT" contact_email="grid-prod@fatebenefratelli.it" ngi="NGI_IT" csirt_email="grid-sec@fatebenefratelli.it"/>
+            <Site id="553" primary_key="499G0" name="GARR-01-DIR" contact_email="grid-tech@garr.it" ngi="NGI_IT" csirt_email="grid-tech@garr.it"/>
+            <Site id="388" primary_key="396G0" name="GILDA-INFN-CATANIA" contact_email="grid-prod@ct.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ct.infn.it"/>
+            <Site id="195" primary_key="89G0" name="GILDA-PADOVA" contact_email="grid-prod@pd.infn.it" ngi="NGI_IT" csirt_email="grid-sec@pd.infn.it"/>
+            <Site id="551" primary_key="141G0" name="GILDA-SIRIUS" contact_email="grid-prod@ct.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ct.infn.it"/>
+            <Site id="204" primary_key="116G0" name="GRISU-SPACI-NAPOLI" contact_email="spaciadmin@spaci.it" ngi="NGI_IT" csirt_email="grid-sec-na@spaci.it"/>
+            <Site id="203" primary_key="218G0" name="GRISU-UNINA" contact_email="scopeadmin@unina.it" ngi="NGI_IT" csirt_email="grid-sec@unina.it"/>
+            <Site id="83" primary_key="340G0" name="HEPHY-UIBK" contact_email="lcg-manager@physik.uibk.ac.at" ngi="NGI_IT" csirt_email="lcg-support@physik.uibk.ac.at"/>
+            <Site id="84" primary_key="243G0" name="Hephy-Vienna" contact_email="Dietrich.Liko@oeaw.ac.at" ngi="NGI_IT" csirt_email="grid-at-security@oeaw.ac.at"/>
+            <Site id="198" primary_key="86G0" name="ICEAGE-CATANIA" contact_email="grid-prod@ct.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ct.infn.it"/>
+            <Site id="298" primary_key="72G0" name="IGI-BOLOGNA" contact_email="grid-operations@lists.cnaf.infn.it" ngi="NGI_IT" csirt_email="grid-sec@cnaf.infn.it"/>
+            <Site id="301" primary_key="66831G0" name="INAF-TS" contact_email="grid-prod@oats.inaf.it" ngi="NGI_IT" csirt_email="grid-sec@oats.inaf.it"/>
+            <Site id="193" primary_key="238G0" name="INFN-BARI" contact_email="grid-prod-ba@lists.infn.it" ngi="NGI_IT" csirt_email="grid-sec-ba@lists.infn.it"/>
+            <Site id="197" primary_key="67G0" name="INFN-BOLOGNA" contact_email="grid-prod@bo.infn.it" ngi="NGI_IT" csirt_email="grid-sec@bo.infn.it"/>
+            <Site id="549" primary_key="45004G0" name="INFN-BOLOGNA-T3" contact_email="grid-prod@bo.infn.it" ngi="NGI_IT" csirt_email="grid-sec@bo.infn.it"/>
+            <Site id="385" primary_key="377G0" name="INFN-CAGLIARI" contact_email="grid-prod@ca.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ca.infn.it"/>
+            <Site id="479" primary_key="161G0" name="INFN-CATANIA" contact_email="grid-prod@ct.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ct.infn.it"/>
+            <Site id="296" primary_key="122G0" name="INFN-CNAF-LHCB" contact_email="grid-prod-lhcb-t2@lists.infn.it" ngi="NGI_IT" csirt_email="t1-security@cnaf.infn.it"/>
+            <Site id="196" primary_key="415G0" name="INFN-COSENZA" contact_email="grid-prod@cs.infn.it" ngi="NGI_IT" csirt_email="grid-sec@cs.infn.it"/>
+            <Site id="480" primary_key="162G0" name="INFN-FERRARA" contact_email="grid-prod@fe.infn.it" ngi="NGI_IT" csirt_email="grid-prod@fe.infn.it"/>
+            <Site id="609" primary_key="286G0" name="INFN-FRASCATI" contact_email="grid-prod@lnf.infn.it" ngi="NGI_IT" csirt_email="grid-sec@lnf.infn.it"/>
+            <Site id="63" primary_key="240G0" name="INFN-GENOVA" contact_email="grid-prod@ge.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ge.infn.it"/>
+            <Site id="201" primary_key="409G0" name="INFN-LECCE" contact_email="grid-prod@le.infn.it" ngi="NGI_IT" csirt_email="grid-sec@le.infn.it"/>
+            <Site id="300" primary_key="163G0" name="INFN-LNL-2" contact_email="grid-prod@lnl.infn.it" ngi="NGI_IT" csirt_email="grid-sec@lnl.infn.it"/>
+            <Site id="657" primary_key="35928G0" name="INFN-MIB" contact_email="grid-prod@mib.infn.it" ngi="NGI_IT" csirt_email="grid-sec@mib.infn.it"/>
+            <Site id="64" primary_key="137G0" name="INFN-MILANO-ATLASC" contact_email="grid-prod@mi.infn.it" ngi="NGI_IT" csirt_email="grid-sec@mi.infn.it"/>
+            <Site id="61" primary_key="204G0" name="INFN-NAPOLI-ARGO" contact_email="grid-prod@na.infn.it" ngi="NGI_IT" csirt_email="grid-sec@na.infn.it"/>
+            <Site id="194" primary_key="283G0" name="INFN-NAPOLI-ATLAS" contact_email="grid-prod-atlas-mon@na.infn.it" ngi="NGI_IT" csirt_email="grid-prod-atlas-mon@na.infn.it"/>
+            <Site id="60" primary_key="115G0" name="INFN-NAPOLI-CMS" contact_email="grid-prod@na.infn.it" ngi="NGI_IT" csirt_email="grid-sec@na.infn.it"/>
+            <Site id="386" primary_key="198G0" name="INFN-NAPOLI-PAMELA" contact_email="grid-prod@na.infn.it" ngi="NGI_IT" csirt_email="grid-sec@na.infn.it"/>
+            <Site id="387" primary_key="70G0" name="INFN-PADOVA" contact_email="grid-prod@pd.infn.it" ngi="NGI_IT" csirt_email="grid-sec@pd.infn.it"/>
+            <Site id="62" primary_key="71G0" name="INFN-PARMA" contact_email="grid-prod@pr.infn.it" ngi="NGI_IT" csirt_email="grid-sec@pr.infn.it"/>
+            <Site id="205" primary_key="216G0" name="INFN-PAVIA" contact_email="grid-prod@pv.infn.it" ngi="NGI_IT" csirt_email="grid-sec@pv.infn.it"/>
+            <Site id="65" primary_key="334G0" name="INFN-PERUGIA" contact_email="grid-prod@pg.infn.it" ngi="NGI_IT" csirt_email="grid-sec@pg.infn.it"/>
+            <Site id="297" primary_key="282G0" name="INFN-PISA" contact_email="grid-prod@lists.pi.infn.it" ngi="NGI_IT" csirt_email="grid-sec@lists.pi.infn.it"/>
+            <Site id="66" primary_key="68G0" name="INFN-ROMA1" contact_email="grid-prod@roma1.infn.it" ngi="NGI_IT" csirt_email="grid-sec@roma1.infn.it"/>
+            <Site id="610" primary_key="336G0" name="INFN-ROMA1-CMS" contact_email="grid-prod@roma1.infn.it" ngi="NGI_IT" csirt_email="grid-sec@roma1.infn.it"/>
+            <Site id="199" primary_key="113G0" name="INFN-ROMA1-VIRGO" contact_email="grid-prod@roma1.infn.it" ngi="NGI_IT" csirt_email="grid-sec@roma1.infn.it"/>
+            <Site id="59" primary_key="408G0" name="INFN-ROMA2" contact_email="grid-prod@roma2.infn.it" ngi="NGI_IT" csirt_email="grid-sec@roma2.infn.it"/>
+            <Site id="550" primary_key="69G0" name="INFN-ROMA3" contact_email="grid-prod@roma3.infn.it" ngi="NGI_IT" csirt_email="grid-sec@roma3.infn.it"/>
+            <Site id="192" primary_key="160G0" name="INFN-T1" contact_email="t1-admin@lists.cnaf.infn.it" ngi="NGI_IT" csirt_email="t1-security@lists.cnaf.infn.it"/>
+            <Site id="548" primary_key="197G0" name="INFN-TORINO" contact_email="grid-prod@to.infn.it" ngi="NGI_IT" csirt_email="grid-sec@to.infn.it"/>
+            <Site id="200" primary_key="379G0" name="INFN-TRIESTE" contact_email="grid-prod@ts.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ts.infn.it"/>
+            <Site id="206" primary_key="49250G0" name="NGI_IT" contact_email="grid-operations@lists.cnaf.infn.it" ngi="NGI_IT" csirt_email="grid-sec@cnaf.infn.it"/>
+            <Site id="68" primary_key="72548G0" name="RECAS-NAPOLI" contact_email="recasna-admin@unina.it" ngi="NGI_IT" csirt_email="grid-sec@unina.it"/>
+            <Site id="481" primary_key="239G0" name="SNS-PISA" contact_email="grid-prod@sns.it" ngi="NGI_IT" csirt_email="grid-sec@sns.it"/>
+            <Site id="299" primary_key="468G0" name="TRIGRID-INFN-CATANIA" contact_email="grid-prod@ct.infn.it" ngi="NGI_IT" csirt_email="grid-sec@ct.infn.it"/>
+            <Site id="482" primary_key="380G0" name="UNI-PERUGIA" contact_email="alessandro.costantini@pg.infn.it" ngi="NGI_IT" csirt_email="alessandro.costantini@pg.infn.it"/>
+            <Site id="389" primary_key="180G0" name="UNINA-EGEE" contact_email="scopeadmin@unina.it" ngi="NGI_IT" csirt_email="grid-sec@unina.it"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_MARGI" ggus_su="NGI_MARGI" rod_email="ngi-rod@margi.ukim.mk" contact_email="NGI-admin@margi.ukim.mk">
+        <Sites>
+            <Site id="258" primary_key="128G0" name="MK-01-UKIM_II" contact_email="seegrid-admin@ukim.edu.mk" ngi="NGI_MARGI" csirt_email="boroj@ii.edu.mk"/>
+            <Site id="321" primary_key="23715G0" name="MK-02-ETF" contact_email="gridadmin@feit.ukim.edu.mk" ngi="NGI_MARGI" csirt_email="gridadmin@feit.ukim.edu.mk"/>
+            <Site id="354" primary_key="56302G0" name="MK-03-FINKI" contact_email="hpgcc-admin@finki.ukim.mk" ngi="NGI_MARGI" csirt_email="hpgcc-admin@finki.ukim.mk"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_MD" ggus_su="NGI_MD" rod_email="grid-rod@lists.renam.md" contact_email="grid-managers@lists.renam.md">
+        <Sites>
+            <Site id="625" primary_key="29249G0" name="MD-02-IMI" contact_email="pvaseanovici@renam.md" ngi="NGI_MD" csirt_email="pvaseanovici@renam.md"/>
+            <Site id="508" primary_key="29252G0" name="MD-04-RENAM" contact_email="pvaseanovici@renam.md" ngi="NGI_MD" csirt_email="pvaseanovici@renam.md"/>
+            <Site id="669" primary_key="57151G0" name="NGI-MD-SERVICES" contact_email="pvaseanovici@renam.md" ngi="NGI_MD" csirt_email="pvaseanovici@renam.md"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_ME" ggus_su="NGI_ME" rod_email="grid-admin@ac.me" contact_email="grid@ac.me">
+        <Sites>
+            <Site id="260" primary_key="26040G0" name="MREN-01-CIS" contact_email="grid-admin@ac.me" ngi="NGI_ME" csirt_email="grid-admin@ac.me"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_NDGF" ggus_su="NGI_NDGF" rod_email="ngi-support@ndgf.org" contact_email="management@ndgf.org">
+        <Sites>
+            <Site id="393" primary_key="93G0" name="EENet" contact_email="grid-admins@lists.eenet.ee" ngi="NGI_NDGF" csirt_email="grid-admins@lists.eenet.ee"/>
+            <Site id="216" primary_key="317G0" name="FI_HIP_T2" contact_email="finnish-lhc-admins@helsinki.fi" ngi="NGI_NDGF" csirt_email="atk-turva@helsinki.fi"/>
+            <Site id="53" primary_key="360G0" name="IMCSUL" contact_email="ras@grid.lumii.lv" ngi="NGI_NDGF" csirt_email="sirt@grid.lumii.lv"/>
+            <Site id="523" primary_key="270G0" name="NDGF-T1" contact_email="support@ndgf.org" ngi="NGI_NDGF" csirt_email="nixon@nsc.liu.se"/>
+            <Site id="521" primary_key="206G0" name="NO-NORGRID-T2" contact_email="t2-support@norgrid.no" ngi="NGI_NDGF" csirt_email="h.a.eide@usit.uio.no"/>
+            <Site id="54" primary_key="225G0" name="RTUETF" contact_email="grid@etf.rtu.lv" ngi="NGI_NDGF" csirt_email="grid@rtu.lv"/>
+            <Site id="137" primary_key="299G0" name="SE-SNIC-T2" contact_email="operations@swegrid.se" ngi="NGI_NDGF" csirt_email="security@swegrid.se"/>
+            <Site id="486" primary_key="222G0" name="T2_Estonia" contact_email="grid@kbfi.ee" ngi="NGI_NDGF" csirt_email="grid@kbfi.ee"/>
+            <Site id="146" primary_key="31456G0" name="UNICPH-NBI" contact_email="grid-support@nbi.ku.dk" ngi="NGI_NDGF" csirt_email="grid-support@nbi.ku.dk"/>
+            <Site id="400" primary_key="223G0" name="VU-MIF-LCG2" contact_email="grid-prod@mif.vu.lt" ngi="NGI_NDGF" csirt_email="grid-security@mif.vu.lt"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_NL" ggus_su="NGI_NL" rod_email="rod-team@sara.nl" contact_email="ops-management@biggrid.nl">
+        <Sites>
+            <Site id="564" primary_key="486G0" name="BCBR" contact_email="enmr@nmr.chem.uu.nl" ngi="NGI_NL" csirt_email="enmr@nmr.chem.uu.nl"/>
+            <Site id="587" primary_key="34216G0" name="BEgrid-BELNET" contact_email="grid_admin@listserv.vub.ac.be" ngi="NGI_NL" csirt_email="grid_admin@listserv.vub.ac.be"/>
+            <Site id="320" primary_key="95G0" name="BEgrid-ULB-VUB" contact_email="grid_admin@listserv.vub.ac.be" ngi="NGI_NL" csirt_email="grid_security@listserv.vub.ac.be"/>
+            <Site id="225" primary_key="220G0" name="BelGrid-UCL" contact_email="pavel.demin@uclouvain.be" ngi="NGI_NL" csirt_email="pavel.demin@uclouvain.be"/>
+            <Site id="403" primary_key="144G0" name="LSG-AMC" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="223" primary_key="226G0" name="LSG-AMS" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="93" primary_key="182G0" name="LSG-EMC" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="406" primary_key="65805G0" name="LSG-HUB" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="92" primary_key="143G0" name="LSG-KUN" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="405" primary_key="346G0" name="LSG-LUMC" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="222" primary_key="385G0" name="LSG-NKI" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="664" primary_key="17841G0" name="LSG-RUG" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="318" primary_key="14242G0" name="LSG-TUD" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="623" primary_key="64295G0" name="LSG-VU" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="404" primary_key="94G0" name="LSG-WUR" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+            <Site id="494" primary_key="224G0" name="NIKHEF-ELPROD" contact_email="grid.sysadmin@nikhef.nl" ngi="NGI_NL" csirt_email="security@nikhef.nl"/>
+            <Site id="663" primary_key="56G0" name="RUG-CIT" contact_email="grid-beheer@list.rug.nl" ngi="NGI_NL" csirt_email="grid-beheer@list.rug.nl"/>
+            <Site id="563" primary_key="145G0" name="SARA-MATRIX" contact_email="eugrid.support@sara.nl" ngi="NGI_NL" csirt_email="cert@sara.nl"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_PL" ggus_su="NGI_PL" rod_email="plgrid-support@cyf-kr.edu.pl" contact_email="polish-ngi-management@plgrid.pl">
+        <Sites>
+            <Site id="593" primary_key="178G0" name="CAMK" contact_email="cta@camk.edu.pl" ngi="NGI_PL" csirt_email="moderski@camk.edu.pl"/>
+            <Site id="452" primary_key="289G0" name="CYFRONET-LCG2" contact_email="lcg-admin@cyf-kr.edu.pl" ngi="NGI_PL" csirt_email="lcg-admin@cyf-kr.edu.pl"/>
+            <Site id="454" primary_key="44G0" name="ICM" contact_email="plgrid-admins@icm.edu.pl" ngi="NGI_PL" csirt_email="plgrid-admins@icm.edu.pl"/>
+            <Site id="528" primary_key="245G0" name="IFJ-PAN-BG" contact_email="grid-admin@ifj.edu.pl" ngi="NGI_PL" csirt_email="grid-admin@ifj.edu.pl"/>
+            <Site id="530" primary_key="53622G0" name="NGI_PL_SERVICES" contact_email="ngi-pl-services@grid.cyf-kr.edu.pl" ngi="NGI_PL" csirt_email="lcg-admin@cyf-kr.edu.pl"/>
+            <Site id="453" primary_key="387G0" name="PSNC" contact_email="egee@man.poznan.pl" ngi="NGI_PL" csirt_email="security@man.poznan.pl"/>
+            <Site id="144" primary_key="355G0" name="TASK" contact_email="lcg-admin@task.gda.pl" ngi="NGI_PL" csirt_email="lcg-admin@task.gda.pl"/>
+            <Site id="143" primary_key="211G0" name="WCSS-PPS" contact_email="egee-site-manager@kdm.wcss.wroc.pl" ngi="NGI_PL" csirt_email="egee-site-manager@kdm.wcss.wroc.pl"/>
+            <Site id="529" primary_key="293G0" name="WCSS64" contact_email="egee-site-manager@kdm.wcss.wroc.pl" ngi="NGI_PL" csirt_email="egee-site-security@kdm.wcss.wroc.pl"/>
+            <Site id="679" primary_key="50563G0" name="WUT" contact_email="wlcg-admin@if.pw.edu.pl" ngi="NGI_PL" csirt_email="wlcg-admin@if.pw.edu.pl"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_RO" ggus_su="NGI_RO" rod_email="ngi-operations@rogrid.ro" contact_email="ngi-operations@rogrid.ro">
+        <Sites>
+            <Site id="228" primary_key="208G0" name="NIHAM" contact_email="niham-l@niham.nipne.ro" ngi="NGI_RO" csirt_email="g-sec@niham.nipne.ro"/>
+            <Site id="98" primary_key="79G0" name="RO-01-ICI" contact_email="site-admin@grid.ici.ro" ngi="NGI_RO" csirt_email="site-admin@grid.ici.ro"/>
+            <Site id="498" primary_key="57G0" name="RO-02-NIPNE" contact_email="atgrid@ifin.nipne.ro" ngi="NGI_RO" csirt_email="atgrid@ifin.nipne.ro"/>
+            <Site id="324" primary_key="259G0" name="RO-07-NIPNE" contact_email="ciubancan@nipne.ro" ngi="NGI_RO" csirt_email="ciubancan@nipne.ro"/>
+            <Site id="323" primary_key="345G0" name="RO-09-UTCN" contact_email="admin@grid.utcluj.ro" ngi="NGI_RO" csirt_email="admin@grid.utcluj.ro"/>
+            <Site id="227" primary_key="258G0" name="RO-11-NIPNE" contact_email="iteodor@nipne.ro" ngi="NGI_RO" csirt_email="iteodor@nipne.ro"/>
+            <Site id="408" primary_key="127G0" name="RO-13-ISS" contact_email="glite@spacescience.ro" ngi="NGI_RO" csirt_email="ionelstan@spacescience.ro"/>
+            <Site id="97" primary_key="388G0" name="RO-14-ITIM" contact_email="felix@itim-cj.ro" ngi="NGI_RO" csirt_email="grid@itim-cj.ro"/>
+            <Site id="668" primary_key="536G0" name="RO-15-NIPNE" contact_email="RO-15-NIPNE@nipne.ro" ngi="NGI_RO" csirt_email="ilcgrid@nipne.ro"/>
+            <Site id="499" primary_key="264G0" name="RO-16-UAIC" contact_email="ramona@uaic.ro" ngi="NGI_RO" csirt_email="ciprian.pinzaru@uaic.ro"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_SI" ggus_su="NGI_SI" rod_email="ops@sling.si" contact_email="management@sling.si">
+        <Sites>
+            <Site id="620" primary_key="30227G0" name="ARNES" contact_email="grid-support@arnes.si" ngi="NGI_SI" csirt_email="grid-support@arnes.si"/>
+            <Site id="86" primary_key="288G0" name="SiGNET" contact_email="grid.admin@ijs.si" ngi="NGI_SI" csirt_email="grid.admin@ijs.si"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_SK" ggus_su="NGI_SK" rod_email="operations@slovakgrid.sk" contact_email="management@slovakgrid.sk">
+        <Sites>
+            <Site id="539" primary_key="118G0" name="FMPhI-UNIBA" contact_email="gridmaster@dnp.fmph.uniba.sk" ngi="NGI_SK" csirt_email="gridmaster@dnp.fmph.uniba.sk"/>
+            <Site id="176" primary_key="339G0" name="IEPSAS-Kosice" contact_email="grid.support@saske.sk" ngi="NGI_SK" csirt_email="grid.support@saske.sk"/>
+            <Site id="41" primary_key="201G0" name="IISAS-Bratislava" contact_email="grid-admin.ui@sav.sk" ngi="NGI_SK" csirt_email="grid-admin.ui@sav.sk"/>
+            <Site id="40" primary_key="73G0" name="TU-Kosice" contact_email="grid-adm@lists.tuke.sk" ngi="NGI_SK" csirt_email="grid-adm@lists.tuke.sk"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_TR" ggus_su="NGI_TR" rod_email="grid-teknik@ulakbim.gov.tr" contact_email="grid-pm@ulakbim.gov.tr">
+        <Sites>
+            <Site id="347" primary_key="78G0" name="TR-01-ULAKBIM" contact_email="grid@ulakbim.gov.tr" ngi="NGI_TR" csirt_email="grid@ulakbim.gov.tr"/>
+            <Site id="166" primary_key="392G0" name="TR-03-METU" contact_email="grid@ulakbim.gov.tr" ngi="NGI_TR" csirt_email="grid-teknik@ulakbim.gov.tr"/>
+            <Site id="167" primary_key="80G0" name="TR-10-ULAKBIM" contact_email="grid@ulakbim.gov.tr" ngi="NGI_TR" csirt_email="grid-teknik@ulakbim.gov.tr"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_UA" ggus_su="NGI_UA" rod_email="ngi-ua-rod@grid.org.ua" contact_email="ngi-ua-operations@grid.org.ua">
+        <Sites>
+            <Site id="383" primary_key="363G0" name="Kharkov-KIPT-LCG2" contact_email="levchuk@kipt.kharkov.ua" ngi="NGI_UA" csirt_email="levchuk@kipt.kharkov.ua"/>
+            <Site id="686" primary_key="56591G0" name="NGI_UA_SERVICES" contact_email="ngi-ua-operations@grid.org.ua" ngi="NGI_UA" csirt_email="ngi-ua-security@grid.org.ua"/>
+            <Site id="170" primary_key="24193G0" name="UA-BITP" contact_email="pelykh@bitp.kiev.ua" ngi="NGI_UA" csirt_email="pelyh@grid.bitp.kiev.ua"/>
+            <Site id="601" primary_key="66810G0" name="UA-IMBG" contact_email="support@moldyngrid.org" ngi="NGI_UA" csirt_email="support@moldyngrid.org"/>
+            <Site id="171" primary_key="56604G0" name="UA-ISMA" contact_email="barannik@isma.kharkov.ua" ngi="NGI_UA" csirt_email="roman@xray.isc.kharkov.com"/>
+            <Site id="169" primary_key="43283G0" name="UA-KNU" contact_email="grid-prod@grid.org.ua" ngi="NGI_UA" csirt_email="grid-sec@grid.org.ua"/>
+            <Site id="648" primary_key="75243G0" name="UA-MHI" contact_email="support@mhi-hpc.org" ngi="NGI_UA" csirt_email="dalexeev@rambler.ru"/>
+            <Site id="687" primary_key="67125G0" name="UA-NSCMBR" contact_email="grid-prod@grid.org.ua" ngi="NGI_UA" csirt_email="grid-sec@grid.org.ua"/>
+            <Site id="173" primary_key="74043G0" name="UA-PIMEE" contact_email="pimee@grid.org.ua" ngi="NGI_UA" csirt_email="pimee-sec@grid.org.ua"/>
+            <Site id="463" primary_key="57622G0" name="UA_BITP_ARC" contact_email="Alitovchenko@bitp.kiev.ua" ngi="NGI_UA" csirt_email="oksana.shadura@cern.ch"/>
+            <Site id="172" primary_key="68150G0" name="UA_ICYB_ARC" contact_email="icybcluster@gmail.com" ngi="NGI_UA" csirt_email="icybcluster@gmail.com"/>
+            <Site id="600" primary_key="66719G0" name="UA_ILTPE_ARC" contact_email="belous@ilt.kharkov.ua" ngi="NGI_UA" csirt_email="mikhailenko@ilt.kharkov.ua"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_UK" ggus_su="NGI_UK" rod_email="uki-grid-ops@cern.ch" contact_email="UKNGI-OPERATIONS@jiscmail.ac.uk">
+        <Sites>
+            <Site id="419" primary_key="80090G0" name="100IT" contact_email="egi-info@100percentit.com" ngi="NGI_UK" csirt_email="egi-security@100percentit.com"/>
+            <Site id="107" primary_key="234G0" name="EFDA-JET" contact_email="jac-adm@jet.efda.org;p.gronbech1@physics.ox.ac.uk" ngi="NGI_UK" csirt_email="jac-adm@jet.efda.org"/>
+            <Site id="570" primary_key="194G0" name="RAL-LCG2" contact_email="lcg-support@gridpp.rl.ac.uk" ngi="NGI_UK" csirt_email="tier1security@rl.ac.uk"/>
+            <Site id="236" primary_key="158G0" name="UKI-LT2-Brunel" contact_email="lcg-admin@brunel.ac.uk;daniela.bauer.grid@googlemail.com;d.colling@imperial.ac.uk" ngi="NGI_UK" csirt_email="lcg-admin@brunel.ac.uk"/>
+            <Site id="572" primary_key="326G0" name="UKI-LT2-IC-HEP" contact_email="lcg-site-admin@imperial.ac.uk" ngi="NGI_UK" csirt_email="lcg-site-admin@imperial.ac.uk"/>
+            <Site id="503" primary_key="279G0" name="UKI-LT2-QMUL" contact_email="edg-site-admin@qmul.ac.uk;daniela.bauer.grid@googlemail.com;d.colling@imperial.ac.uk" ngi="NGI_UK" csirt_email="edg-site-admin@qmul.ac.uk"/>
+            <Site id="238" primary_key="193G0" name="UKI-LT2-RHUL" contact_email="grid-admin@pp.rhul.ac.uk;d.colling@imperial.ac.uk;daniela.bauer.grid@googlemail.com;duncan.rand@imperial.ac.uk" ngi="NGI_UK" csirt_email="goc-csirt@pp.rhul.ac.uk"/>
+            <Site id="104" primary_key="157G0" name="UKI-LT2-UCL-HEP" contact_email="lcg-admin@hep.ucl.ac.uk;daniela.bauer.grid@googlemail.com;d.colling@imperial.ac.uk" ngi="NGI_UK" csirt_email="lcg-security@hep.ucl.ac.uk"/>
+            <Site id="502" primary_key="156G0" name="UKI-NORTHGRID-LANCS-HEP" contact_email="lcg-admin@hep.lancs.ac.uk" ngi="NGI_UK" csirt_email="lcg-admin@hep.lancs.ac.uk"/>
+            <Site id="232" primary_key="277G0" name="UKI-NORTHGRID-LIV-HEP" contact_email="gridteam@hep.ph.liv.ac.uk" ngi="NGI_UK" csirt_email="security@hep.ph.liv.ac.uk"/>
+            <Site id="233" primary_key="278G0" name="UKI-NORTHGRID-MAN-HEP" contact_email="ops@tier2.hep.manchester.ac.uk" ngi="NGI_UK" csirt_email="csirts@tier2.hep.manchester.ac.uk"/>
+            <Site id="234" primary_key="107G0" name="UKI-NORTHGRID-SHEF-HEP" contact_email="edg-site-admin@sheffield.ac.uk" ngi="NGI_UK" csirt_email="edg-site-admin@sheffield.ac.uk"/>
+            <Site id="235" primary_key="329G0" name="UKI-SCOTGRID-DURHAM" contact_email="oper.ip3@durham.ac.uk;m.mitchell@physics.gla.ac.uk" ngi="NGI_UK" csirt_email="oper.ip3@durham.ac.uk"/>
+            <Site id="105" primary_key="250G0" name="UKI-SCOTGRID-ECDF" contact_email="wlcg-support-ecdf@mlist.is.ed.ac.uk;m.mitchell@physics.gla.ac.uk" ngi="NGI_UK" csirt_email="wlcg-irt-ecdf@mlist.is.ed.ac.uk"/>
+            <Site id="627" primary_key="64G0" name="UKI-SCOTGRID-GLASGOW" contact_email="uki-scotgrid-glasgow@physics.gla.ac.uk;m.mitchell@physics.gla.ac.uk" ngi="NGI_UK" csirt_email="grid-cert@physics.gla.ac.uk"/>
+            <Site id="106" primary_key="372G0" name="UKI-SOUTHGRID-BHAM-HEP" contact_email="lcg-site-admin@hep.ph.bham.ac.uk;p.gronbech1@physics.ox.ac.uk" ngi="NGI_UK" csirt_email="lcg-site-cert@hep.ph.bham.ac.uk"/>
+            <Site id="337" primary_key="106G0" name="UKI-SOUTHGRID-BRIS-HEP" contact_email="lcg-site-admin@bristol.ac.uk" ngi="NGI_UK" csirt_email="lcg-security@bristol.ac.uk"/>
+            <Site id="336" primary_key="233G0" name="UKI-SOUTHGRID-CAM-HEP" contact_email="lcg-admin@hep.phy.cam.ac.uk" ngi="NGI_UK" csirt_email="cert@cam.ac.uk"/>
+            <Site id="571" primary_key="232G0" name="UKI-SOUTHGRID-OX-HEP" contact_email="lcg_manager@physics.ox.ac.uk" ngi="NGI_UK" csirt_email="lcg_security@physics.ox.ac.uk"/>
+            <Site id="628" primary_key="61G0" name="UKI-SOUTHGRID-RALPP" contact_email="PPD.GRID.Support@rl.ac.uk;p.gronbech1@physics.ox.ac.uk" ngi="NGI_UK" csirt_email="PPD.GRID.Support@rl.ac.uk"/>
+            <Site id="573" primary_key="44186G0" name="UKI-SOUTHGRID-SUSX" contact_email="grid-admin@sussex.ac.uk" ngi="NGI_UK" csirt_email="grid-security@sussex.ac.uk"/>
+        </Sites>
+    </NGI>
+    <NGI name="NGI_ZA" ggus_su="NGI_ZA" rod_email="sagrid-ops@lists.sagrid.ac.za" contact_email="sagrid-ops@lists.sagrid.ac.za">
+        <Sites>
+            <Site id="175" primary_key="81467G0" name="ZA-MERAKA" contact_email="bbecker@csir.co.za" ngi="NGI_ZA" csirt_email="rmooi@csir.co.za"/>
+            <Site id="285" primary_key="81622G0" name="ZA-UJ" contact_email="za-uj-ops@lists.sagrid.ac.za" ngi="NGI_ZA" csirt_email="adrians@uj.ac.za"/>
+            <Site id="689" primary_key="81872G0" name="ZA-WITS-CORE" contact_email="za-wits-core-ops@lists.sagrid.ac.za" ngi="NGI_ZA" csirt_email="scott.hazelhurst@wits.ac.za"/>
+        </Sites>
+    </NGI>
+    <NGI name="ROC_Canada" ggus_su="ROC_Canada" rod_email="roc@triumf.ca" contact_email="roc@lcg.triumf.ca">
+        <Sites>
+            <Site id="661" primary_key="55G0" name="BEIJING-LCG2" contact_email="lcg-admin@ihep.ac.cn" ngi="ROC_Canada" csirt_email="lcg-admin@ihep.ac.cn"/>
+            <Site id="187" primary_key="175G0" name="CA-ALBERTA-WESTGRID-T2" contact_email="rsg@ualberta.ca" ngi="ROC_Canada" csirt_email="rsg@ualberta.ca"/>
+            <Site id="191" primary_key="46822G0" name="CA-MCGILL-CLUMEQ-T2" contact_email="atlasgrid-admin@clumeq.ca" ngi="ROC_Canada" csirt_email="atlasgrid-admin@clumeq.ca"/>
+            <Site id="57" primary_key="397G0" name="CA-SCINET-T2" contact_email="lcg-support@scinet.utoronto.ca" ngi="ROC_Canada" csirt_email="lcg-security@scinet.utoronto.ca"/>
+            <Site id="605" primary_key="71629G0" name="CA-TRIUMF-T2K" contact_email="t2kcompute@comp.nd280.org" ngi="ROC_Canada" csirt_email="t2kcompute@comp.nd280.org"/>
+            <Site id="545" primary_key="24430G0" name="CA-VICTORIA-WESTGRID-T2" contact_email="rcf-lcg@uvic.ca" ngi="ROC_Canada" csirt_email="rcf-lcg@uvic.ca"/>
+            <Site id="50" primary_key="75163G0" name="ROC_Canada_SERVICES" contact_email="roc@lcg.triumf.ca" ngi="ROC_Canada" csirt_email="roc-security@lcg.triumf.ca"/>
+            <Site id="462" primary_key="228G0" name="SFU-LCG2" contact_email="lcg-support@sfu.ca" ngi="ROC_Canada" csirt_email="lcg-support@sfu.ca"/>
+            <Site id="49" primary_key="315G0" name="TRIUMF-LCG2" contact_email="lcg_support@triumf.ca" ngi="ROC_Canada" csirt_email="csirt@triumf.ca"/>
+        </Sites>
+    </NGI>
+    <NGI name="ROC_LA" ggus_su="ROC_LA" rod_email="support@roc-la.org" contact_email="support@roc-la.org">
+        <Sites>
+            <Site id="398" primary_key="76G0" name="CBPF" contact_email="gridlafex@cbpf.br" ngi="ROC_LA" csirt_email="gridlafex@cbpf.br"/>
+            <Site id="685" primary_key="15881G0" name="EELA-UNLP" contact_email="gridadmin@linti.unlp.edu.ar" ngi="ROC_LA" csirt_email="gridadmin@linti.unlp.edu.ar"/>
+            <Site id="56" primary_key="395G0" name="EELA-UTFSM" contact_email="grid@hpc.utfsm.cl" ngi="ROC_LA" csirt_email="grid@hpc.utfsm.cl"/>
+            <Site id="259" primary_key="138G0" name="ICN-UNAM" contact_email="grid@correo.nucleares.unam.mx" ngi="ROC_LA" csirt_email="grid-security@correo.nucleares.unam.mx"/>
+            <Site id="448" primary_key="263G0" name="SAMPA" contact_email="sampa-admin@dfn.if.usp.br" ngi="ROC_LA" csirt_email="sampa-admin@dfn.if.usp.br"/>
+            <Site id="190" primary_key="391G0" name="UNIANDES" contact_email="grid@uniandes.edu.co" ngi="ROC_LA" csirt_email="grid@uniandes.edu.co"/>
+        </Sites>
+    </NGI>
+    <NGI name="Russia" ggus_su="ROC_Russia" rod_email="rcod@egee.sinp.msu.ru" contact_email="roc-support@theory.sinp.msu.ru">
+        <Sites>
+            <Site id="307" primary_key="365G0" name="ITEP" contact_email="lublev@itep.ru" ngi="Russia" csirt_email="lublev@itep.ru"/>
+            <Site id="394" primary_key="272G0" name="JINR-LCG2" contact_email="lcgadm@lxmail.jinr.ru" ngi="Russia" csirt_email="lcgadm@lxmail.jinr.ru"/>
+            <Site id="619" primary_key="75720G0" name="JINR-T1" contact_email="t1adm@lxmail.jinr.ru" ngi="Russia" csirt_email="t1adm@lxmail.jinr.ru"/>
+            <Site id="556" primary_key="190G0" name="RRC-KI" contact_email="gridops@grid.kiae.ru" ngi="Russia" csirt_email="csirt@grid.kiae.ru"/>
+            <Site id="81" primary_key="65409G0" name="RRC-KI-T1" contact_email="gridops@grid.kiae.ru" ngi="Russia" csirt_email="csirt@grid.kiae.ru"/>
+            <Site id="309" primary_key="231G0" name="RU-Protvino-IHEP" contact_email="lcg@ihep.ru" ngi="Russia" csirt_email="kotlyar@ihep.ru"/>
+            <Site id="80" primary_key="229G0" name="RU-SPbSU" contact_email="andrey.zar@gmail.com" ngi="Russia" csirt_email="azaroche@mail.cern.ch"/>
+            <Site id="557" primary_key="96G0" name="Ru-Troitsk-INR-LCG2" contact_email="lcg@inr.ru" ngi="Russia" csirt_email="sli@inr.ru"/>
+            <Site id="395" primary_key="230G0" name="ru-Moscow-FIAN-LCG2" contact_email="grid-admin@sci.lebedev.ru" ngi="Russia" csirt_email="grid-security@sci.lebedev.ru"/>
+            <Site id="487" primary_key="150G0" name="ru-Moscow-SINP-LCG2" contact_email="grid-support@sinp.msu.ru" ngi="Russia" csirt_email="grid-support@sinp.msu.ru"/>
+            <Site id="308" primary_key="100G0" name="ru-PNPI" contact_email="globus@pnpi.nw.ru" ngi="Russia" csirt_email="globus@pnpi.nw.ru"/>
+        </Sites>
+    </NGI>
+</NGIs>

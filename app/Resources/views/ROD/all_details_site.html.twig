@@ -1,0 +1,106 @@
+{% extends "base_bootstrap_4.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/vendor/datatables/select/css/select.dataTables.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/simple-vertical-timeline.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/css/rod.min.css') }}" />
+{% endblock %}
+
+{% block title %}Operations-Portal | ROD Dashboard{% endblock %}
+{% block body %}
+    <h1 class="card card-header bg-info text-white flex-row mb-3"><span class="fa fa-home mr-2"></span>  {{ site }}</h1>
+    <hr>
+{#    <h3 class="card card-body flex-row mb-3"><span class="fa fa-home mr-2"></span>  {{ details['site']['NAME'] }}</h3>#}
+
+    {% if details['tickets'] | length > 0 and isSecurity == 'all' %}
+
+        <div id="tickets" class="mb-5">
+            <div class='d-flex justify-content-center'>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if details['alarms'] | length > 0 and isSecurity == 'all' %}
+        <div id="alarms" class="mb-5">
+            <div class='d-flex justify-content-center'>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if alarmsSecurity['alarmsSecurity'] | length > 0 and app.user.isSecuOfficer() and isSecurity == 'security' %}
+        <div id="alarmsSecurity" class="mb-5">
+            <div class='d-flex justify-content-center'>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if details['downtimes'] | length > 0 %}
+        <div id="downtimes" class="mb-5">
+            <div class='d-flex justify-content-center'>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if details['notepads'] | length > 0 %}
+       <div id="notepads" class="mb-5">
+           <div class='d-flex justify-content-center'>
+               <div class="spinner-border text-primary" role="status">
+                   <span class="sr-only">Loading...</span>
+               </div>
+           </div>
+       </div>
+    {% endif %}
+
+    {% if details['avre'] | length > 0 %}
+        <div id="avre" class="mb-5">
+            <div class='d-flex justify-content-center'>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if details['notepads']  | length == 0 and details['tickets']  | length == 0 and
+        details['alarms']  | length == 0 and details['downtimes']  | length == 0 %}
+        <div class='card-header  border border-secondary'>
+            <h3 class='text-center'>This site has currently no issues </h3>
+        </div>
+    {% endif %}
+
+    {% if isSecurity == 'all' %}
+        {{ include(':ROD:modal-delete-ticket.html.twig') }}
+        {{ include(':ROD:modal-ticket.html.twig') }}
+        {{ include(':ROD:modal-notepad.html.twig') }}
+    {% endif %}
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('build/vendor/datatables/select/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.colVis.min.js') }}"></script>
+    <script type="application/javascript">
+
+        var site = "{{ site }}";
+        // $('#tickets').html( "<div class='d-flex justify-content-center'>" + "<div class=\"lds-ripple text-center\">" + "<div>" + "</div>" + "<div>" + "</div>" + "</div>" + "</div>");
+
+        $('#tickets').load("{{ url('ROD_details') }}", {site: site, detailsType: 'tickets'} );
+        $('#alarms').load("{{ url('ROD_details') }}", {site: site , detailsType: 'alarms'});
+        $('#downtimes').load("{{ url('ROD_details') }}", {site: site , detailsType: 'downtimes'});
+        $('#notepads').load("{{ url('ROD_details') }}", {site: site , detailsType: 'notepads'});
+        $('#avre').load("{{ url('ROD_details') }}", {site: site , detailsType: 'avre'});
+        $('#alarmsSecurity').load("{{ url('ROD_details') }}", {site: site , detailsType: 'alarmsSecurity'});
+    </script>
+{% endblock %}

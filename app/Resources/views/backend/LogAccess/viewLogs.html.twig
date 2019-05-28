@@ -1,0 +1,40 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body %}
+    {#{{dump(log)}}#}
+
+    <table id="log">
+        <thead>
+           <tr>
+             <th>Server</th>
+             <th>IP</th>
+             <th>Date</th>
+             <th>Method</th>
+             <th>User agent</th>
+           </tr>
+        </thead>
+
+        <tbody>
+        {% for line in log %}
+            <tr>
+                {% for line in log %}
+                   <td></td>
+               {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $('#log').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+        });
+    </script>
+{% endblock %}
+
+

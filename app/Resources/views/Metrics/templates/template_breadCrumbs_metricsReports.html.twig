@@ -1,0 +1,22 @@
+<ol class="breadcrumb">
+
+    {% for crumb in breadcrumbs %}
+        {% if crumb["name"] is not defined and crumb["entity"] is not defined%}
+            <li class="breadcrumb-item"><a href="{{ path(crumb["route"]) }}">{{ crumb["title"] }}</a></li>
+        {% elseif crumb["name"] is defined and crumb["entity"] is defined%}
+            <li class="breadcrumb-item"><a href="{{ path(crumb["route"], {"entity" : crumb["entity"], "name" : crumb["name"], "date" : crumb["date"]|date("Y-m-d h:m:s")} ) }}">{{ crumb["title"] }}</a></li>
+        {% elseif crumb["name"] is defined and crumb["entity"] is not defined%}
+            <li class="breadcrumb-item"><a href="{{ path(crumb["route"], {"name" : crumb["name"], "date" : crumb["date"]|date("Y-m-d h:m:s")} ) }}">{{ crumb["title"] }}</a></li>
+        {% elseif crumb["name"] is not defined and crumb["entity"] is defined  %}
+            <li class="breadcrumb-item">
+                {% if crumb["date"] is defined %}
+                    <a href="{{ path(crumb["route"], {"entity" : crumb["entity"], "date" : crumb["date"]|date("Y-m-d h:m:s")} ) }}">{{ crumb["title"] }}</a>
+                {% else %}
+                    <a href="{{ path(crumb["route"], {"entity" : crumb["entity"], "start" : crumb["start"]|date("Y-m"), "end" :crumb["end"]|date("Y-m") } ) }}">{{ crumb["title"] }}</a>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+
+</ol>
+

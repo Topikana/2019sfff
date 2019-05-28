@@ -1,0 +1,78 @@
+<table id="usersMetricsTable" cellspacing="0" width="100%"
+       class="table table-bordered table-striped table-condensed">
+    <thead>
+    <tr>
+        <th>VO</th>
+
+        {% for date in tabdates %}
+            <th colspan="2" style="text-align: center">
+                {{ date }}
+            </th>
+        {% endfor %}
+    </tr>
+
+    <tr id="total" style="font-weight: bold;">
+        <th>Total</th>
+
+        <th class="thLeft" style=" border-right: none;">
+            <span  class="pull-left" style="padding-left: 30px;color:gray;font-size:smaller;">N.A.</span>
+        </th>
+        <th  style="border-left: none;">
+            <span style ="padding-right: 20px" class="float-right">{{ entityMetrics["total"][tabdates[0]] }}</span>
+        </th>
+
+
+        <th class="thLeft" style="border-right: none">
+            <span class="pull-left" style="padding-left: 30px;{{ styleColLeft }}">{{ diffColLeft }}</span>
+        </th>
+        <th style="border-left: none;">
+            <span style ="padding-right: 20px"  class="float-right">{{ entityMetrics["total"][tabdates[1]] }}</span>
+        </th>
+
+
+        <th class="thLeft" style="border-right: none">
+            <span class="pull-left" style="padding-left: 30px;{{ styleColMid }}">{{ diffColMid }}</span>
+        </th>
+        <th style="border-left: none;">
+           <span style ="padding-right: 20px"  class="float-right"> {{ entityMetrics["total"][tabdates[2]] }}</span>
+        </th>
+
+
+        <th class="thLeft" style="border-right: none">
+            <span class="pull-left" style="padding-left: 30px;{{ styleColRight }}">{{ diffColRight }}</span>
+        </th>
+        <th style="border-right: none;">
+            <span style ="padding-right: 20px"  class="float-right">{{ entityMetrics["total"][tabdates[3]] }}</span>
+        </th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for vo, nbstart in entityMetrics["entity"] %}
+        {% if vo != "total" %}
+            <tr id="{{ vo }}">
+
+                <td>
+                    {{ vo }}
+                    <a class="float-right" style="font-size:smaller;padding-right:20px; font-style:italic" href="{{ path("oneYearVoCaMetricsReports", {"name": vo|url_encode, "entity" : entity, "date": tabdates[3]}) }}">History</a>
+                </td>
+
+                {% for month, ddate in tabdates %}
+
+                    <td style="border-right: none">
+                        <span style="{{ entityMetrics["nbUsersStyle"][vo][ddate] }}">
+                        {{entityMetrics["nbUsersDiff"][vo][ddate]  }}
+                        </span>
+                    </td>
+                    <td style="border-left: none"><span class="float-right" >{{ entityMetrics["nbUsers"][vo][ddate] }}</span></td>
+
+                {% endfor %}
+
+            </tr>
+        {% endif %}
+    {% endfor %}
+
+    </tbody>
+</table>
+

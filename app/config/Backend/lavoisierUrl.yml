@@ -1,0 +1,9 @@
+parameters:
+  lavoisierfr: "cclavoisierfr.in2p3.fr"
+  lavoisier01: "cclavoisier01.in2p3.fr"
+  lavoisier0086: "ccosvms0086.in2p3.fr"
+  lavoisier0089: "ccosvms0089.in2p3.fr"
+  lavoisierfrUrl: "http://cclavoisierfr.in2p3.fr:8080/lavoisier"
+  lavoisier01Url: "http://cclavoisier01.in2p3.fr:8080/lavoisier"
+  lavoisier0086Url: "http://ccosvms0086.in2p3.fr:8080/lavoisier"
+  lavoisier0089Url: "http://ccosvms0089.in2p3.fr:8080/lavoisier"

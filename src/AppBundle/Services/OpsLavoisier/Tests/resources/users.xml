@@ -1,0 +1,43 @@
+<e:entries xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <e:entries key="user">
+        <e:entry key="key">/O=GRID-FR/C=FR/O=CNRS/OU=CC-IN2P3/CN=foo bar</e:entry>
+        <e:entry key="CN">Foo Bar</e:entry>
+        <e:entry key="EMAIL">foo.bar@cc.in2p3.fr</e:entry>
+        <e:entry key="PRIMARY_KEY">306G0</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="ENTITY_TYPE">project</e:entry>
+        <e:entry key="ON_ENTITY">EGI</e:entry>
+        <e:entry key="USER_ROLE">GRID BODY</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="ON_ENTITY">vo.foo.org</e:entry>
+        <e:entry key="USER_ROLE">VO MANAGER</e:entry>
+        <e:entry key="ENTITY_TYPE">vo</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="USER_ROLE">Site Operations Manager</e:entry>
+        <e:entry key="ON_ENTITY">GRIDOPS-OPSPORTAL</e:entry>
+        <e:entry key="ENTITY_TYPE">site</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="USER_ROLE">CIC Staff</e:entry>
+        <e:entry key="ON_ENTITY">EGI</e:entry>
+        <e:entry key="ENTITY_TYPE">project</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="USER_ROLE">COD Staff</e:entry>
+        <e:entry key="ON_ENTITY">EGI</e:entry>
+        <e:entry key="ENTITY_TYPE">project</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="USER_ROLE">COD Administrator</e:entry>
+        <e:entry key="ON_ENTITY">EGI</e:entry>
+        <e:entry key="ENTITY_TYPE">project</e:entry>
+    </e:entries>
+    <e:entries>
+        <e:entry key="USER_ROLE">Regional Staff (ROD)</e:entry>
+        <e:entry key="ON_ENTITY">NGI_FRANCE</e:entry>
+        <e:entry key="ENTITY_TYPE">ngi</e:entry>
+    </e:entries>
+</e:entries>

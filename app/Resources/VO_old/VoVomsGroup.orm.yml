@@ -1,0 +1,46 @@
+AppBundle\Entity\VoVomsGroup:
+  type: entity
+  table: vo_voms_group
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    group_role:
+          type: string
+          length: 255
+          options:
+            fixed: false
+    description:
+      type: string
+      length: 1000
+      options:
+        fixed: false
+    is_group_used:
+      type: smallint
+      options:
+        unsigned: false
+    group_type:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    allocated_ressources:
+      type: integer
+      options:
+        unsigned: false
+    serial:
+      type: integer
+      options:
+        unsigned: false
+
+  manyToOne:
+    vo:
+      targetEntity: Vo
+      inversedBy: voVomsGroups
+      joinColumn:
+        name: vo_id
+        referencedColumnName: serial

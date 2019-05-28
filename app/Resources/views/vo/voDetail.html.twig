@@ -1,0 +1,75 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+    {% endblock %}
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div role="alert" class="alert alert-danger">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div role="alert" class="alert alert-success">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+    {% if tabgeneral is defined
+    and description is defined
+    and aup is defined
+    and acknowledgment is defined
+    and resources is defined
+    and  contacts is defined
+    and mailinglist is defined
+    and vomslist is defined
+    and vomsgroup is defined %}
+
+        <article class="page-header">
+            <h1 class="ml-5">VO Id Card : {{ tabgeneral.name }} </h1>
+        </article>
+
+        <article class="mr-5 ml-5">
+
+
+            {% include ":vo/templates:template_tab_VODetails.html.twig" with
+            {"name" : tabgeneral.name,
+            "serial" : tabgeneral.serial,
+            "scope" : tabgeneral.scope,
+            "status" :tabgeneral.status,
+            "validationDate" : tabgeneral.validationDate,
+            "disciplines": tabgeneral.disciplines,
+            "supportedServices": tabgeneral.supportedServices,
+            "enrollmentUrl": tabgeneral.enrollmentUrl,
+            "homepageUrl": tabgeneral.homepageUrl,
+            "supportProcedureUrl": tabgeneral.supportProcedureUrl,
+            "ggus" :tabgeneral.ggus,
+            "voms":tabgeneral.voms,
+            "description": description,
+            "aup": aup,
+            "acknowledgment": acknowledgment,
+            "resources": resources,
+            "cloud" : cloud,
+            "otherrequirements": otherrequirements,
+            "contacts" : contacts,
+            "mailinglist" : mailinglist,
+            "vomslist": vomslist,
+            "vomsgroup": vomsgroup
+            } %}
+        </article>
+
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/vo/voList.min.js') }}"></script>
+{% endblock %}
+

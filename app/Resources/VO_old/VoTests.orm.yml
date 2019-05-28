@@ -1,0 +1,16 @@
+AppBundle\Entity\VoTests:
+  type: entity
+  table: VOs
+  connection: dashboardConnection
+  id:
+    test_name:
+      type: string
+      length : 255
+      options:
+        fixed: false
+  fields:
+    roc_name:
+      type: string
+      length: 100
+      options:
+        fixed: false

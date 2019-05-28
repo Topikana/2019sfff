@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="rt.properties.xml"/>
+    </imports>
+
+    <services>
+        <service id="OpsLavoisierRTService" class="OpsLavoisier\Services\RTService">
+            <argument key="hostname">%lavoisier_host_core%</argument>
+        </service>
+
+        <!-- OPS Helpdesk -->
+        <service id="rt_helpdesk_ops" class="TicketingSystem\Helpdesk\RtHelpdesk">
+            <argument key="config" type="collection">
+                <argument key='service_identifier'>rt_helpdesk_ops</argument>
+                <argument key="urls">%rt.urls%</argument>
+                <argument key="authentication" type="collection">
+                    <argument key="userName">%rt.ops.login%</argument>
+                    <argument key="password">%rt.ops.password%</argument>
+                </argument>
+                <argument key="maps">%rt.ops.maps%</argument>
+                <argument key="communities">%rt.ops.communities%</argument>
+                <!--<argument key="methods">%rt.ops.methods%</argument>-->
+                <argument key="queue">%rt.queue%</argument>
+            </argument>
+            <argument id="identifier">security</argument>
+            <!--<argument type="service" id="rt.helpdesk.ops.history"/>-->
+            <argument type="service" id="OpsLavoisierRTService"/>
+            <!--<call method="setAttachementService">-->
+                <!--<argument type="service" id="ggus_helpdesk_attach"/>-->
+            <!--</call>-->
+        </service>
+    </services>
+</container>

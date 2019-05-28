@@ -1,0 +1,648 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap4-tour.0.11.0/bootstrap-tour.v0.11.0.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap4-tour.0.11.0/bootstrap-tour-standalone.v0.11.0.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/themes/proton/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset("css/themes/default/style.css") }}" />
+    <link rel="stylesheet" href="{{ asset("css/themes/default-dark/style.css") }}" />
+
+{% endblock %}
+
+{% block body %}
+
+
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div role="alert" class="alert alert-danger">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div role="alert" class="alert alert-success">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    {% if registred is defined %}
+        <div class="card card-success" id="registrationComplete">
+            <div class="card-header">
+                <div class="card-title"><h1>Congratulations! Registration is now complete.</h1></div>
+            </div>
+            <div class="card-body">
+
+                <p>Thank you for the registration of the VO.<br/>
+                    The registration request has been sent to the Operations Team of <a href="http://www.egi.eu/">EGI.eu</a>.<br/>
+                    The team will review the request and will validate the VO if the information you entered found correct
+                    and complete.<br/>
+                    You will be notified in email about the successful registration or about to any identified problem.<br/>
+                    Please contact the support team if you have further questions: <a href="mailto:operations@egi.eu">operations@egi.eu</a>
+                    and/or check
+                    <a href="{{ registration_procedure }}">VO registration procedure</a>
+                    <br/>
+                </p>
+
+                {% if deleteMessage is defined %}<p id="deleteMessage">{{ deleteMessage }}</p>{% endif %}
+
+            </div>
+            <div class="card-footer">
+                {% if pLinkTicketCreated is defined %}
+                    <a href="{{ pLinkTicketCreated }}">Link to GGUS New VO Request</a>
+                {% else %}
+                    <div class="alert alert-warning"><h2>WARNING</h2> Vo ticket creation related to this registration
+                        has failed.
+                    </div>
+                {% endif %}
+                {% if pLinkTicketSUCreation is defined and pLinkTicketSUCreation != null %}
+                    <a href="{{ pLinkTicketSUCreation }}">Link to GGUS dedicated Support Unit creation</a>
+                {% endif %}
+
+            </div>
+        </div>
+    {% else %}
+        <div id="registrationWelcome" class="card  m-3" {% if app.environment == "test" %}style="display: none"{% endif %}>
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Welcome to VO registration page</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="m-3">
+                    <legend>
+                        The VO registration service
+                    </legend>
+                    <div id="collapse" class="panel-collapse ">
+                        <p>
+                        The VO registration service is provided by EGI, the European infrastructure for advanced computing offering buildributed Compute,
+                        Storage and Data for researchers and international research collaborations.<br/>
+                        The EGI Federation comprises hundreds of data centres in Europe and other parts of the world,
+                        consumed by thousands of users who belong to Virtual Organisations.</p>
+
+                    </div>
+
+                </div>
+                <hr/>
+                <div class="m-3">
+                    <legend>
+                        Virtual Organisation
+                    </legend>
+                    <div id="collapse" class="panel-collapse ">
+                        <p>
+                            Virtual Organisation (VO) is a group of people (e.g. scientists, researchers) with
+                            common interests and requirements, who need to work collaboratively and/or share resources
+                            (e.g. data, software, expertise, CPU, storage space) regardless of geographical location.
+                       <br/>
+                            They join a VO in order to access resources to meet these needs, after agreeing to a set
+                            of rules and Policies
+                            that govern their access and security rights (to users, resources and data). <a href="https://documents.egi.eu/document/2623" title="link to the new Acceptable use policy and condition policy">[Acceptable use policy and condition policy document]</a>
+                        </p>
+
+                        <ul>
+                           <li> In case of questions please contact EGI User support group :
+                            <a href="mailto:support@egi.eu">support@egi.eu</a>
+                           </li>
+                            <li>
+                                Link to VO managers documentation <a href="https://wiki.egi.eu/wiki/User_Documentation">User
+                                    Documentation</a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </div>
+                <hr/>
+                <div class="m-3">
+                    <legend>
+                        Please be sure and verify next steps before to proceed with VO registration process:
+                    </legend>
+                    <div id="collapse2" class="panel-collapse">
+                        <ul>
+                            <li>
+                                You have already a valid user certificate imported in your browser, if not, please
+                                consult
+                                documentation:
+
+                                <ul>
+                                    <li>
+                                        How to obtain a user certificate: to find your local Certificate Authority
+                                        (CA)
+                                        please
+                                        <a href="http://www.eugridpma.org/members/worldmap/">
+                                            [click here]
+                                        </a>
+                                        <button class='btn btn-link btn-lg fas fa-lg fa-question-circle text-primary'
+                                                type='button'
+                                                data-target = "#obtainUserCertificateCenterModalCenter"
+                                                data-toggle="modal"
+                                                >
+                                        </button>
+                                    </li>
+                                    <div class="modal fade col-sm-8 ml-auto mr-auto" id="obtainUserCertificateCenterModalCenter" tabindex="-1" role="dialog" aria-labelledby="obtainUserCertificateCenterModalCenter" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">How to obtain a user certificate: to find your local Certificate Authority (CA) ?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Obtain a personal grid certificate that authenticates the user within the grid
+                                                    infrastructure and grants access to computing, storage and other types of resources.
+                                                    <br/>This can be done through the local grid Certificate Authority of your country,
+                                                    which can be found through the webpage of the
+                                                    <a href="http://www.eugridpma.org/members/worldmap/">
+                                                        International Grid Trust Federation</a>'
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <li>
+                                        How to import certificate into your browser
+                                        <button class='btn btn-link btn-lg fas fa-question-circle text-primary'
+                                                type='button'
+                                                {#style='font-size: 16px;'#}
+                                                data-toggle="modal"
+                                                data-target="#importCertificateCenterModalCenter">
+                                        </button>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                You already have a VOMS server setup and registered
+                                at <a href="http://goc.egi.eu/" title="GOCDB Portal link" target="_blank">GOCDB Portal</a>
+                                or in the OSG infrastructure,
+                                if not and you need a support, you will be able to request it during VO registration
+                                process,
+                                otherwise
+                                please consult documentation:
+                                <br/><br/>
+                                <ul>
+                                    <li>
+                                        <a href="http://italiangrid.github.io/voms/documentation.html">
+                                            VOMS installation guide
+                                        </a>
+                                    </li>
+                                </ul>
+                                <br/>
+                            </li>
+                            <div class="modal fade col-sm-8 ml-auto mr-auto" id="importCertificateCenterModalCenter" tabindex="-1" role="dialog" aria-labelledby="importCertificateCenterModalCenter" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"> How to import certificate into your browser ?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Your local CA should provide the information about use of grid certificates and how to
+                                            import them in various internet browsers.
+                                                <br/>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </ul>
+                    </div>
+                </div>
+                <hr/>
+                <div class="m-3">
+                    <legend>
+                       Rules and Policies
+                    </legend>
+                    <div id="collapse" class="panel-collapse ">
+                        By registering a new VO you should agree to:
+                        <ul>
+                        <li> a set of rules and Policies about access and security rights to users, resources and data :
+                            <a href="https://documents.egi.eu/document/2623"> [link]</a>.</li>
+                        <li> procedures concerning VO managers in EGI Infrastructure, available<a href="https://wiki.egi.eu/wiki/User_Documentation#VO_Procedures_and_Policies">
+                                [link]  </a></li>
+                        <li> EGI Corporate level SLA <a href="https://documents.egi.eu/public/ShowDocument?docid=2733">[link]</a> .
+                        This Corporate Level service level agreement is valid for all services provided to support business processes according to the EGI service catalogue
+                            (<a href="https://www.egi.eu/services/">[link]</a>) ,
+                        if no other agreements are in place. The Agreement may be extended or replaced by specific SLAs</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr/>
+                <div class="m-3">
+                    <h5>
+                        <mark><em>Please, check box to access to the registration</em></mark>
+                    </h5>
+                </div>
+                <div>
+                    <div>
+                        <input type="checkbox" class="checkboxRegistration" id="opPolicy" value="opPolicy"
+                               name='prep[]'/>
+                        I have read and agree to the policies mentioned previously
+
+                    </div>
+                    <br>
+
+                    <div align="center">
+                        <input id="btnRegistration" type="button" class="btn btn-primary btn-large"
+                               onClick="checkVoRegistration()"
+                               value="Register a VO now !">
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <h4>For support please ask <a href="mailto:support@egi.eu">support@egi.eu</a></h4>
+            </div>
+        </div>
+        <div id="registration"  {% if app.environment != "test" %}style="display: none"{% endif %}>
+            <div class="col-md-12">
+                <article class="page-header">
+                    <h2>New VO registration
+                <div class="float-right">
+
+                      <button type="button" data-toggle="tooltip" data-placement="bottom" title="Show you how to register a VO with minimal required information" onclick="startTour()" class="btn btn-primary">How to register a VO ?</button>
+                       <a href="https://wiki.egi.eu/wiki/PROC14"> <span class="btn btn-primary ml-2">       Check VO registration procedure      </span></a>
+                </div>
+                    </h2>
+                    <hr/>
+                </article>
+
+
+
+                <form enctype="multipart/form-data" id="voForm" action="{{ path("registration") }}" method="post"
+                      class='form-horizontal'>
+                    <header>
+                        <div id="header" data-spy="affix" data-offset-top="123" class="affix-top ml-5">
+                            {{ form_widget(voForm.saveVo) }}
+                        </div>
+                    </header>
+                    <!--
+                        Vo Header
+                    -->
+                    <section id="VOH_section">
+                        {% include ':vo/voManagement:template_registrationVoHeaderForm.html.twig' %}
+                    </section>
+
+                    <!--
+                        Vo Acknowledgment Statements
+                    -->
+                    <section id="VOAS_section">
+                        {% include ':vo/voManagement:template_voAcknowledgmentStatements.html.twig' %}
+                    </section>
+
+                    <!--
+                        Vo Discipline
+                    -->
+                    <section id="VOD_section">
+                        {% include ':vo/voManagement:template_voDiscipline.html.twig' %}
+                    </section>
+
+                    <!--
+                        Vo Voms information
+                    -->
+                    <section id="VI_section">
+                        {% include ':vo/voManagement:template_registrationVoVomsInformation.html.twig' %}
+                    </section>
+
+
+                    <!--
+                        Vo Resources
+                    -->
+                    <section id="VOR_section">
+                        {% include ':vo/voManagement:template_voResource.html.twig' %}
+                    </section>
+
+                    <!--
+                        Vo Manager
+                    -->
+                    <section id="VM_section">
+                        <div class="pl-3 pr-3">
+                        {% include ':vo/voManagement:template_voManager.html.twig' %}
+                        </div>
+                    </section>
+
+                    <!--
+                        Vo Mailing List
+                    -->
+                    <section id="VOGC_section">
+                        <div class="pl-3 pr-3">
+                        {% include ':vo/voManagement:template_voMainlingList.html.twig' %}
+                        </div>
+                    </section>
+
+                    <!--
+                        Other Field
+                    -->
+
+                    {% if app.environment == "test" %}
+                        <input type="hidden" value="Civil engineering" name="VoDiscipline[111]">
+                    {% endif %}
+
+                    {{ form_widget(voForm._token) }}
+
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    <footer style="display: none">
+        {{ path("checkVoName") }}
+
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+
+    {#<script type="text/javascript" src="{{ asset('build/js/vo/voManagement.min.js') }}"></script>#}
+    <script type="text/javascript" src="{{ asset('js/vo/voManagement.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/jstree/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap4-tour.0.11.0/bootstrap-tour.0.11.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap4-tour.0.11.0/bootstrap-tour-standalone.0.11.0.min.js') }}"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+
+        // setUpCvmfs();
+        getCvmfs();
+
+    })
+
+</script>
+    <script>
+    +function ($) {
+    'use strict';
+
+    // AFFIX CLASS DEFINITION
+    // ======================
+
+    var Affix = function (element, options) {
+    this.options = $.extend({}, Affix.DEFAULTS, options)
+
+    var target = this.options.target === Affix.DEFAULTS.target ? $(this.options.target) : $(document).find(this.options.target)
+
+    this.$target = target
+    .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
+    .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
+
+    this.$element     = $(element)
+    this.affixed      = null
+    this.unpin        = null
+    this.pinnedOffset = null
+
+    this.checkPosition()
+    }
+
+    Affix.VERSION  = '3.4.0'
+
+    Affix.RESET    = 'affix affix-top affix-bottom'
+
+    Affix.DEFAULTS = {
+    offset: 0,
+    target: window
+    }
+
+    Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
+    var scrollTop    = this.$target.scrollTop()
+    var position     = this.$element.offset()
+    var targetHeight = this.$target.height()
+
+    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false
+
+    if (this.affixed == 'bottom') {
+    if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom'
+    return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom'
+    }
+
+    var initializing   = this.affixed == null
+    var colliderTop    = initializing ? scrollTop : position.top
+    var colliderHeight = initializing ? targetHeight : height
+
+    if (offsetTop != null && scrollTop <= offsetTop) return 'top'
+    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom'
+
+    return false
+    }
+
+    Affix.prototype.getPinnedOffset = function () {
+    if (this.pinnedOffset) return this.pinnedOffset
+    this.$element.removeClass(Affix.RESET).addClass('affix')
+    var scrollTop = this.$target.scrollTop()
+    var position  = this.$element.offset()
+    return (this.pinnedOffset = position.top - scrollTop)
+    }
+
+    Affix.prototype.checkPositionWithEventLoop = function () {
+    setTimeout($.proxy(this.checkPosition, this), 1)
+    }
+
+    Affix.prototype.checkPosition = function () {
+    if (!this.$element.is(':visible')) return
+
+    var height       = this.$element.height()
+    var offset       = this.options.offset
+    var offsetTop    = offset.top
+    var offsetBottom = offset.bottom
+    var scrollHeight = Math.max($(document).height(), $(document.body).height())
+
+    if (typeof offset != 'object')         offsetBottom = offsetTop = offset
+    if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
+    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
+
+    var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
+
+    if (this.affixed != affix) {
+    if (this.unpin != null) this.$element.css('top', '')
+
+    var affixType = 'affix' + (affix ? '-' + affix : '')
+    var e         = $.Event(affixType + '.bs.affix')
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    this.affixed = affix
+    this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
+
+    this.$element
+    .removeClass(Affix.RESET)
+    .addClass(affixType)
+    .trigger(affixType.replace('affix', 'affixed') + '.bs.affix')
+    }
+
+    if (affix == 'bottom') {
+    this.$element.offset({
+    top: scrollHeight - height - offsetBottom
+    })
+    }
+    }
+
+
+    // AFFIX PLUGIN DEFINITION
+    // =======================
+
+    function Plugin(option) {
+    return this.each(function () {
+    var $this   = $(this)
+    var data    = $this.data('bs.affix')
+    var options = typeof option == 'object' && option
+
+    if (!data) $this.data('bs.affix', (data = new Affix(this, options)))
+    if (typeof option == 'string') data[option]()
+    })
+    }
+
+    var old = $.fn.affix
+
+    $.fn.affix             = Plugin
+    $.fn.affix.Constructor = Affix
+
+
+    // AFFIX NO CONFLICT
+    // =================
+
+    $.fn.affix.noConflict = function () {
+    $.fn.affix = old
+    return this
+    }
+
+
+    // AFFIX DATA-API
+    // ==============
+
+    $(window).on('load', function () {
+    $('[data-spy="affix"]').each(function () {
+    var $spy = $(this)
+    var data = $spy.data()
+
+    data.offset = data.offset || {}
+
+    if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom
+    if (data.offsetTop    != null) data.offset.top    = data.offsetTop
+
+    Plugin.call($spy, data)
+    })
+    })
+
+    }(jQuery);
+    </script>
+
+
+
+
+    <script>
+        function startTour(){
+            var tour = new Tour({
+                steps: [
+                    {
+                        element: "#vo_form_0_name",
+                        title: "Step 1/11 - Name",
+                        content: "Enter the name of your VO <br> <em> It must be unique and follow regex xxx.xxx.xx or xx-xx.xx.xx </em>",
+                        placement: 'bottom',
+                        next: 1
+                    },
+
+                    {
+                        element: "#vo_form_1_scope",
+                        title: "Step 2/11 Scope",
+                        content: "Select the scope <br> <em>(Global or National)</em>",
+                        placement: 'bottom',
+                        prev: 0,
+                        next: 2
+                    },
+
+                    {
+                        element: "#vo_form_2_homepage_url",
+                        title: "Step 3/11 Homepage url",
+                        content: "Enter the url of your VO homepage <br> <em>(must begin by http://... or https//... )</em>",
+                        placement: 'bottom',
+                        prev: 1,
+                        next: 3
+                    },
+
+                    {
+                        element: "#vo_form_3_supported_services",
+                        title: "Step 4/11 Supported services",
+                        content: "Select at least one service supported by your VO",
+                        placement: 'bottom',
+                        prev: 2,
+                        next: 4
+                    },
+
+                    {
+                        element: "#vo_form_4_description",
+                        title: "Step 5/11 Description",
+                        content: "Enter the description of your VO <br> <em> (Must contains at least 30 characters)</em>",
+                        placement: 'bottom',
+                        prev: 3,
+                        next: 5
+                    },
+
+                    {
+                        element: "#vo_form_5_aup_type",
+                        title: "Step 6/11 Acceptable use policy management",
+                        content: "1) Select the type of AUP <br><em>(Text, url or file)</em><br> 2) Then enter the related information of the AUP",
+                        placement: 'bottom',
+                        prev: 4,
+                        next: 6
+                    },
+                    {
+                        element: "#vo_form_6_acknowledgment",
+                        title: "Step 7/11 Acknowledgment Statement",
+                        content: "1) Choose to use or not Acknowledgment Statement <br> 2) If use, enter related information for the Acknowledgment Statement",
+                        placement: 'bottom',
+                        prev: 5,
+                        next: 7
+                    },
+                    {
+                        element: "#disciplines",
+                        title: "Step 8/11 Disciplines",
+                        content: "Select at least one discipline related to your VO",
+                        placement: 'right',
+                        prev: 6,
+                        next: 8
+                    },
+                    {
+                        element: "#vo_form_8_vovomsinfo",
+                        title: "Step 9/11 Voms information",
+                        content: "1) If the VO needs help to set up a VOMS server, let the default choice. <br>2) Else, select the corresponding choice and complete the related form",
+                        placement: 'top',
+                        prev: 7,
+                        next: 9
+                    },
+                    {
+                        element: "#vo_form_9_vomanager",
+                        title: "Step 10/11 Voms information",
+                        content: "Enter information about the Vo Manager <br><em>(first name, last name, dn, email...)</em>",
+                        placement: 'bottom',
+                        prev: 8,
+                        next: 10
+                    },
+                    {
+                        element: "#vo_form_10_mailinglist",
+                        title: "Step 11/11 Mailing List",
+                        content: "Enter at least the mail of VO Managers, VO Users, and Security mailing list",
+                        placement: 'top',
+                        prev: 9,
+                    },
+
+                ]});
+
+
+            // Initialize the tour
+            tour.init();
+
+            // Start the tour
+            tour.start(true);
+            tour.goTo(0);
+        }
+    </script>
+{% endblock %}

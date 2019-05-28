@@ -1,0 +1,24 @@
+step:
+  Solution:
+    id : Solution
+    label: Solution
+    required: true
+    value: |
+              The problem has been solved.
+
+              ------ Details about the solution ---------
+
+
+              -------------------------------------------
+
+              +C.user+
+  Status:
+    id: Status
+    value: solved
+    visibility: false
+  Modifier:
+    id: Modifier
+    label: Modifier
+    value: +C.user+
+    visibility: false
+

@@ -1,0 +1,19 @@
+parameters:
+  serviceInfos:
+    'DESY Pan Notebook' :	{contact: "Michael.Schuh@desy.de", action: "Forward request to eosc-pan-registration@desy.de. Check-in integration is ongoing", link: "https://marketplace.eosc-portal.eu/services/pan-notebook"}
+    'EODC JupyterHub' :	{contact: "Christian.Briese@eodc.eu,Christoph.Reimer@eodc.eu", action: "	Forward the request to service owners. EGI SSO integration is ongoing. Once done the users can login by themselves",link: "https://marketplace.eosc-portal.eu/services/eodc-jupyterhub-for-global-copernicus-data"}
+    'OpenCoastS'	: {contact: "aoliveira@lnec.pt, aazevedo@lnec.pt",	action: "The user has to register him/herself and then wait for account activation. Istruction already online", link: "https://marketplace.eosc-portal.eu/services/opencoasts-portal"}
+    'B2DROP'	: {contact: "support@eudat.eu", action: "https://b2drop.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2drop"}
+    'B2SHARE'	: {contact: "support@eudat.eu", action: "https://b2share.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2share"}
+    'B2FIND'	: {contact: "support@eudat.eu", action: "https://b2find.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2find"}
+    'B2NOTE'	: {contact: "support@eudat.eu", action: "https://b2note.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2note"}
+    'B2SAFE'	: {contact: "support@eudat.eu", action: "https://b2safe.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2safe"}
+    'B2HANDLE' : 	{contact: "support@eudat.eu", action: "https://b2handle.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2handle"}
+    'B2ACCESS' :	{contact: "support@eudat.eu", action: "https://b2access.eudat.eu",	link: "https://marketplace.eosc-portal.eu/services/b2access"}
+    'CLARIN Virtual Language Observatory' :	{contact: "support@eudat.eu", action: "Accessible without AAI at https://vlo.clarin.eu", link: ""}
+    'CHIPSTER' : { contact: "support@egi.eu", action: "", link: ""}
+    'Hadoock'	:	{ contact: "support@egi.eu", action: "Accessible (after registration) at http://haddock.science.uu.nl/enmr/services/HADDOCK2.2/", link: ""}
+    'AMBER'	:	{ contact: "support@egi.eu", action: "Accessible with EGI Check-in at http://py-enmr.cerm.unifi.it/access/index", link: ""}
+    'EGI Cloud compute' :	{contact: "Enol.Fernandez@egi.eu", action: "Assign to support@egi.eu", link: ""}
+    'EGI Notebooks' :	{contact: "Enol.Fernandez@egi.eu", action: "For individual users: Direct access at https://notebooks.egi.eu; For communities: Order via support@egi.eu", link: ""}
+    'FitSM': 	{contact: "Sy.Holsinger@egi.eu", action: "", link: ""}

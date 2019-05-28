@@ -1,0 +1,40 @@
+image: ccin2p3/php7.1-xdebug-sonar:latest
+
+before_script:
+  - cp test_php.ini /usr/local/etc/php/php.ini
+  #take the other security file for test
+# Install composer
+  - curl -sS https://getcomposer.org/installer | php
+
+# Install all project dependencies
+  - php composer.phar global require hirak/prestissimo
+  - php composer.phar clear-cache
+  - php composer.phar install
+
+
+stages:
+  - tests
+  - deploy
+
+job_tests:
+  stage: tests
+  only:
+    - develop
+  script:
+     - echo "${PARAMETERS}" > app/config/parameters.yml
+     - echo "${security_yml}" > app/config/security.yml
+ #    - php  vendor/phpunit/phpunit/phpunit --configuration phpunit.xml.dist --coverage-text
+     - sed -n '/system-out/!p' logfile.xml > logfile.xml
+ #    - /sonar-scanner-2.8/bin/sonar-scanner -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN_TOKEN} -Dsonar.projectVersion=${CI_BUILD_REF}
+job_deploy:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - mkdir ~/.ssh
+    - echo "${PRIVATE_KEY}" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "${PARAMETERS}" > app/config/parameters.yml
+    - echo "${discovery_html_twig}"  > vendor/lightsaml/sp-bundle/src/LightSaml/SpBundle/Resources/views/discovery.html.twig
+    - echo "${security_aai_yml}" > app/config/security.yml
+    - rsync -az --delete -e "ssh -i ~/.ssh/id_rsa -o 'StrictHostKeyChecking no'" . operrtal@operations-portal.in2p3.fr:/www/NEXT/sf3

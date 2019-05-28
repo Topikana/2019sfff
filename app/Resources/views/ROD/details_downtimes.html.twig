@@ -1,0 +1,114 @@
+{#<div id="loader" class="d-flex justify-content-center"></div>#}
+
+
+<h3 class="card card-header mb-4">Downtimes : </h3>
+<table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover details_downtimes">
+    <thead>
+    <tr>
+        <th class='sortable-text' rel="downtime name">Hosted_by</th>
+        <th class='sortable-text' rel="downtime name">Endpoints</th>
+        <th class='sortable-text' rel="downtimes">Formated_start_date</th>
+        <th class='sortable-text' rel="downtimes">Formated_end_date</th>
+        <th class='sortable-text' rel="downtimes">Severity</th>
+        <th class='sortable-text' rel="downtime name">Scheduled</th>
+        {#<th class='sortable-text' rel="downtimes">GOCDB_PORTAL_URL</th>#}
+        <th class='sortable-text' rel="downtimes">Description</th>
+        <th class="sortable-numeric" rel="downtime availability">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for downtime in details['downtimes'] %}
+        <tr>
+            <td>{{ downtime['HOSTED_BY'] }}</td>
+            <td>
+                <button class="btn btn-primary" data-toggle="modal" data-target=".bd-endpoints-modal-sm">
+                    <span class="fas fa-search text-light"></span>
+                </button>
+            </td>
+            <td>{{ downtime['FORMATED_START_DATE'] }}</td>
+            <td>{{ downtime['FORMATED_END_DATE'] }}</td>
+            <td>
+                {% if downtime['SEVERITY'] | lower == 'outage' %}
+                    <span class="badge badge-danger">
+                        {{ downtime['SEVERITY'] }}
+                    </span>
+                {% else %}
+                    <span class="badge badge-warning">
+                        {{ downtime['SEVERITY'] }}
+                    </span>
+                {% endif %}
+            </td>
+            <td>
+                {% if downtime['CLASSIFICATION'] | lower == 'scheduled' %}
+                    <span class="badge badge-success">
+                        {{ downtime['CLASSIFICATION'] }}
+                    </span>
+                {% else %}
+                    <span class="badge badge-warning">
+                        {{ downtime['CLASSIFICATION'] }}
+                    </span>
+                {% endif %}
+            </td>
+            <td class="description">{{ downtime['DESCRIPTION'] }}</td>
+{#            <td class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolores eum fuga fugit magnam optio possimus praesentium reiciendis vel, voluptatibus. Debitis deserunt, repellendus. A adipisci assumenda fuga illo magni repellendus?#}
+            {#Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos earum et ipsa iste minima minus quidem veniam voluptate! Asperiores cumque dolor dolorum eligendi, iste obcaecati placeat quas temporibus tenetur voluptatem.</td>#}
+            <td class="pt-3 m-auto">
+                <a href="{{ downtime['GOCDB_PORTAL_URL'] }}" target="_blank" title="Back to the link" class="btn btn-primary">
+                    <span class="fa fa-link"></span>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade bd-endpoints-modal-sm"  tabindex="-1" role="dialog" aria-labelledby="bd-endpoits-modal-sm" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered w-50" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Endpoints list</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% for endpoints in downtime['ENDPOINTS']%}
+                <div class="mt-3">
+                <ul>
+                    <li class="endpoint" value="{{ endpoints }}">{{ endpoints }}</li>
+                </ul>
+                </div>
+            {% endfor %}
+
+            <div class="modal-footer">
+                {#<button type="submit" class="btn btn-primary">Submit</button>#}
+                <button type="button" class="btn btn-sm btn-secondary mr-2" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<script async src="{{ asset('js/rod/jquery.ellipsis.min.js') }}"></script>
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('.details_downtimes').DataTable({
+            "columnDefs": [
+                {"className": "dt-left", "targets": [0]},
+                {"className": "dt-center", "targets": '_all' },
+                // { "width": "45%", "targets": -2 }
+            ]
+        });
+
+        $('.description').ellipsis({
+            lines: 3,             // force ellipsis after a certain number of lines. Default is 'auto'
+            ellipClass: 'ellip',  // class used for ellipsis wrapper and to namespace ellip line
+            // responsive: true      // set to true if you want ellipsis to update on window resize. Default is false
+        });
+
+
+        $('.endpoint').each(function(){
+            var test = $(this).html();
+            $('.endpoint').text(test.replace('***', '-'));
+        });
+
+    });
+</script>

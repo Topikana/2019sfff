@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="ggus.attach.methods" type="collection">
+            <parameter key="create">AddAttachment</parameter>
+        </parameter>
+
+        <parameter key="ggus.attach.maps" type="collection">
+            <parameter key="cMap" type="collection">
+                <parameter key="Name">GAT_Attachment_Name</parameter>
+                <parameter key="Data">GAT_Attachment_Data</parameter>
+                <parameter key="Size">GAT_Attachment_Orig_Size</parameter>
+                <parameter key="TicketId">GAT_Request_ID</parameter>
+                <parameter key="Modifier">GAT_Last_Modifier</parameter>
+                <parameter key="Login">GAT_Last_Login</parameter>
+            </parameter>
+        </parameter>
+    </parameters>
+</container>

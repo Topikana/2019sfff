@@ -1,0 +1,57 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host_prod: '%database.host%'
+    database_port_prod: '%database.port%'
+    database_name_prod: '%database.name%'
+    database_user_prod: '%database.user%'
+    database_host_test: '%database.host%'
+    database_port_test: '%database.port%'
+    database_name_test: '%database.name%'
+    database_user_test: '%database.user%'
+    database_password: '%database.password%'
+
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # login / Password ggus
+    ggus.team.login: login
+    ggus.team.password: password
+    ggus.ops.login: login
+    ggus.ops.password: password
+
+    portalUrlTest: portalUrl
+    vaporUrlTest: vaporUrl
+
+    spool_prod: file
+    spool_test: memory
+
+    # SAML part
+    saml_metadata_file: local_file
+    saml_symfony_id: saml_symfony_id
+    saml_metadata_file_dev: local_file
+    saml_symfony_id_dev: saml_symfony_id
+    lightsaml.route.login_check: lightsaml_sp.login_check
+
+    certificate_opsportal: path_cert
+    key_opsportal: path_key
+    password_certificate: password
+
+    #SWIFT
+    swift.transport: mail
+    swift.username:  user
+    swift.password:  password
+    mongodb_server: "mongodb://localhost:27017"
+
+    # JIRA
+    jira.username: username
+    jira.password: password

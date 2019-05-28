@@ -1,0 +1,358 @@
+
+{% extends "::base_bootstrap_4.html.twig" %}
+{% block stylesheets %}
+    <link href="{{ asset('css/bootstrap-tour.min.css') }}" rel="stylesheet">
+    <!-- jstree themes -->
+    <link rel="stylesheet" href="{{ asset('css/themes/proton/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset("css/themes/default/style.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("css/themes/default-dark/style.css") }}"/>
+{% endblock %}
+{% block body %}
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+    <section id="homeSection">
+
+        <div id="flashes">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div role="alert" class="alert alert-{{ label }}">
+                    {{ flash|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+
+        <div class="row">
+
+            <!-- jstree for recipients targets -->
+            <div class="col-md-3 border-right" style="height:700px; overflow-y: scroll">
+                <div class="card-body" href="#" id="jsTreeTargets">
+                    <h2 class="portal" >Select Recipients targets </h2>
+                    <hr/>
+                    <i class="fa fa-envelope"></i><span class="m-2 badge badge-primary p-2"> Selected Target(s): <span id="counter">0</span></span>
+
+                    <br><br/>
+
+                    <i class="fa fa-search"></i><input class="m-2" type="text" id="searchRecipient" value="" class="input">
+                    <br><br>
+
+                    {% for branchkey, target in targets %}
+
+                        <div class="m-2 ml-4" id="{{ branchkey }}">
+                            <ul>
+                                {{ target|raw }}
+                            </ul>
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!-- end jstree targets -->
+
+            <!-- EGI BROADCAST FORM -->
+            <article class="col-md-8 border-left" style="height:700px;">
+                <div class="card-body">
+
+                    <button type="button" onclick="startTour()" class="btn btn-primary btn-sm float-right">How to send broadcast ?</button>
+
+                    <h2 class="portal text-left">Contact all the EGI Communities</h2>
+
+                    <hr/>
+                    <h4 id="predefinedTitle"><p class="text-right" style="font-size: 18px"><a href="#" onclick="getPredefinedBroadcast('{{ path('showMyBroadcastAjax') }}')">Predefined broacasts</a></p></h4>
+                    <br><br>
+
+
+                    <form id="formContactEGI" method="POST">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-3 mr-5 d-flex flex-column">
+
+                                <div class="d-flex flex-column mt-2 mb-2 row">
+
+                                    <label class="col-form-label-sm d-flex mb-0" style="font-size: 14px; font-weight: 700">{{ form_label(formBd.author_cn) }}</label>
+
+                                    <div id="broadcast_form_0_name p-0">
+                                        {{ form_widget(formBd.author_cn, { 'attr' : {'class' : 'form-control form-control-sm' }}) }}
+                                    </div>
+
+                                </div>
+                                <div class="d-flex flex-column mt-2 mb-2 row">
+                                    <label class="col-form-label-sm d-flex mb-0" style="font-size: 14px; font-weight: 700">{{ form_label(formBd.author_email) }}</label>
+                                    <div id="broadcast_form_1_email">
+                                        {{ form_widget(formBd.author_email , { 'attr' : {'class' : 'form-control form-control-sm' }}) }}
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-column mt-2 mb-2 row">
+                                    <label class="col-form-label-sm d-flex mb-1" style="font-size: 14px; font-weight: 700">{{ form_label(formBd.cc,  label|default(null), { 'label_attr' : {'class' : 'my-auto' }}) }}</label>
+
+                                    <div id="broadcast_form_2_cc">
+                                        {{ form_widget(formBd.cc , { 'attr' : {'class' : 'form-control form-control-sm' }}) }}
+                                    </div>
+                                </div>
+
+                                <div class="ml-3">
+                                    <div class="row">
+                                        <div id="broadcast_form_3_confirmation" class="my-auto m-2">
+                                            {{ form_widget(formBd.confirmation) }}
+                                        </div>
+                                        <label class="col-form-label m-5" >{{ form_label(formBd.confirmation, label|default(null), { 'label_attr' : {'class' : 'my-auto ' } }) }}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 ml-5">
+
+                                <div class="d-flex flex-column mt-2 mb-2 row">
+                                    <label class="col-form-label-sm d-flex mb-0">{{ form_label(formBd.publication_type) }}</label>
+
+                                    <div id="broadcast_form_4_publication_type">
+                                        {{ form_widget(formBd.publication_type, { 'attr' : {'class' : 'form-control form-control-sm' }}) }}
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-column mt-2 mb-2 row">
+                                    <label class="col-form-label-sm d-flex mb-0">{{ form_label(formBd.subject) }}</label>
+
+                                    <div id="broadcast_form_5_subject">
+                                        {{ form_widget(formBd.subject , { 'attr' : {'class' : 'form-control form-control-sm' }}) }}
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column mt-2 mb-2 row">
+                                    <label id="broadcast_form_6_body" class="col-form-label-sm d-flex mb-0">{{ form_label(formBd.body) }}</label>
+
+                                    <div>
+                                        {{ form_widget(formBd.body, {'attr':{'rows':'8'}}) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-control-xs">
+                                    <div>
+                                        {{ form_widget(formBd.targets) }}
+                                    </div>
+                                </div>
+
+                                <button onclick="verifyBeforeSendBd('{{ path('selectedTargets') }}')" id="sendBroadcast" type="button" class="btn btn-sm btn-primary pull-right mt-3">Validate Broadcast</button>
+
+                            </div>
+                        </div>
+                        {{ form_rest(formBd) }}
+                    </form>
+                </div>
+                <!-- end EGI BROADCAST FORM -->
+            </article>
+        </div>
+    </section>
+
+    <div class="modal fade m-auto" id="modalPredefined" style="font-size: 14px" tabindex="-1" role="dialog"
+         aria-labelledby="modalPredefinedLabel"
+         aria-hidden="true">
+        <div id="modal-dialog" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalPredefinedLabel">
+                        <span class="fa fa-envelope"></span>&nbsp;&nbsp;Predefined broadcasts
+                    </h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="modal-body" class="modal-body">
+                    <a onclick="startTour()" class="btn btn-primary">How to add downtime subscriptions ?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVerify" tabindex="-1" role="dialog"
+         aria-labelledby="modalVerifyLabel"
+         aria-hidden="true">
+        <div id="modal-dialog" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalVerifyLabel" class="left">
+                        <span class="fa fa-envelope"></span>&nbsp;&nbsp;Validate your information
+                    </h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div id="SummaryBdbody" class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Broadcast Summary</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Name : </strong><span id="verifName"></span></p>
+                            <p><strong>Email : </strong><span id="verifMail"></span></p>
+                            <p><strong>CC : </strong><span id="verifCC"></span></p>
+                            <p><strong>Send a confirmation : </strong><span id="verifConfirm"></span></p>
+                            <p><strong>Publication type : </strong><span id="verifPubType"></span></p>
+                            <p><strong>Subject : </strong><span id="verifSubject"></span></p>
+                            <p><strong>Body : </strong><span id="verifBody"></span></p>
+
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Selected targets</h3>
+                        </div>
+                        <div id="targetsList" class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    <button onclick="sendMailContactEGICommunities()" type="button" class="btn btn-primary">Send broadcast</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/jstree/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/broadcast/broadcast.min.js') }}"></script>
+    <script src="{{ asset('build/js/vo/bootstrap-tour.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/jquery.validate.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/broadcast/jstreeHelper.min.js') }}"></script>
+    <script type="text/javascript" class="source">
+        $(document).ready(function () {
+
+            //remove Model from publication type if user is not super user
+            {% if not isGrid %}
+            $("#broadcast_message_publication_type option[value='3']").hide();
+            {% endif %}
+
+
+            func_var = null;
+            open_node_var = false;
+
+            //construct jstree targets
+            initJsTree();
+
+
+
+            // search discipline
+            var to = false;
+            $('#searchRecipient').keyup(function () {
+                if (to) {
+                    clearTimeout(to);
+                }
+                to = setTimeout(function () {
+                    var v = $('#searchRecipient').val();
+
+                    $("#jsTreeTargets div").each(function () {
+                        var id = "#" + $(this).attr("id");
+
+                        $(id).jstree(true).search(v);
+                    });
+                }, 250);
+
+
+            });
+        });
+
+
+
+        function startTour(){
+            var tour = new Tour({
+
+                steps: [
+                    {
+                        element: "#broadcast_form_0_name",
+                        title: "Step 1/9 - Name",
+                        content: "Your name is preset, just verify it",
+                        placement: 'bottom',
+                        next: 1
+                    },
+
+                    {
+                        element: "#broadcast_form_1_email",
+                        title: "Step 2/9 Email",
+                        content: "Enter your email address",
+                        placement: 'bottom',
+                        prev: 0,
+                        next: 2
+                    },
+
+                    {
+                        element: "#broadcast_form_2_cc",
+                        title: "Step 3/9 - Cc (Optionnal)",
+                        content: "Enter an adress to send a copy of of your mail if necessary",
+                        placement: 'bottom',
+                        prev: 1,
+                        next: 3
+                    },
+
+                    {
+                        element: "#broadcast_form_3_confirmation",
+                        title: "Step 4/9 - Confirmation",
+                        content: "If you want to receive a copy of your email, click here",
+                        placement: 'bottom',
+                        prev: 2,
+                        next: 4
+                    },
+
+                    {
+                        element: "#broadcast_form_4_publication_type",
+                        title: "Step 5/9 - Publication Type",
+                        content: "Select the type of your broadcast <br><em> (To send, make it visible or not in archive or in the news)</em>",
+                        placement: 'bottom',
+                        prev: 3,
+                        next: 5
+                    },
+
+                    {
+                        element: "#broadcast_form_5_subject",
+                        title: "Step 6/9 - Subject",
+                        content: "Choose a title for your mail <br><em> (It must contains at least 10 characters)</em>",
+                        placement: 'bottom',
+                        prev: 4,
+                        next: 6
+                    },
+
+                    {
+                        element: "#broadcast_form_6_body",
+                        title: "Step 7/9 - Body",
+                        content: "Enter the content of your email <br><em> (It must contains at least 50 characters)</em>",
+                        placement: 'bottom',
+                        prev: 5,
+                        next: 7
+                    },
+
+                    {
+                        element: "#searchRecipient",
+                        title: "Step 8/9 - Targets",
+                        content: "Don't forget the target(s) of your email",
+                        placement: 'bottom',
+                        prev: 6,
+                        next: 8
+                    },
+
+                    {
+                        element: "#sendBroadcast",
+                        title: "Step 9/9 - Validate your email",
+                        content: "Click on the button to see your email before send",
+                        placement: 'bottom',
+                        prev: 7,
+                    }
+
+                ]});
+
+
+            // Initialize the tour
+            tour.init();
+
+            // Start the tour
+            tour.start(true);
+            tour.goTo(0);
+        }
+
+
+
+
+    </script>
+{% endblock %}

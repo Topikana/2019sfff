@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/home.min.css') }}">
+
+{% endblock %}
+{% block body %}
+
+<section id="homeSection">
+
+    {% if error is defined %}
+        <div role="alert" class="alert alert-danger">
+            {{ error|raw }}  <a class="btn btn-primary " href="{{ path("lightsaml_sp.login") }}"><span
+                        class='glyphicon glyphicon-log-in'> Log In</span> </a>
+        </div>
+    {% endif %}
+    {% if request is defined %}
+    {#<h1 style="margin-bottom:0;">#}
+        {#<span class="glyphicon glyphicon-user"></span>#}
+        {#{% if dn is defined %}#}
+        {#{{ dn|split(",")[0]|split("CN=")[1] }}#}
+        {#{% endif %}#}
+    {#</h1>#}
+    {#<h3>  You have been identified with the following attributes : </h3>#}
+
+    {#<table class="dataTable table table-condensed table-striped" >#}
+        {#<thead>#}
+        {#<tr><th>Attribute</th><th>Value</th></tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+
+            {#{% for value, attribute in request %}#}
+              {#<tr><td>{{ value }}</td><td>{{ attribute | nl2br }}</td></tr>#}
+            {#{% endfor %}#}
+
+
+        {#</tbody>#}
+
+    {#</table>#}
+    {% endif %}
+</section>
+{% endblock %}

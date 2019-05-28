@@ -1,0 +1,32 @@
+<div class="card mt-4">
+       <div class="card-header">
+        <h2 class="portal text-primary" id="vo_form_9_vomanager">Vo manager</h2>
+       </div>
+    <div class="card-body">
+        <div class="col-md-12 font-weight-bold" style="font-size: 14px;">
+            <div class="row">
+            <div class="col-md-4">
+                <label>{{ form_label(voForm.VoContacts.first_name) }}</label>
+                {{ form_widget(voForm.VoContacts.first_name, { 'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-md-4">
+                <label>{{ form_label(voForm.VoContacts.last_name) }}</label>
+                {{ form_widget(voForm.VoContacts.last_name, { 'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+            </div>
+            </div>
+            <div class="col-md-12 pl-0">
+                <label>{{ form_label(voForm.VoContacts.dn) }}</label>
+                {{ form_widget(voForm.VoContacts.dn,{ 'attr': {'value': app.user.dn, 'class' : 'form-control form-control-sm'} }) }}
+            </div>
+            <div class="col-md-12 pl-0">
+                <label>{{ form_label(voForm.VoContacts.email) }}</label>
+                {{ form_widget(voForm.VoContacts.email, { 'attr' : { 'class' : 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-md-12 pl-0">
+                <label for="vo_form_vo_contacts_comment">Comment</label>
+                <input type="text" class="form-control form-control-sm" id="vo_form_vo_contacts_comment" name="vo_form_vo_contacts_comment"/>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

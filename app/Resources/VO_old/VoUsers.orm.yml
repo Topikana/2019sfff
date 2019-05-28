@@ -1,0 +1,38 @@
+AppBundle\Entity\VoUsers:
+  type: entity
+  table: vo_user
+  connection: dashboardConnection
+  id:
+    dn:
+     type: string
+     length: 255
+     options:
+       fixed: false
+  fields:
+    email:
+      type: string
+      length: 500
+      options:
+        fixed: false
+    vo:
+      type: string
+      length: 50
+      options:
+        fixed: false
+      nullable: true
+    ca:
+      type: string
+      length: 500
+      options:
+        fixed: false
+      nullable: true
+    urlvo:
+      type: string
+      length: 1000
+      options:
+        fixed: false
+      nullable: true
+    last_update:
+      type: datetime
+    first_update:
+      type: datetime

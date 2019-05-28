@@ -1,0 +1,101 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/buttons/css/buttons.dataTables.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/select/css/select.dataTables.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('build/vendor/datatables/buttons/css/buttons.dataTables.min.css') }}" />
+
+    {% endblock %}
+
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div role="alert" class="alert alert-danger">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div role="alert" class="alert alert-success">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    <article class="page-header">
+        <h1 class="ml-5 mr-5">VO(s) search tool <button class="m-4 btn btn-primary btn-sm" data-toggle="collapse" data-parent="#accordion3"
+                                                       href="#collapseThree" aria-expanded="false">
+                <span class="far fa-question-circle"></span>
+            </button></h1>
+    </article>
+    <article>
+
+        <div  id="accordion3"   role="tablist" aria-multiselectable="true" >
+
+
+            <hr/>
+            <div id="collapseThree" class="text-left panel-collapse collapse" role="tabpanel">
+                <div class="card-body">
+                    {{ help["pages"]["voListOther"]|raw  }}
+                </div>
+                <hr>
+            </div>
+        </div>
+
+
+        {% include ':vo/templates:template_tab_OtherVoList.html.twig' %}
+
+    </article>
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/vo/voList.js') }}"></script>
+
+
+    <script src="{{ asset('build/vendor/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.print.min.js') }}"></script>
+
+    <script src="{{ asset('build/vendor/datatables/select/js/dataTables.select.min.js') }}"></script>
+
+
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            // Setup - add a text input to each header cell of datatable
+            setUpFilters();
+
+            //build vo tables with datatables plugin
+            buildVOTables();
+
+            //Apply the search by header
+            applySearch();
+
+            setDisableFilters();
+
+            // Add XML exports button to Vo Other List Tab
+            {% if voFullLink  is defined  and voListOtherLink is defined %}
+                constructExportButtons('{{ voFullLink }}', '{{ voListOtherLink }}');
+            {% endif %}
+
+            //show page loader on click on action button in tab
+            showLoaderOnVoAction();
+
+
+        });
+    </script>
+{% endblock %}

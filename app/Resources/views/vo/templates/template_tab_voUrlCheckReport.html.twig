@@ -1,0 +1,39 @@
+<table class="table table-bordered table-responsive-lg table-striped">
+    <tbody>
+    <tr>
+        <td>Test Date</td>
+        <td>{{ testDate }}</td>
+    </tr>
+
+    <tr>
+        <td>Url checked</td>
+        <td><a href="{{ urlChecked }}" title="{{ voName }} enrollment url">{{ urlChecked }}</a></td>
+    </tr>
+
+    <tr>
+        <td>HTTP returned status</td>
+        <td><span class="label label-{% if httpReturnedStatus != 302 and httpReturnedStatus != 200 %}danger{% else %}success{% endif %}">
+            {{ httpReturnedStatus }}
+            </span>
+        </td>
+    </tr>
+
+    <tr>
+        <td>HTTP status description</td>
+        <td><span class="label label-{% if httpReturnedStatus != 302 and httpReturnedStatus != 200 %}danger{% else %}success{% endif %}">
+             {{ httpStatusDescription }}
+                </span>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Log</td>
+        <td>{{ log }}</td>
+    </tr>
+
+    <tr>
+        <td>Time</td>
+        <td>{{ time }}</td>
+    </tr>
+    </tbody>
+</table>

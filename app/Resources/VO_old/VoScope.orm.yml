@@ -1,0 +1,27 @@
+AppBundle\Entity\VoScope:
+  type: entity
+  table: vo_scope
+  connection: dashboardConnection
+  id:
+    serial:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    scope:
+      type: string
+      options:
+        fixed: false
+    roc:
+      type: string
+      options:
+        fixed: false
+    decommissioned:
+      type: smallint
+      options:
+        unsigned: false
+  oneToMany:
+    voHeaders:
+      targetEntity: VoHeader
+      mappedBy: voScope

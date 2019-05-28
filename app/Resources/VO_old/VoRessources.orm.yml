@@ -1,0 +1,85 @@
+AppBundle\Entity\VoRessources:
+  type: entity
+  table: vo_ressources
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    serial:
+      type: integer
+      options:
+        unsigned: false
+    insert_date:
+      type: datetime
+    ram386:
+      type: integer
+      options:
+        unsigned: false
+    ram64:
+      type: integer
+      options:
+        unsigned: false
+    job_scratch_space:
+      type: integer
+      options:
+        unsigned: false
+    job_max_cpu:
+      type: integer
+      options:
+        unsigned: false
+    job_max_wall:
+      type: integer
+      options:
+        unsigned: false
+    other_requirements:
+      type: string
+      length: 4000
+      options:
+        fixed: false
+    cpu_core:
+      type: integer
+      options:
+        unsigned: false
+    vm_ram:
+      type: integer
+      options:
+        unsigned: false
+    storage_size:
+      type: integer
+      options:
+        unsigned: false
+    public_ip:
+      type: string
+      length: 500
+      options:
+        fixed: false
+    user:
+      type: string
+      columnDefinition: ENUM('0', '1', '2')
+      length: 255
+      options:
+        fixed: false
+    reject_reason:
+      type: string
+      length: 4000
+      options:
+        fixed: false
+    notify_sites:
+      type: smallint
+      options:
+        unsigned: false
+    number_cores:
+          type: integer(6)
+        minimum_ram:
+          type: integer(6)
+        scratch_space_values:
+          type: integer(6)
+
+  oneToMany:
+    vos:
+      targetEntity: Vo
+      mappedBy: voRessources

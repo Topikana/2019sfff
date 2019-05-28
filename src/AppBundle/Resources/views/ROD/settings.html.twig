@@ -1,0 +1,20 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:ROD:settings{% endblock %}
+
+{% block body %}
+    {% form_theme form_settings 'bootstrap_4_layout.html.twig' %}
+
+    <div class="well">
+        <h1>Welcome to the settings page</h1>
+    </div>
+
+    {{ form_start(form_settings) }}
+    {{ form_widget(form_settings) }}
+
+    <button type="submit" class="btn btn-primary">VALIDER</button>
+
+    {{ form_end(form_settings) }}
+
+
+{% endblock %}

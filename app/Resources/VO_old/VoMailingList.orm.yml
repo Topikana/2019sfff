@@ -1,0 +1,66 @@
+AppBundle\Entity\VoMailingList:
+  type: entity
+  table: vo_mailing_list
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    admins_mailing_list:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    operations_mailing_list:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    user_support_mailing_list:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    users_mailing_list:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    security_contact_mailing_list:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    user:
+      type: string
+      length: 255
+      length:
+        fixed: false
+    insert_date:
+      type: datetime
+    serial:
+      type: integer
+      options:
+        unsigned: false
+    validated:
+      type: string
+      columnDefinition: ENUM('0', '1', '2')
+      options:
+        fixed: false
+    reject_reason:
+      type: string
+      length: 4000
+      options:
+        fixed: false
+    notify_sites:
+      type: smallint
+      options:
+        unsigned: false
+
+  oneToMany:
+    vos:
+      targetEntity: Vo
+      mappedBy: voMailingList

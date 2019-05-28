@@ -1,0 +1,94 @@
+<div id="modalVomsServer" class="modal fade mt-5 pt-5" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                {% if mode == "create" %}
+                    <h3 class="modal-title text-center">Add new Voms Server</h3>
+                {% else %}
+                    <h3 class="modal-title text-center">Edit {{ hostname }}</h3>
+                {% endif %}
+            </div>
+            {{ form_start(vomsForm, {'attr': {'id': 'vomsServerForm'}}) }}
+            <div class="modal-body">
+                {% if mode == "create" %}
+                <div class="d-flex justify-content-between mb-5">
+                    <div class="col-md-5 row font-weight-bold" style="font-size: 14px;">
+                        <label>{{ form_label(vomsForm.hostname) }}
+                            <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+                               title="Voms Hostname"
+                               data-content="Hostname of the machine hosting the VOMS server. <br>
+                               If VO Manager cant find his newly setup VOMS server, please verify that it exists at
+                               <a href='https://goc.gridops.org/portal/'>GOCDB Portal</a>  or in OSG infrastructure <br>
+                               - if not, please register your VOMS server at
+                               <a href='https://gocdb4.esc.rl.ac.uk/portal'>Register at GOCDB</a> and start registration
+                               again or contact OSG Team"
+                               data-html='true'><span class='fa fa-info-circle ml-2 my-1 mr-2 text-primary'
+                                                      style="font-size: 15px;"></span></a></label>
+                        {{ form_widget(vomsForm.hostname, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                    </div>
+                {% endif %}
+
+                <div class="col-md-3 row help font-weight-bold" style="font-size: 14px;">
+                    <label class="infoLabel">{{ form_label(vomsForm.https_port) }}</label>
+                    {{ form_widget(vomsForm.https_port, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-3 ro help font-weight-bold" style="font-size: 14px;">
+                    <label class="infoLabel">{{ form_label(vomsForm.vomses_port) }}</label>
+                    {{ form_widget(vomsForm.vomses_port, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                </div>
+                <div class="col-md-6 row help font-weight-bold" style="font-size: 14px;">
+                    <br/>
+                    <label>{{ form_label(vomsForm.members_list_url) }}</label>
+                    {{ form_widget(vomsForm.members_list_url, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-12 row mt-5 help font-weight-bold" style="font-size: 14px;">
+                    <br/><br/>
+                    <a class="infoLabel">{{ form_widget(vomsForm.is_vomsadmin_server) }}</a>
+                    <label>{{ form_label(vomsForm.is_vomsadmin_server) }}</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {% if mode == "update" %}
+                    {{ form_widget(vomsForm.hostname) }}
+                {% endif %}
+                {{ form_widget(vomsForm.serial) }}
+                <input type="hidden" value="{{ mode }}" name="mode" id="mode">
+                <button type="button" class="pull-right btn btn-default" data-dismiss="modal"
+                        onclick="$('#header').slideDown('slow');">Close
+                </button>
+                <input type="submit" class="pull-right btn btn-success" id="VOVG_form_submit" value="Save">
+            </div>
+            {{ form_end(vomsForm) }}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $(document).ready(function () {
+        $('#header').slideUp("slow");
+        $("#vomsServerForm").validate();
+
+        $("#vomsServerForm").submit(function (event) {
+            if ($("#vomsServerForm").valid()) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'html',
+                    data: $("#vomsServerForm :input").serialize(),
+                    url: "{{ path("vomsServerForm") }}",
+                    success: function (data, textStatus) {
+                        $('#panelVomsServer').html(data)
+                    },
+                    complete: function () {
+                        $('#header').slideDown("slow");
+                    }
+                });
+                $('#modalVomsServer').modal('toggle');
+            }
+        });
+        refreshHelp("vomsServerForm");
+        $('[data-toggle="popover"]').popover();
+    });
+
+</script>

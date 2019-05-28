@@ -1,0 +1,50 @@
+<article id="voCreatedDetails"  style="display: none">
+    <div class="card">
+    <div class="card-header">
+
+        <div class="card-title">
+            <H3>Details for period : <strong>{{ dateStart }}</strong> / <strong>{{ dateEnd }}</strong></H3>
+        </div>
+    </div>
+    <div class="card-body">
+
+        {% if tabVoDetails is defined and tabVoDetails|length != 0 %}
+            <table id="createdVoDetailsTable{{dateStart}}{{ dateEnd }}" style="overflow: auto"
+                   class="table sortable-onload-0 table-bordered table-striped table-condensed">
+                <thead>
+                <tr>
+
+                    <th class="sortable-text">Vo Name</th>
+                    <th class="sortable-text">Validation Date</th>
+                    <th class="sortable-text">Status</th>
+                    <th class="sortable-text">Scope</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for key, record in tabVoDetails %}
+                    <tr>
+                        <td>{{ record["name"] }}</td>
+                        <td>{{ record["validation_date"]|date("Y-m-d H:m:s") }}</td>
+                        <td>
+                <span class="badge badge-{% if record["status"] == 'Production' %}success{% elseif record["status"] == 'New' %}info{% elseif record["status"] == "Deleted" %}danger{% else %}warning{% endif %}">
+                    {{ record["status"] }}
+                </span>
+                        </td>
+                        <td>
+                <span class="badge badge-{% if record["scope"] == 'Global' %}success{% else %}info{% endif %}">
+                    {{ record["scope"] }}
+                </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+        {% else %}
+            <p>There is no created vo to been seen...</p>
+        {% endif %}
+    </div>
+    </div>
+</article>

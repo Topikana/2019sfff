@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+
+        <parameter key="rt.ops.methods" type="collection">
+            <parameter key="create">OpCreateOps</parameter>
+            <parameter key="list">OpGetListOps</parameter>
+        </parameter>
+
+
+        <parameter key="rt.ops.communities" type="collection">
+            <parameter key="CSI" type="collection">
+                <parameter key="view">Csi_RT_Ticket_List</parameter>
+           </parameter>
+        </parameter>
+
+        <parameter key="rt.ops.maps" type="collection">
+            <parameter key="cMap" type="collection">
+                <parameter key="Id">id</parameter>
+                <parameter key="Queue">Queue</parameter>
+                <parameter key="Owner">owner</parameter>
+                <parameter key="Creator">Creator</parameter>
+                <parameter key="Subject">Subject</parameter>
+                <parameter key="Status">Status</parameter>
+                <parameter key="Priority">Priority</parameter>
+                <parameter key="InitialPriority">InitialPriority</parameter>
+                <parameter key="FinalPriority">FinalPriority</parameter>
+                <parameter key="Requestors">Requestors</parameter>
+                <parameter key="Cc">Cc</parameter>
+                <parameter key="AdminCc">AdminCc</parameter>
+                <parameter key="Created">Created</parameter>
+                <parameter key="Starts">Starts</parameter>
+                <parameter key="Started">Started</parameter>
+                <parameter key="Due">Due</parameter>
+                <parameter key="EndDate">Due</parameter>
+                <parameter key="Resolved">Resolved</parameter>
+                <parameter key="Told">Told</parameter>
+                <parameter key="LastUpdated">LastUpdates</parameter>
+                <parameter key="TimeEstimated">TimeEstimated</parameter>
+                <parameter key="TimeWorked">TimeWorked</parameter>
+                <parameter key="TimeLeft">TimeLeft</parameter>
+                <parameter key="Text">Text</parameter>
+                <parameter key="Constituency">CF.{Constituency}</parameter>
+                <parameter key="State">CF.{State}</parameter>
+                <parameter key="Ip">CF.{IP}</parameter>
+                <parameter key="site">CF.{TargetSite}</parameter>
+                <parameter key="ngi">ngi</parameter>
+                <parameter key="Helpdesk">CF.{Helpdesk}</parameter>
+                <parameter key="Workflow">CF.{Workflow}</parameter>
+                <parameter key="Step">CF.{Step}</parameter>
+                <parameter key="StepLabel">CF.{StepLabel}</parameter>
+                <parameter key="CF.{GroupOfIssuesId}">CF.{GroupOfIssuesId}</parameter>
+                <parameter key="GroupId">CF.{GroupOfIssuesId}</parameter>
+                <parameter key="GroupUrl">CF.{GroupOfIssuesUrl}</parameter>
+            </parameter>
+        </parameter>
+    </parameters>
+</container>
+ 

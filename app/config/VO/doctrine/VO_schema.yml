@@ -1,0 +1,1234 @@
+AppBundle\Entity\VO\Vo:
+  connection: dashboardConnection
+  tableName: vo
+  columns:
+    serial:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string
+      notnull: true
+    validation_date:
+      type: timestamp(25)
+      notnull: true
+    creation_date:
+      type: timestamp(25)
+      notnull: true
+    last_change:
+      type: timestamp(25)
+      notnull: true
+    header_id:
+      type: integer(4)
+      notnull: true
+    ressources_id:
+      type: integer(4)
+      notnull: true
+    mailing_list_id:
+      type: integer(4)
+      notnull: true
+    ggus_ticket_id:
+      type: integer(4)
+      notnull: true
+    need_voms_help:
+      type: integer(1)
+      notnull: true
+    need_ggus_support:
+      type: integer(1)
+      notnull: true
+    voms_ticket_id:
+      type: integer(4)
+      notnull: true
+    ggus_ticket_id_su_creation:
+      type: integer(4)
+      notnull: true
+    monitored:
+      type: integer(2)
+
+      default: 0
+    enable_team_ticket:
+      type: integer(1)
+
+      default: 0
+  relations:
+    VoHeader:
+      local: header_id
+      foreign: id
+      type: one
+    VoRessources:
+      local: ressources_id
+      foreign: id
+      type: one
+    VoMailingList:
+      local: mailing_list_id
+      foreign: id
+      type: one
+    VoContactHasProfile:
+      local: serial
+      foreign: serial
+      type: many
+    VoVomsGroup:
+      local: serial
+      foreign: serial
+      type: many
+    VoVomsServer:
+      local: serial
+      foreign: serial
+      type: many
+    VoDisciplines:
+      local: serial
+      foreign: vo_id
+AppBundle\Entity\VO\VoContactHasProfile:
+  connection: dashboardConnection
+  tableName: vo_contact_has_profile
+  columns:
+    serial:
+      type: integer(4)
+
+
+      primary: true
+
+    user_profile_id:
+      type: integer(4)
+
+
+      primary: true
+
+    contact_id:
+      type: integer(4)
+
+
+      primary: true
+
+    comment:
+      type: string(500)
+
+
+
+      notnull: true
+
+  relations:
+    Vo:
+      local: serial
+      foreign: serial
+      type: one
+    VoUserProfile:
+      local: user_profile_id
+      foreign: id
+      type: one
+    VoContacts:
+      local: contact_id
+      foreign: id
+      type: one
+AppBundle\Entity\VO\VoContacts:
+  connection: dashboardConnection
+  tableName: vo_contacts
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    first_name:
+      type: string(255)
+
+
+
+      notnull: true
+
+    last_name:
+      type: string(255)
+
+
+
+      notnull: true
+
+    dn:
+      type: string(255)
+
+
+
+      notnull: true
+
+    email:
+      type: string(255)
+
+
+
+      notnull: true
+
+    grid_body:
+      type: integer(1)
+
+
+
+      default: '0'
+      notnull: true
+
+  relations:
+    VoContactHasProfile:
+      local: id
+      foreign: contact_id
+      type: many
+AppBundle\Entity\VO\VoDiscipline:
+  connection: dashboardConnection
+  tableName: vo_discipline
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    discipline:
+      type: string
+
+
+
+      notnull: false
+
+    description:
+      type: string(1000)
+
+
+
+      notnull: true
+
+  relations:
+    VoHeader:
+      local: id
+      foreign: discipline_id
+AppBundle\Entity\VO\VoDisciplines:
+  connection: dashboardConnection
+  tableName: vo_disciplines
+  columns:
+    vo_id:
+      type: integer(4)
+      primary: true
+    discipline_id:
+      type: integer(4)
+      primary: true
+      notnull: false
+  relations:
+      Vo:
+        local: vo_id
+        foreign: serial
+        type: one
+      Disciplines:
+        local: discipline_id
+        foreign: discipline_id
+AppBundle\Entity\VO\Disciplines:
+  connection: dashboardConnection
+  tableName: disciplines
+  columns:
+    discipline_id:
+      type: integer(4)
+
+
+      primary: true
+    discipline_label:
+      type: string(100)
+
+
+      primary: true
+      notnull: false
+AppBundle\Entity\VO\VoField:
+  connection: dashboardConnection
+  tableName: vo_field
+  columns:
+    field_name:
+      type: string(255)
+
+
+      primary: true
+
+    field_error_msg:
+      type: string(2000)
+
+
+
+      notnull: true
+
+    field_user_help:
+      type: string(2000)
+
+
+
+      notnull: true
+
+    field_admin_help:
+      type: string(2000)
+
+
+
+      notnull: true
+
+    category:
+      type: string(2000)
+
+
+
+      notnull: true
+
+    field_link:
+      type: string(255)
+
+
+
+      notnull: true
+
+    field_example:
+      type: string(255)
+
+
+
+      notnull: true
+
+    field_regexp_id:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    required:
+      type: integer(1)
+
+
+
+      notnull: true
+
+  relations:
+    VoRegexp:
+      local: field_regexp_id
+      foreign: id
+      type: one
+AppBundle\Entity\VO\VoHeader:
+  connection: dashboardConnection
+  tableName: vo_header
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+
+
+
+      notnull: true
+
+    alias:
+      type: string(255)
+
+
+
+      notnull: true
+
+    grid_id:
+      type: string(255)
+
+
+
+      notnull: true
+
+    serial:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    enrollment_url:
+      type: string(255)
+
+
+
+      notnull: true
+
+    homepage_url:
+      type: string(255)
+
+
+
+      notnull: true
+
+    support_procedure_url:
+      type: string(255)
+
+
+
+      notnull: true
+
+    aup:
+      type: string(4000)
+
+
+
+      notnull: false
+
+    aup_type:
+      type: enum(4)
+
+
+      values:
+        - text
+        - url
+        - file
+
+      notnull: true
+
+    description:
+      type: string(4000)
+
+
+
+      notnull: false
+
+    arc_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    glite_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    unicore_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    globus_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    cloud_computing_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    cloud_storage_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    desktop_grid_supported:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    validation_date:
+      type: date(25)
+
+
+
+      notnull: true
+
+    discipline_id:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    scope_id:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    status_id:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    insert_date:
+      type: timestamp(25)
+
+
+
+      notnull: true
+
+    user:
+      type: string(255)
+
+
+
+      notnull: true
+
+    validated:
+      type: enum(1)
+
+
+      values:
+        - '0'
+        - '1'
+        - '2'
+
+      notnull: true
+
+    reject_reason:
+      type: string(4000)
+
+
+
+      notnull: true
+
+    notify_sites:
+      type: integer(1)
+
+
+
+      notnull: true
+    perun:
+      type: integer(1)
+
+      notnull: true
+
+  relations:
+    VoDiscipline:
+      local: discipline_id
+      foreign: id
+      type: one
+    VoScope:
+      local: scope_id
+      foreign: id
+      type: one
+    VoStatus:
+      local: status_id
+      foreign: id
+      type: one
+    Vo:
+      local: id
+      foreign: header_id
+      type: many
+AppBundle\Entity\VO\VoMailingList:
+  connection: dashboardConnection
+  tableName: vo_mailing_list
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    admins_mailing_list:
+      type: string(255)
+
+
+
+      notnull: true
+
+    operations_mailing_list:
+      type: string(255)
+
+
+
+      notnull: true
+
+    user_support_mailing_list:
+      type: string(255)
+
+
+
+      notnull: true
+
+    users_mailing_list:
+      type: string(255)
+
+
+
+      notnull: true
+
+    security_contact_mailing_list:
+      type: string(255)
+
+
+
+      notnull: true
+
+    user:
+      type: string(255)
+
+
+
+      notnull: true
+
+    insert_date:
+      type: timestamp(25)
+
+
+
+      notnull: true
+
+    serial:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    validated:
+      type: enum(1)
+
+
+      values:
+        - '0'
+        - '1'
+        - '2'
+
+      notnull: true
+
+    reject_reason:
+      type: string(4000)
+
+
+
+      notnull: true
+
+    notify_sites:
+      type: integer(1)
+
+
+
+      notnull: true
+
+  relations:
+    Vo:
+      local: id
+      foreign: mailing_list_id
+      type: many
+AppBundle\Entity\VO\VoRegexp:
+  connection: dashboardConnection
+  tableName: vo_regexp
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    regexpression:
+      type: string(255)
+
+
+
+      notnull: true
+
+    description:
+      type: string(100)
+
+
+
+      notnull: true
+
+  relations:
+    VoField:
+      local: id
+      foreign: field_regexp_id
+      type: many
+AppBundle\Entity\VO\VoRessources:
+  connection: dashboardConnection
+  tableName: vo_ressources
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    serial:
+      type: integer(4)
+      notnull: true
+    insert_date:
+      type: timestamp(25)
+      notnull: true
+    ram386:
+      type: integer(4)
+      notnull: true
+    ram64:
+      type: integer(4)
+      notnull: true
+    job_scratch_space:
+      type: integer(4)
+      notnull: true
+    job_max_cpu:
+      type: integer(4)
+      notnull: true
+    job_max_wall:
+      type: integer(4)
+      notnull: true
+    other_requirements:
+      type: string(4000)
+      notnull: true
+    cpu_core:
+      type: integer(4)
+      notnull: true
+    vm_ram:
+      type: integer(4)
+      notnull: true
+    storage_size:
+      type: integer(4)
+      notnull: true
+    public_ip:
+      type: string(50)
+      notnull: true
+    user:
+      type: string(255)
+      notnull: true
+    validated:
+      type: enum(1)
+      values:
+        - '0'
+        - '1'
+        - '2'
+      notnull: true
+    reject_reason:
+      type: string(4000)
+      notnull: true
+    notify_sites:
+      type: integer(1)
+      notnull: true
+    cvmfs:
+      type: string(4000)
+    number_cores:
+      type: integer(6)
+    minimum_ram:
+      type: integer(6)
+    scratch_space_values:
+      type: integer(6)
+  relations:
+    Vo:
+      local: id
+      foreign: ressources_id
+      type: many
+AppBundle\Entity\VO\VoScope:
+  connection: dashboardConnection
+  tableName: vo_scope
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    scope:
+      type: string
+
+
+
+      notnull: true
+
+    roc:
+      type: string
+
+
+
+      notnull: true
+
+    decommissioned:
+      type: integer(1)
+
+
+
+      notnull: true
+
+  relations:
+    VoHeader:
+      local: id
+      foreign: scope_id
+      type: many
+AppBundle\Entity\VO\VoStatus:
+  connection: dashboardConnection
+  tableName: vo_status
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    status:
+      type: string
+
+
+
+      notnull: true
+
+    description:
+      type: string
+
+
+
+      notnull: true
+
+  relations:
+    VoHeader:
+      local: id
+      foreign: status_id
+      type: many
+AppBundle\Entity\VO\VoTests:
+  connection: dashboardConnection
+  tableName: VOs
+  columns:
+    test_name:
+      type: string(255)
+
+
+      primary: true
+
+    roc_name:
+      type: string(100)
+
+
+
+      notnull: true
+
+AppBundle\Entity\VO\VoUserProfile:
+  connection: dashboardConnection
+  tableName: vo_user_profile
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    profile:
+      type: string(100)
+
+
+
+      notnull: true
+
+    description:
+      type: string(255)
+
+
+
+      notnull: true
+
+    help_msg:
+      type: string(1000)
+
+
+
+      notnull: true
+
+  relations:
+    VoContactHasProfile:
+      local: id
+      foreign: user_profile_id
+      type: many
+AppBundle\Entity\VO\VoUsers:
+  connection: dashboardConnection
+  tableName: vo_users
+  columns:
+    dn:
+      type: string(255)
+
+
+      primary: true
+
+    email:
+      type: string(500)
+
+
+
+      notnull: true
+
+    vo:
+      type: string(50)
+
+
+      primary: true
+
+    uservo:
+      type: string(200)
+
+
+
+      notnull: false
+
+    ca:
+      type: string(500)
+
+
+
+      notnull: false
+
+    urlvo:
+      type: string(1000)
+
+
+
+      notnull: false
+
+    last_update:
+      type: timestamp(25)
+
+
+
+      notnull: true
+
+    first_update:
+      type: timestamp(25)
+
+
+
+      notnull: true
+
+AppBundle\Entity\VO\VoVomsGroup:
+  connection: dashboardConnection
+  tableName: vo_voms_group
+  columns:
+    id:
+      type: integer(4)
+
+
+      primary: true
+      autoincrement: true
+    group_role:
+      type: string(255)
+
+
+
+      notnull: true
+
+    description:
+      type: string(1000)
+
+
+
+      notnull: true
+
+    is_group_used:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    group_type:
+      type: string(255)
+
+
+
+      notnull: true
+
+    allocated_ressources:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    serial:
+      type: integer(4)
+
+
+
+      notnull: true
+
+  relations:
+    Vo:
+      local: serial
+      foreign: serial
+      type: one
+AppBundle\Entity\VO\VoVomsServer:
+  connection: dashboardConnection
+  tableName: vo_voms_server
+  columns:
+    serial:
+      type: integer(4)
+
+
+      primary: true
+
+    hostname:
+      type: string(255)
+
+
+      primary: true
+
+    https_port:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    vomses_port:
+      type: integer(4)
+
+
+
+      notnull: true
+
+    is_vomsadmin_server:
+      type: integer(1)
+
+
+
+      notnull: true
+
+    members_list_url:
+      type: string(255)
+
+
+
+      notnull: true
+
+  relations:
+    Vo:
+      local: serial
+      foreign: serial
+      type: one
+AppBundle\Entity\VO\VoReport:
+  connection: dashboardConnection
+  tableName: vo_report
+  actAs: { Timestampable: ~ }
+  columns:
+    report_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    report_body:
+      type: string
+    serial:
+      type: integer(4)
+AppBundle\Entity\VO\VoUsersHistory:
+    connection: dashboardConnection
+    tableName: vo_users_history
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+
+        autoincrement: true
+      vo:
+        type: string(255)
+
+
+
+      u_month:
+        type: integer(2)
+
+
+        notnull: true
+
+      u_year:
+        type: integer(4)
+
+
+      nbtotal:
+        type: integer(5)
+
+      nbremoved:
+        type: integer(5)
+
+      nbadded:
+        type: integer(5)
+
+AppBundle\Entity\VO\VoUsersMetrics:
+    connection: dashboardConnection
+    tableName: vo_users_metrics
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+
+        autoincrement: true
+      vo:
+        type: string(255)
+
+
+
+      discipline:
+        type: string(255)
+      day_date:
+        type: string(10)
+      nbtotal:
+        type: integer(5)
+
+AppBundle\Entity\VO\VoMetrics:
+    connection: dashboardConnection
+    tableName: vo_metrics
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+
+        autoincrement: true
+      nb_vo:
+         type: integer(3)
+      nb_added:
+        type:integer(3)
+      nb_removed:
+       type:integer(10)
+      nb_inter_vo:
+         type: integer(3)
+      nb_inter_added:
+        type:integer(3)
+      nb__inter_removed:
+       type:integer(10)
+      day_date:
+        type: string(10)
+AppBundle\Entity\VO\VoUsersMetricsbyCA:
+    connection: dashboardConnection
+    tableName: vo_users_metrics_ca
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+
+        autoincrement: true
+      ca:
+        type: string(255)
+
+
+
+      day_date:
+        type: string(10)
+      nbtotal:
+        type: integer(5)
+
+AppBundle\Entity\VO\VoYearlyValidation:
+    connection: dashboardConnection
+    tableName: vo_yearly_validation
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+
+        autoincrement: true
+      serial:
+        type: integer(4)
+
+
+
+        notnull: true
+
+      date_validation:
+        type: timestamp(25)
+
+
+
+        notnull: true
+
+      date_last_email_sending:
+        type: timestamp(25)
+
+
+
+        notnull: true
+
+    relations:
+      Vo:
+        local: serial
+        foreign: serial
+        type: one
+AppBundle\Entity\VO\VoAcknowledgmentStatements:
+    connection: dashboardConnection
+    tableName: vo_acknowledgment_statements
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+
+        autoincrement: true
+      serial:
+        type: integer(4)
+
+
+
+        notnull: true
+
+      type_as:
+        type: string(255)
+
+
+
+      grantid:
+        type: string(255)
+
+
+
+      suggested:
+        type: string
+
+
+
+
+      relationShip:
+        type: string
+
+
+
+
+      publicationUrl:
+        type: string(255)
+
+
+
+    relations:
+      Vo:
+        local: serial
+        foreign: serial
+        type: one
+AppBundle\Entity\VO\VoRobotCertificate:
+    connection: dashboardConnection
+    tableName: vo_robot_certificate
+    actAs: { Timestampable: ~ }
+    columns:
+      id:
+        type: integer(10)
+        primary: true
+        notnull: true
+        autoincrement: true
+      vo_name:
+        type: string(255)
+        notnull: true
+      service_name:
+        type: string(255)
+      service_url:
+        type: string(255)
+      email:
+        type: string(255)
+        notnull: true
+      robot_dn:
+        type: string(255)
+
+      use_sub_proxies:
+        type: integer(2)
+
+    relations:
+      Vo:
+        local: serial
+        foreign: serial
+        type: one

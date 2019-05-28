@@ -1,0 +1,282 @@
+<e:entries xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <e:entries PRIMARY_KEY="2916G0" key="amga.ct.infn.itAMGA" site="GRISU-COMETA-INFN-CT" hostname="amga.ct.infn.it" service_type="AMGA" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">amga.ct.infn.it</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=2916</e:entry>
+        <e:entry key="SERVICE_TYPE">AMGA</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">GRISU-COMETA-INFN-CT</e:entry>
+        <e:entry key="ROC_NAME">NGI_IT</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="2919G0" key="amga.grid.org.uaAMGA" site="UA-KNU" hostname="amga.grid.org.ua" service_type="AMGA" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">amga.grid.org.ua</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=2919</e:entry>
+        <e:entry key="SERVICE_TYPE">AMGA</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">N</e:entry>
+        <e:entry key="SITENAME">UA-KNU</e:entry>
+        <e:entry key="ROC_NAME">NGI_UA</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="738G0" key="ce01.cmi.ua.ac.beAPEL" site="BEgrid-UniversiteitAntwerpen" hostname="ce01.cmi.ua.ac.be" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">ce01.cmi.ua.ac.be</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=738</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">BEgrid-UniversiteitAntwerpen</e:entry>
+        <e:entry key="ROC_NAME">NGI_NL</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="739G0" key="ingrid.cism.ucl.ac.beAPEL" site="BelGrid-UCL" hostname="ingrid.cism.ucl.ac.be" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">ingrid.cism.ucl.ac.be</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=739</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">BelGrid-UCL</e:entry>
+        <e:entry key="ROC_NAME">NGI_NL</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="740G0" key="cream02.iihe.ac.beAPEL" site="BEgrid-ULB-VUB" hostname="cream02.iihe.ac.be" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">cream02.iihe.ac.be</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=740</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">BEgrid-ULB-VUB</e:entry>
+        <e:entry key="ROC_NAME">NGI_NL</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="741G0" key="gridce.atlantis.ugent.beAPEL" site="BEgrid-UGent" hostname="gridce.atlantis.ugent.be" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">gridce.atlantis.ugent.be</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=741</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">N</e:entry>
+        <e:entry key="SITENAME">BEgrid-UGent</e:entry>
+        <e:entry key="ROC_NAME">NGI_NL</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="742G0" key="kg-ce01.cc.kuleuven.beAPEL" site="BEgrid-KULeuven" hostname="kg-ce01.cc.kuleuven.be" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">kg-ce01.cc.kuleuven.be</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=742</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">BEgrid-KULeuven</e:entry>
+        <e:entry key="ROC_NAME">NGI_NL</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="744G0" key="cream-ce02.cat.cbpf.brAPEL" site="CBPF" hostname="cream-ce02.cat.cbpf.br" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">cream-ce02.cat.cbpf.br</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=744</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">CBPF</e:entry>
+        <e:entry key="ROC_NAME">ROC_LA</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="745G0" key="sampace.if.usp.brAPEL" site="SAMPA" hostname="sampace.if.usp.br" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">sampace.if.usp.br</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=745</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">SAMPA</e:entry>
+        <e:entry key="ROC_NAME">ROC_LA</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="748G0" key="cream1.grid.cesnet.czAPEL" site="prague_cesnet_lcg2" hostname="cream1.grid.cesnet.cz" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">cream1.grid.cesnet.cz</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=748</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">prague_cesnet_lcg2</e:entry>
+        <e:entry key="ROC_NAME">NGI_CZ</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="749G0" key="cream2.grid.cesnet.czAPEL" site="prague_cesnet_lcg2" hostname="cream2.grid.cesnet.cz" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">cream2.grid.cesnet.cz</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=749</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">prague_cesnet_lcg2</e:entry>
+        <e:entry key="ROC_NAME">NGI_CZ</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="751G0" key="cream1.farm.particle.czAPEL" site="praguelcg2" hostname="cream1.farm.particle.cz" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">cream1.farm.particle.cz</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=751</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">praguelcg2</e:entry>
+        <e:entry key="ROC_NAME">NGI_CZ</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="752G0" key="cream2.farm.particle.czAPEL" site="praguelcg2" hostname="cream2.farm.particle.cz" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">cream2.farm.particle.cz</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=752</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">praguelcg2</e:entry>
+        <e:entry key="ROC_NAME">NGI_CZ</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="753G0" key="carceri.hec.lancs.ac.ukAPEL" site="UKI-NORTHGRID-LANCS-HEP" hostname="carceri.hec.lancs.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">carceri.hec.lancs.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=753</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LANCS-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="754G0" key="fal-pygrid-44.lancs.ac.ukAPEL" site="UKI-NORTHGRID-LANCS-HEP" hostname="fal-pygrid-44.lancs.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">fal-pygrid-44.lancs.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=754</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LANCS-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="755G0" key="abaddon.hec.lancs.ac.ukAPEL" site="UKI-NORTHGRID-LANCS-HEP" hostname="abaddon.hec.lancs.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">abaddon.hec.lancs.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=755</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LANCS-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="756G0" key="hepgrid5.ph.liv.ac.ukAPEL" site="UKI-NORTHGRID-LIV-HEP" hostname="hepgrid5.ph.liv.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">hepgrid5.ph.liv.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=756</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LIV-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="757G0" key="hepgrid97.ph.liv.ac.ukAPEL" site="UKI-NORTHGRID-LIV-HEP" hostname="hepgrid97.ph.liv.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">hepgrid97.ph.liv.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=757</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LIV-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="758G0" key="hepgrid10.ph.liv.ac.ukAPEL" site="UKI-NORTHGRID-LIV-HEP" hostname="hepgrid10.ph.liv.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">hepgrid10.ph.liv.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=758</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LIV-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+    <e:entries PRIMARY_KEY="759G0" key="hepgrid6.ph.liv.ac.ukAPEL" site="UKI-NORTHGRID-LIV-HEP" hostname="hepgrid6.ph.liv.ac.uk" service_type="APEL" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <e:entry key="HOSTNAME">hepgrid6.ph.liv.ac.uk</e:entry>
+        <e:entry key="GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Service&amp;id=759</e:entry>
+        <e:entry key="SERVICE_TYPE">APEL</e:entry>
+        <e:entry key="IN_PRODUCTION">Y</e:entry>
+        <e:entry key="NODE_MONITORED">Y</e:entry>
+        <e:entry key="SITENAME">UKI-NORTHGRID-LIV-HEP</e:entry>
+        <e:entry key="ROC_NAME">NGI_UK</e:entry>
+        <e:entry key="DOWNTIME_PRIMARY_KEY">90687G0</e:entry>
+        <e:entry key="DOWNTIME_GOCDB_PORTAL_URL">https://goc.egi.eu/portal/index.php?Page_Type=Downtime&amp;id=12185</e:entry>
+        <e:entry key="DOWNTIME_SEVERITY">OUTAGE</e:entry>
+        <e:entry key="DOWNTIME_DESCRIPTION">hw repair</e:entry>
+        <e:entry key="DOWNTIME_END_DATE">1384441200</e:entry>
+    </e:entries>
+</e:entries >

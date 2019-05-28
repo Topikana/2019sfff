@@ -1,0 +1,366 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/themes/proton/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+
+{% endblock %}
+
+{#{% block javascripts %}#}
+
+    {#<script language="JavaScript">#}
+        {#$(document).ready(function () {#}
+            {#$('html, body').animate({scrollTop: 0}, 0);#}
+            {#changeAcknowledgment();#}
+        {#})#}
+    {#</script>#}
+{#{% endblock %}#}
+{% block body %}
+
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div role="alert" class="alert alert-danger">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div role="alert" class="alert alert-success">
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+    {#<div class="mr-2 ml-2" style="">#}
+        <article class="page-header">
+            <h1>Update VO <strong>{{ voName }}</strong></h1>
+        </article>
+
+        {#<div class="col-2 pr-0">#}
+
+        {#</div>#}
+        <div class="col-md-2 pr-0" style="position: fixed;">
+                <div class='mt-3 mr-4'  data-offset-top="100">
+                    <div class='well card  bg-light d-flex justify-content-center pt-3 pb-3'>
+                        <p class='lead d-flex justify-content-center'>
+                            {{ subVoName }}
+                        </p>
+                        <ul class="m-auto p-0 m-0" style="list-style-type: none;">
+                            <li><span class="fa fa-arrow-circle-right text-secondary"
+                                      style="font-size: 12px"></span> creation :
+                                <span>{{ subCreationDate }}</span>
+                            </li>
+
+                            <li><span class="fa fa-arrow-circle-right text-secondary"
+                                      style="font-size: 12px"></span>
+                                <a href="http://{{ portalUrl }}/xml/voIDCard/public/voname/{{ voName }}">XML feed for
+                                    this
+                                    vo</a>
+                            </li>
+                            <li><span class="fa fa-arrow-circle-right text-secondary"
+                                      style="font-size: 12px"></span>
+                                <a href="http://{{ portalUrl }}/xml/voIDCard/public/all/true">XML feed for all VO</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="mt-4 mr-4" style="margin-top: 1250px;" >
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#VOH_section">General information</a></li>
+                        <li class="list-group-item"><a href="#VOAS_section">Acknowlegment Statement</a></li>
+                        <li class="list-group-item"><a href="#VOD_section">Disciplines</a></li>
+                        <li class="list-group-item"><a href="#VOR_section">Resources</a></li>
+                        <li class="list-group-item"><a href="#VOGC_section">Mailing List</a></li>
+                        <li class="list-group-item"><a href="#VOC_section">Contact List</a></li>
+                        <li class="list-group-item"><a href="#VOV_section">VOMS Server</a></li>
+                        <li class="list-group-item"><a href="#VOVG_section">VOMS Group/Role</a></li>
+                    </ul>
+                </div>
+
+
+                {#<div class='affix' style="margin-top:550px">#}
+                    {#{{ render(controller('AppBundle:VO/VO:myVo')) }}#}
+                {#</div>#}
+
+        </div>
+    {#<div>#}
+        <div class="col-md-12 d-flex justify-content-end pr-0">
+
+            {#{% if messageVo is defined and messageVo != null %}#}
+                {#<span class="alert alert-info">{{ messageVo }}</span>#}
+                {#<br/><br/>#}
+            {#{% endif %}#}
+
+
+            <form id="voForm" action="{{ action }}" method="post" class='form-horizontal'>
+                <header>
+                    <div id="header" data-spy="affix" data-offset-top="100" class="affix-top " style="width: 1250px">
+                        {{ form_widget(voForm.saveVo) }}
+                    </div>
+                </header>
+                <!--
+                    Vo Header
+                -->
+                <section id="VOH_section">
+                    {% include ':vo/voManagement:template_voHeaderForm.html.twig' %}
+                </section>
+
+                <!--
+                    Vo Acknowledgment Statements
+                -->
+                <section id="VOAS_section">
+                    {% include ':vo/voManagement:template_voAcknowledgmentStatements.html.twig' %}
+                </section>
+
+                <!--
+                    Vo Discipline
+                -->
+                <section id="VOD_section">
+                    {% include ':vo/voManagement:template_voDiscipline.html.twig' %}
+                </section>
+
+                <!--
+                    Vo Resources
+                -->
+                <section id="VOR_section">
+                    {% include ':vo/voManagement:template_voResource.html.twig' %}
+                </section>
+
+                <!--
+                    Vo Mailing List
+                -->
+
+                <section id="VOGC_section">
+                    <div class="col-sm-10 float-right pl-0 pr-0">
+                    {% include ':vo/voManagement:template_voMainlingList.html.twig' %}
+                    </div>
+                </section>
+
+                <!--
+                    Other Field
+                -->
+
+                <input type="hidden" value="{{ serial }}" id="serial" name="serial">
+                {{ form_widget(voForm._token) }}
+
+            </form>
+
+
+            <!--
+                Vo Contact
+            -->
+            <section id="VOC_section">
+                <div class="card   col-10 pl-0 pr-0 float-right" id="panelContact">
+                    {{ render(controller('AppBundle:VO/VO:contactList', { 'serial': serial })) }}
+                </div>
+            </section>
+
+            <!--
+               Vo Voms Server
+            -->
+            <section id="VOV_section">
+                <div class="card mt-4 col-10 pl-0 pr-0 float-right" id="panelVomsServer">
+                    {{ render(controller('AppBundle:VO/VO:vomsServerList', { 'serial': serial })) }}
+                </div>
+            </section>
+
+            <!--
+               Vo Voms Group
+            -->
+            <section id="VOVG_section">
+                <div class="card mt-4 mb-4 col-10 pl-0 pr-0 float-right" id="panelVomsGroup">
+                    {{ render(controller('AppBundle:VO/VO:vomsGroupList', { 'serial': serial })) }}
+                </div>
+            </section>
+        </div>
+    {#</div>#}
+    {#</div>#}
+{% endblock %}
+
+{% block javascripts %}
+
+
+    <script type="text/javascript" src="{{ asset('js/vo/voManagement.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vo/voList.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('build/js/jstree/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/broadcast/jstreeHelper.js') }}"></script>
+
+
+
+    <script type="text/javascript" src="{{ asset('build/js/jquery.validate.min.js') }}"></script>
+
+
+
+   {#<script>#}
+       {#$(document).ready(function () {#}
+           {#// alertAddCvmfs();#}
+
+       {#})#}
+   {#</script>#}
+
+
+    <script>
+
+
+
+        +function ($) {
+            'use strict';
+
+            // AFFIX CLASS DEFINITION
+            // ======================
+
+            var Affix = function (element, options) {
+                this.options = $.extend({}, Affix.DEFAULTS, options)
+
+                var target = this.options.target === Affix.DEFAULTS.target ? $(this.options.target) : $(document).find(this.options.target)
+
+                this.$target = target
+                    .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
+                    .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
+
+                this.$element     = $(element)
+                this.affixed      = null
+                this.unpin        = null
+                this.pinnedOffset = null
+
+                this.checkPosition()
+            }
+
+            Affix.VERSION  = '3.4.0'
+
+            Affix.RESET    = 'affix affix-top affix-bottom'
+
+            Affix.DEFAULTS = {
+                offset: 0,
+                target: window
+            }
+
+            Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
+                var scrollTop    = this.$target.scrollTop()
+                var position     = this.$element.offset()
+                var targetHeight = this.$target.height()
+
+                if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false
+
+                if (this.affixed == 'bottom') {
+                    if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom'
+                    return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom'
+                }
+
+                var initializing   = this.affixed == null
+                var colliderTop    = initializing ? scrollTop : position.top
+                var colliderHeight = initializing ? targetHeight : height
+
+                if (offsetTop != null && scrollTop <= offsetTop) return 'top'
+                if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom'
+
+                return false
+            }
+
+            Affix.prototype.getPinnedOffset = function () {
+                if (this.pinnedOffset) return this.pinnedOffset
+                this.$element.removeClass(Affix.RESET).addClass('affix')
+                var scrollTop = this.$target.scrollTop()
+                var position  = this.$element.offset()
+                return (this.pinnedOffset = position.top - scrollTop)
+            }
+
+            Affix.prototype.checkPositionWithEventLoop = function () {
+                setTimeout($.proxy(this.checkPosition, this), 1)
+            }
+
+            Affix.prototype.checkPosition = function () {
+                if (!this.$element.is(':visible')) return
+
+                var height       = this.$element.height()
+                var offset       = this.options.offset
+                var offsetTop    = offset.top
+                var offsetBottom = offset.bottom
+                var scrollHeight = Math.max($(document).height(), $(document.body).height())
+
+                if (typeof offset != 'object')         offsetBottom = offsetTop = offset
+                if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
+                if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
+
+                var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
+
+                if (this.affixed != affix) {
+                    if (this.unpin != null) this.$element.css('top', '')
+
+                    var affixType = 'affix' + (affix ? '-' + affix : '')
+                    var e         = $.Event(affixType + '.bs.affix')
+
+                    this.$element.trigger(e)
+
+                    if (e.isDefaultPrevented()) return
+
+                    this.affixed = affix
+                    this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
+
+                    this.$element
+                        .removeClass(Affix.RESET)
+                        .addClass(affixType)
+                        .trigger(affixType.replace('affix', 'affixed') + '.bs.affix')
+                }
+
+                if (affix == 'bottom') {
+                    this.$element.offset({
+                        top: scrollHeight - height - offsetBottom
+                    })
+                }
+            }
+
+
+            // AFFIX PLUGIN DEFINITION
+            // =======================
+
+            function Plugin(option) {
+                return this.each(function () {
+                    var $this   = $(this)
+                    var data    = $this.data('bs.affix')
+                    var options = typeof option == 'object' && option
+
+                    if (!data) $this.data('bs.affix', (data = new Affix(this, options)))
+                    if (typeof option == 'string') data[option]()
+                })
+            }
+
+            var old = $.fn.affix
+
+            $.fn.affix             = Plugin
+            $.fn.affix.Constructor = Affix
+
+
+            // AFFIX NO CONFLICT
+            // =================
+
+            $.fn.affix.noConflict = function () {
+                $.fn.affix = old
+                return this
+            }
+
+
+            // AFFIX DATA-API
+            // ==============
+
+            $(window).on('load', function () {
+                $('[data-spy="affix"]').each(function () {
+                    var $spy = $(this)
+                    var data = $spy.data()
+
+                    data.offset = data.offset || {}
+
+                    if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom
+                    if (data.offsetTop    != null) data.offset.top    = data.offsetTop
+
+                    Plugin.call($spy, data)
+                })
+            })
+
+        }(jQuery);
+    </script>
+{% endblock %}
+
+

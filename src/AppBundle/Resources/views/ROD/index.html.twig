@@ -1,0 +1,641 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/rod.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/vendor/datatables/select/css/select.dataTables.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/vendor/datatables/buttons/css/buttons.dataTables.min.css') }}" />
+    {#<link rel="stylesheet" href="{{ asset('vendor/datatables/css/responsive.dataTables.min.css') }}" />#}
+    <link rel="stylesheet" href="{{ asset('build/css/simple-vertical-timeline.min.css') }}" />
+
+
+
+
+
+{% endblock %}
+
+{% block title %}Operations-Portal | ROD Dashboard{% endblock %}
+{% block body %}
+
+    {% for flash_message in app.session.flashbag.get('danger') %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message|raw }}
+        </div>
+    {% endfor %}
+    <h1 class="col-12 mb-4 card card-header flex-row"><span class="fa fa-home"></span> Your Dashboard</h1>
+    {#{{dump( app.user) }}#}
+    <!-- filter -->
+   {{ include(':ROD:filter_settings.html.twig') }}
+
+    <div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
+        Click on the number of items (alarms, tickets...) to access the list of items and related details and actions !
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><span class="fa fa-poo-storm"></span> ROD dashboard</a>
+        </li>
+        {% if app.user.isSecuOfficer() %}
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><span class="fa fa-shield-alt"></span> Security dashboard</a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <!-- datatable -->
+            <table class="table table-striped table-bordered sortable-onload-0 table-hover dt-responsive nowrap" style="width: 100%" id="rod_table">
+                <thead>
+                <tr>
+                    <th class='sortable-text' rel="Site name">id</th>
+                    <th class='sortable-text' rel="Site name">Site</th>
+                    <th class='sortable-numeric' rel="Site name">Downtimes</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios ok</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios critical</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios warning</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios unknown</th>
+                    <th class='sortable-numeric' rel="Alarms">Tickets</th>
+                    <th class='sortable-numeric' rel="Alarms">Notepads</th>
+                    <th class="sortable-text" rel="Site availability">PRODUCTION_INFRASTRUCTURE</th>
+                    <th class="sortable-text" rel="Site availability">STATUS</th>
+                    <th class="sortable-numeric" rel="Site availability">Av</th>
+                    <th class="sortable-numeric" rel="Site reliability">Re</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for site in sites %}
+                    <tr>
+                        <td>{{ site['site']['PRIMARY_KEY'] }}</td>
+                        <td>
+                            <a href="{{ path('rod_all_details_site',{'site': site['site']['NAME'], 'isSecurity': 'all' }) }}">{{ site['site']['NAME'] }}</a>
+                        </td>
+                        <td class="details-control" data-details-type="downtimes" class="downtime"  data-site="{{ site['site']['NAME'] }}">
+                            {% if site['downtimes']['nb_downtimes'] > 0 %}
+                                <span class="badge badge-primary downtime">
+                            <span class="fa fa-wrench"> </span>
+                            {{ site['downtimes']['nb_downtimes'] | number_format }}
+                        </span>
+                            {% endif %}
+                        </td>
+                        <td class="details-control" data-details-type="alarms" data-status="0" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_ok'] > 0 %}
+                                <span class="badge badge-success">
+                        <span class="fas fa-check"></span>
+                            {{ site['alarms']['nb_alarms_ok'] | number_format }}
+                    </span>
+                            {% endif %}
+                        </td>
+                        <td class="details-control" data-details-type="alarms" data-status="2" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_critical'] > 0 %}
+                                <span class="badge badge-danger">
+                        <span class="fas fa-skull-crossbones"></span>
+                            {{ site['alarms']['nb_alarms_critical'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="alarms" data-status="1" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_warning'] > 0 %}
+                                <span class="badge badge-warning">
+                        <span class="fas fa-exclamation"></span>
+                            {{ site['alarms']['nb_alarms_warning'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="alarms" data-status="3" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_unknown'] > 0 %}
+                                <span class="badge badge-default">
+                        <span class="fas fa-question"></span>
+                            {{ site['alarms']['nb_alarms_unknown'] | number_format  }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="tickets" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['tickets']['nb_tickets'] > 0 %}
+                                <span class="badge badge-warning">
+                        <span class="fa fa-tags"></span>
+                            {{ site['tickets']['nb_tickets'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="notepads" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['notepads']['nb_notepads'] > 0 %}
+                                <span class="badge badge-info">
+                        <span class="fa fa-book"></span>
+                            {{ site['notepads']['nb_notepads'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td>{{ site['site']['PRODUCTION_INFRASTRUCTURE'] }}</td>
+                        <td>{{ site['site']['CERTIFICATION_STATUS'] }}</td>
+                        <td class="details-control" data-details-type="avre" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['avre']['availability'] is defined %}
+                                {% if site['avre']['availability'] > 80 %}
+                                    <span class="badge badge-success">
+                             {{ site['avre']['availability'] | number_format(2) }}
+                        </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                             {{ site['avre']['availability'] | number_format(2) }}
+                        </span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="details-control" data-details-type="avre" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['avre']['reliability'] is defined %}
+                                {% if site['avre']['reliability'] > 85 %}
+                                    <span class="badge badge-success">
+                             {{ site['avre']['reliability'] | number_format(2) }}
+                        </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                             {{ site['avre']['reliability'] | number_format(2) }}
+                        </span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-success btn-sm add-ticket" data-site="{{ site['site']['NAME'] }}" data-ngi="{{ site['site']['NGI'] }}"><span class="fa fa-plus mr-1"></span>Ticket</button>
+                                <button class="btn btn-info btn-sm add-notepad" data-site="{{ site['site']['NAME'] }}"><span class="fa fa-plus mr-1"></span>Notepad</button>
+                            </div>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+
+        </div>
+
+
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+            <!-- datatable security -->
+            <table class="table table-striped table-bordered sortable-onload-0 table-hover dt-responsive nowrap w-100" id="security_table">
+                <thead>
+
+                <tr>
+                    <th class='sortable-text' rel="Site name">id</th>
+                    <th class='sortable-text' rel="Site name">Site</th>
+                    <th class='sortable-numeric' rel="Site name">Downtimes</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios ok</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios critical</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios warning</th>
+                    <th class='sortable-numeric' rel="Alarms">Nagios unknown</th>
+                    <th class='sortable-numeric' rel="Alarms">Notepads</th>
+                    <th class="sortable-text" rel="Site availability">PRODUCTION_INFRASTRUCTURE</th>
+                    <th class="sortable-text" rel="Site availability">STATUS</th>
+                    <th class="sortable-numeric" rel="Site availability">Av</th>
+                    <th class="sortable-numeric" rel="Site reliability">Re</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {% for site in sitesSecurity %}
+                    <tr>
+                        <td>{{ site['site']['PRIMARY_KEY'] }}</td>
+                        <td>
+                            <a href="{{ path('rod_all_details_site',{'site': site['site']['NAME'], 'isSecurity': 'security' }) }}">{{ site['site']['NAME'] }}</a>
+                        </td>
+                        <td class="details-control" data-details-type="downtimes" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['downtimes']['nb_downtimes'] > 0 %}
+                                <span class="badge badge-primary">
+                            <span class="fa fa-wrench"> </span>
+                            {{ site['downtimes']['nb_downtimes'] | number_format }}
+                        </span>
+                            {% endif %}
+                        </td>
+                        <td class="details-control" data-details-type="alarmsSecurity" data-status="0" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_ok'] > 0 %}
+                                <span class="badge badge-success">
+                        <span class="fas fa-check"></span>
+                            {{ site['alarms']['nb_alarms_ok'] | number_format }}
+                    </span>
+                            {% endif %}
+                        </td>
+                        <td class="details-control" data-details-type="alarmsSecurity" data-status="2" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_critical'] > 0 %}
+                                <span class="badge badge-danger">
+                        <span class="fas fa-skull-crossbones"></span>
+                            {{ site['alarms']['nb_alarms_critical'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="alarmsSecurity" data-status="1" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_warning'] > 0 %}
+                                <span class="badge badge-warning">
+                        <span class="fas fa-exclamation"></span>
+                            {{ site['alarms']['nb_alarms_warning'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="alarmsSecurity" data-status="3" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['alarms']['nb_alarms_unknown'] > 0 %}
+                                <span class="badge badge-default">
+                        <span class="fas fa-question"></span>
+                            {{ site['alarms']['nb_alarms_unknown'] | number_format  }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td class="details-control" data-details-type="notepads" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['notepads']['nb_notepads'] > 0 %}
+                                <span class="badge badge-info">
+                        <span class="fa fa-book"></span>
+                            {{ site['notepads']['nb_notepads'] | number_format }}
+                    </span>
+                            {% endif %}
+
+                        </td>
+                        <td>{{ site['site']['PRODUCTION_INFRASTRUCTURE'] }}</td>
+                        <td>{{ site['site']['CERTIFICATION_STATUS'] }}</td>
+                        <td class="details-control" data-details-type="avre" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['avre']['availability'] is defined %}
+                                {% if site['avre']['availability'] > 80 %}
+                                    <span class="badge badge-success">
+                             {{ site['avre']['availability'] | number_format(2) }}
+                        </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                             {{ site['avre']['availability'] | number_format(2) }}
+                        </span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="details-control" data-details-type="avre" data-site="{{ site['site']['NAME'] }}">
+                            {% if site['avre']['reliability'] is defined %}
+                                {% if site['avre']['reliability'] > 85 %}
+                                    <span class="badge badge-success">
+                             {{ site['avre']['reliability'] | number_format(2) }}
+                        </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                             {{ site['avre']['reliability'] | number_format(2) }}
+                        </span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+    <div id="div_details" class="mt-4 mb-4"></div>
+
+
+    {{ include(':ROD:modal-notepad.html.twig') }}
+    {{ include(':ROD:modal-ticket.html.twig') }}
+    {{ include(':ROD:modal-delete-ticket.html.twig') }}
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('build/vendor/datatables/select/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/datatables/buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('build/vendor/js-cookie/js.cookie.js') }}"></script>
+    {#<script src="{{ asset('vendor/datatables/js/dataTables.responsive.min.js') }}"></script>#}
+
+     <script>
+         // var $ = require('jquery');
+         $(document).ready(function() {
+
+             var table =   $('#rod_table').DataTable({
+                 "responsive": true,
+                 "order": [[ 4, "desc" ]],
+                 "columnDefs": [
+                     { "orderable": true, "targets": 1 },
+                     {"className": "dt-left", "targets": [1]},
+                     {"className": "dt-center", "targets": "_all"},
+                     {
+                         "targets": [ 0 ],
+                         "visible": false
+                     },
+                     {
+                         "targets": [ 9 ],
+                         "visible": false
+                     },
+                     {
+                         "targets": [ 10 ],
+                         "visible": false
+                     }
+                 ],
+                 "columns": [
+                     {"data": "id"},
+                     { "data": "site" },
+                     { "data": "downtimes" },
+                     { "data": "nagios_ok" },
+                     { "data": "nagios_critical" },
+                     { "data": "nagios_warning" },
+                     { "data": "nagios_unknown" },
+                     { "data": "tickets" },
+                     { "data": "notepads" },
+                     { "data": "PRODUCTION_INFRASTRUCTURE"},
+                     { "data": "status"},
+                     { "data": "Av" },
+                     { "data": "Re" },
+                     { "data": "Action" }
+                 ],
+                 dom:
+                 "<'row d-flex justify-content-start'<'col-sm-3 ml-2 buttonsadd'><'col-sm-2 mt-3'f><'col-sm-2 mt-3'l>>" +
+                 "<<'col-sm-12'tr>>" + "<'row'<'col-sm-5 ml-3'i><'col-sm-6 d-flex justify-content-start'p>>",
+
+
+                 buttons: [
+                     {
+                         extend: 'colvis',
+                         className: 'btn btn-primary m-2 mt-3',
+                         columns: [0,1,2,3,5,6,7,8,9,10,11,12]
+                     }
+                 ]
+             });
+
+             // security datatable
+             var security_table =   $('#security_table').DataTable({
+
+                 "order": [[ 4, "desc" ]],
+                 "columnDefs": [
+                     { "orderable": true, "targets": 1 },
+                     {"className": "dt-left", "targets": [1]},
+                     {"className": "dt-center", "targets": "_all"},
+                     {
+                         "targets": [ 0 ],
+                         "visible": false
+                     },
+                     {
+                         "targets": [ 8 ],
+                         "visible": false
+                     },
+                     {
+                         "targets": [ 9 ],
+                         "visible": false
+                     }
+                 ],
+                 "columns": [
+                     {"data": "id"},
+                     { "data": "site" },
+                     { "data": "downtimes" },
+                     { "data": "nagios_ok" },
+                     { "data": "nagios_critical" },
+                     { "data": "nagios_warning" },
+                     { "data": "nagios_unknown" },
+                     { "data": "notepads" },
+                     { "data": "PRODUCTION_INFRASTRUCTURE"},
+                     { "data": "status"},
+                     { "data": "Av" },
+                     { "data": "Re" }
+                 ],
+                 dom:
+                 "<'row d-flex justify-content-start'<'col-sm-3 ml-2 buttonsadd'><'col-sm-2 mt-3'f><'col-sm-2 mt-3'l>>" +
+                 "<<'col-sm-12'tr>>" + "<'row'<'col-sm-5 ml-3'i><'col-sm-6 d-flex justify-content-start'p>>",
+
+                 buttons: [
+                     {
+                         extend: 'colvis',
+                         className: 'btn btn-primary m-2 mt-3',
+                         columns: [0,1,2,3,5,6,7,8,9,10,11]
+                     }
+                 ]
+             });
+
+
+             table.buttons().container()
+                 .appendTo( $('.buttonsadd:eq(0)', table.table().container() ) );
+
+             security_table.buttons().container()
+                 .appendTo( $('.buttonsadd:eq(0)', security_table.table().container() ) );
+
+             $('.buttonsadd').append(
+                 "<button  class='btn btn-outline-secondary m-2 mt-3' type='button' data-toggle='collapse' data-target='#settings' aria-expanded='true' aria-controls='settings'>\n" +
+                 "    <span class='fa fa-cog'></span> " +
+                 "Settings\n" +
+                 "</button>");
+
+             $('.dt-button').removeClass('dt-button');
+
+             $('#rod_table tbody, #security_table tbody').on( 'click', 'tr td.details-control', function () {
+
+                 var details_type = $(this).data("details-type");
+                 var status = $(this).data("status");
+                 var site = $(this).data("site");
+                 var div_details = document.getElementById("div_details");
+
+                 if(details_type === 'tickets'){
+                     $('#appbundle_rod_close_ticket_site').val(site);
+                 }
+
+                     $.ajax({
+                         url : "{{ url('ROD_details') }}",
+                         type : 'POST',
+                         data : 'site='+site+'&detailsType='+details_type+'&status='+status,
+                         beforeSend: function () {
+                             $('#div_details').html(
+                                 "<div class='d-flex justify-content-center'>" +
+                                     "<div class='spinner-border text-primary' role='status'>" +
+                                        "  <span class='sr-only'>Loading...</span>" +
+                                     "</div>" +
+                                 "</div>");
+
+                             // "<div class='lds-ripple text-primary' role='status'>" +
+                             // "<span class='sr-only'>Loading...</span>" +
+                             // "</div>"
+                             div_details.scrollIntoView();
+                         },
+                         success : function(data, statut){ // code_html contient le HTML renvoyé
+                             $('#div_details').html(data);
+                             $('#div_details h3').append(' '+site);
+
+                             div_details.scrollIntoView();
+                         },
+
+                         error : function(resultat, statut, erreur){
+                             $('#div_details').html(statut+ " "+erreur);
+                             div_details.scrollIntoView();
+                         }
+                     });
+             });
+
+             var siteDetails = Cookies.get('showDetailsSite');
+             if(siteDetails !== undefined){
+                 if(Cookies.get('showDetailsType') === 'ticket'){
+                     $("#rod_table .details-control[data-site='"+siteDetails+"'][data-details-type='tickets']").trigger( "click" );
+                 }else if(Cookies.get('showDetailsType') === 'alarm'){
+                     $("#rod_table .details-control[data-site='"+siteDetails+"'][data-details-type='alarms']").first().trigger( "click" );
+                 }
+                 Cookies.remove('showDetailsSite');
+                 Cookies.remove('showDetailsType');
+             }
+
+             // ************************ filter ************************
+                  $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ) {
+
+                             var infra = $('#appbundle_settings_infrastructure').val();
+                             var status = $('#appbundle_settings_certifiedStatus').val();
+                             var show = true;
+
+                      if(settings.nTable.id === 'rod_table' ){
+
+
+                          var infra_data =  data[9] || 0, status_data =  data[10] || 0;
+
+                             // console.log('data 11 : '+data[11]+ ' status : '+status);
+                             // console.log('data 10 : '+data[10]+ ' infra : '+infra_data);
+
+                             if (infra_data !== 'Production' && infra === 'prod'){
+                                 show = false;
+                             }
+
+                             if( status_data !== 'Certified' && status === 'Certified'){
+                                 show = false;
+                             }
+
+                             return show;
+                      }else if( settings.nTable.id === 'security_table' ){
+
+                          var infra_data_sec =  data[8] || 0, status_data_sec =  data[9] || 0;
+
+
+                          // console.log('data 11 : '+data[11]+ ' status : '+status);
+                          // console.log('data 10 : '+data[10]+ ' infra : '+infra_data_sec);
+
+                          if (infra_data_sec !== 'Production' && infra === 'prod'){
+                              show = false;
+                          }
+
+                          if( status_data_sec !== 'Certified' && status === 'Certified'){
+                              show = false;
+                          }
+
+                          return show;
+                      }else{
+                             return true;
+                     }
+
+                  });
+
+                  if( $('#appbundle_settings_filter_columns_0:checked').val() == 1){
+                      table.order( [[ 4, 'desc' ]] ).draw();
+                      security_table.order( [[ 4, 'desc' ]] ).draw();
+                      $('#appbundle_settings_alarmStatus_2').prop('checked','checked');
+                  }
+
+                  if ($('#appbundle_settings_filter_columns_1:checked').val() == 2){
+                      table.order( [[ 5, 'desc' ]] ).draw();
+                      security_table.order( [[ 5, 'desc' ]] ).draw();
+                      $('#appbundle_settings_alarmStatus_1').prop('checked','checked');
+                  }
+
+                 if ($('#appbundle_settings_filter_columns_2:checked').val() == 3){
+                     table.order( [[ 7, 'desc' ]] ).draw();
+                     security_table.order( [[ 7, 'desc' ]] ).draw();
+                 }
+
+                 $('#appbundle_settings_filter_columns').change(function () {
+
+                     if( $('#appbundle_settings_filter_columns_0:checked').val() == 1){
+                         table.order( [[ 4, 'desc' ]] ).draw();
+                         security_table.order( [[ 4, 'desc' ]] ).draw();
+                         $('#appbundle_settings_alarmStatus_2').prop('checked','checked');
+                     }
+                     if( $('#appbundle_settings_filter_columns_1:checked').val() == 2){
+                         table.order( [[ 5, 'desc' ]] ).draw();
+                         security_table.order( [[ 5, 'desc' ]] ).draw();
+                         $('#appbundle_settings_alarmStatus_1').prop('checked','checked');
+
+                     }
+                     if ($('#appbundle_settings_filter_columns_2:checked').val() == 3){
+                         table.order( [[ 7, 'desc' ]] ).draw();
+                         security_table.order( [[ 7, 'desc' ]] ).draw();
+                     }
+                 });
+
+             if ($('#appbundle_settings_alarmStatus_1:checked').val() != 1 ){
+                 table.column( 5 ).visible( false );
+                 security_table.column( 5 ).visible( false );
+             }
+             if ($('#appbundle_settings_alarmStatus_2:checked').val() != 2 ){
+                 table.column( 4 ).visible( false );
+                 security_table.column( 4 ).visible( false );
+             }
+             if ($('#appbundle_settings_alarmStatus_0:checked').val() != 0 ){
+                 table.column( 3 ).visible( false );
+                 security_table.column( 3 ).visible( false );
+             }
+             if ($('#appbundle_settings_alarmStatus_3:checked').val() != 3 ){
+                 table.column( 6 ).visible( false );
+                 security_table.column( 6 ).visible( false );
+             }
+
+             table.columns.adjust().draw( false ); // adjust column sizing and redraw
+             security_table.columns.adjust().draw( false ); // adjust column sizing and redraw
+
+
+             $('#appbundle_settings_infrastructure, #appbundle_settings_certifiedStatus').change( function() {
+                 table.draw();
+                 security_table.draw();
+         } );
+
+             $('#appbundle_settings_displayOnlyProb,#appbundle_settings_alarmStatus').click(function () {
+                 table.draw();
+                 security_table.draw();
+             });
+
+             $('#global_filter').keyup(function () {
+                 table.draw();
+                 security_table.draw();
+             });
+
+            table.draw();
+            security_table.draw();
+
+
+            $('.add-ticket').click(function () {
+                var site = $(this).data("site");
+                var ngi = $(this).data("ngi");
+                $('#appbundle_rod_ticket_site').val(site);
+                $('#appbundle_rod_ticket_ngi').val(ngi);
+                $('#appbundle_rod_ticket_description').val("");
+                $('#modal-ticket').modal();
+            });
+
+             $('.add-notepad').click(function () {
+                 var site = $(this).data("site");
+                 $('#appbundle_notepad_subject').val("[Rod Dashboard] Issue detected : "+site);
+                 $('#appbundle_notepad_site').val(site);
+                 $('#appbundle_notepad_comment').val("");
+                 $('#modal-notepad').modal();
+             });
+
+             $('#myTab a').on('click', function () {
+                 $('#div_details').html("");
+             });
+
+         });
+     </script>
+ {% endblock %}

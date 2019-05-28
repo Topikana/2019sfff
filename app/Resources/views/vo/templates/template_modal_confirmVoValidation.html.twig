@@ -1,0 +1,20 @@
+<button class="btn btn-danger" data-backdrop="static" data-keyboard="false"  data-toggle="modal" data-target="#modalVoConfirm">Verify</button>
+
+
+<div id="modalVoConfirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalConfirmTitle">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center" id="modalConfirmTitle">Confirm the validation</h3>
+            </div>
+            <div class="modal-body">
+                <p>By clicking <strong>OK</strong> you confirm that the information related to the VO is up-to-date and correct !</p>
+                <p>If it is not the case please update accordingly the VO ID card</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="validateVO('{{ voId }}', '{{ path("validateVOAjax") }}')" class="btn btn-primary">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

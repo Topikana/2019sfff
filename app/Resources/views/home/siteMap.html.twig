@@ -1,0 +1,97 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/home.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/themes/proton/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset("css/themes/default/style.css") }}" />
+    <link rel="stylesheet" href="{{ asset("css/themes/default-dark/style.css") }}" />
+
+{% endblock %}
+{% block body %}
+    <section id="homeSection">
+        <article class="card card-default">
+
+            <div class="card-header">
+                <h3>Site Map</h3>Pass your mouse over menu items to get the description . Click on sub-items to access the page
+            </div>
+
+            <div class="card-body" id="sitemap">
+
+                    <ul>
+                        {% for key1, men in menu %}
+                            <li>
+                                <a class="firstNode" href='#' data-toggle='popover' title='{{ men["title"] }}' data-trigger='hover'
+                                   data-content='{{ men['description'] }}'> {{ men['title'] }}</a>
+                                <ul>
+                                {% for key2,items in men['items'] %}
+
+
+                                    {% if items["module"] != "home" %}
+                                            <li id="{{ items["id"] }}">
+
+                                                {% if men['route'] is defined %}
+                                                    <a href="http://{{ portalUrl }}/{{ items['module'] }}/{{ items["action"] }}"
+                                                       data-toggle="popover" title="{{ items["title"] }}" data-trigger="hover"
+                                                       data-content="{{ items['description'] }}">{{ items["title"] }}</a>
+
+                                                {% elseif  items["prefix"] is defined and items["prefix"] == "vaporUrl" %}
+
+                                                    <a href="http://{{ vaporUrl }}/{{ items["module"] }}/{{ items["action"] }}"
+                                                       data-toggle="popover" title="{{ items["title"] }}" data-trigger="hover"
+                                                       data-content="{{ items['description'] }}">{{ items["title"] }}</a>
+                                                {% else %}
+                                                    <a href="{{ path(items["action"]) }}"
+                                                       data-toggle="popover" title="{{ items["title"] }}" data-trigger="hover"
+                                                       data-content="{{ items['description'] }}">{{ items["title"] }}</a>
+                                                {% endif %}
+                                            </li>
+                                    {% else %}
+
+                                            <li id=" {{ items["id"] }}">
+                                                <a href="{{ path(items['action']) }}"
+                                                   data-toggle="popover" title="{{ items["title"] }}" data-trigger="hover"
+                                                   data-content="{{ items['description'] }}">{{ items["title"] }}</a>
+                                            </li>
+
+                                    {% endif %}
+
+                                {% endfor %}
+                                </ul>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+            </div>
+        </article>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('build/js/jstree/jstree.min.js') }}"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#sitemap').jstree({
+                'core': {
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true,
+                        'icons': false,
+                    }
+                }
+            }).bind("loaded.jstree open_node.jstree", function () {
+                $('[data-toggle="popover"]').popover();
+            }).delegate("a", "click", function () {
+                if ($("#sitemap").jstree("is_leaf", this)) {
+                    document.location.href = this;
+                }
+                else {
+                    $("#sitemap").jstree("toggle_node", this);
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+

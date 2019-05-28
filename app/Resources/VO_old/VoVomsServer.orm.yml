@@ -1,0 +1,41 @@
+AppBundle\Entity\VoVomsServer:
+  type: entity
+  table: vo_voms_server
+  connection: dashboardConnection
+  id:
+    serial:
+      type: integer
+      options:
+        unsigned: false
+    hostname:
+      type: string
+      length: 255
+      options:
+        fixed: false
+  fields:
+    https_port:
+      type: integer
+      options:
+        unsigned: false
+    vomses_port:
+      type: integer
+      options:
+        unsigned: false
+    is_vomsadmin_server:
+      type: smallint
+      options:
+        unsigned: false
+    members_list_url:
+      type: string
+      length: 255
+      options:
+        fixed: false
+
+  manyToOne:
+    vo:
+      targetEntity: Vo
+      inversedBy: voVomsServers
+      joinColumn:
+        name: vo_id
+        referencedColumnName: serial
+

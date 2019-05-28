@@ -1,0 +1,24 @@
+parameters:
+  jiraItems:
+    Name: {field: "10225", group: "information about user", required: true, visible: true}
+    Surname: {field: "10226", group: "information about user" , required: true, visible: true}
+    Email: { field: "10227", group: "information about user" , required: true, visible: true}
+    DisplayName : { field: "10228" , group: "information about user" , required: false, visible: true}
+#    EOSC_UniqueID: {field: "10229" , group: "information about user" , required: false, visible: false}
+    Institution: {field : "10243", group: "information about user affilations" ,required: false, visible: true}
+    Department: {field : "10244", group: "information about user affilations" ,required: false, visible: true}
+    DepartmentalWebPage: {field : "10245", group: "information about user affilations" ,required: false, visible: true}
+    SupervisorName: {field : "10248", group: "information about user affilations" ,required: false, visible: true}
+    SupervisorProfile: {field : "10249", group: "information about user affilations" ,required: false, visible: true}
+    CustomerTypology: {field : "10250", group: "information about the project" ,required: false, visible: true, values: {single_user: "single user", research: "research"  , private_company: "private company"}}
+    ReasonForAccess: {field : "10251", group: "information about the project" ,required: false, visible: true}
+    UserGroupName: {field : "10252", group: "information about the project" ,required: false, visible: true}
+    ProjectInformation: {field : "10253", group: "information about the project" ,required: false, visible: true}
+    ProjectName: {field : "10705", group: "information about the project" ,required: false, visible: true}
+    ScientificDiscipline: {field : "10706", group: "information about the project" ,required: false, visible: true}
+#    Platforms: {field : "10708", group: "information about the project" ,required: false, visible: false}
+    INeedAVoucher: {field : "10716", group: "information about offers" ,required: false, visible: true, values: {yes: "yes", no: "no"}}
+    VoucherId: {field : "10710", group: "information about offers" ,required: false, visible: true}
+    Order: {field : "10400", group: "information about service" ,required: true, visible: true}
+    ServiceOrderTarget: {field : "10900", group: "information about service" ,required: true, visible: true}
+    OfferType: {field : "10906", group: "information about service" ,required: true, visible: true , values: {normal: 'normal', open_access: 'open_access',catalog: 'catalog'}}

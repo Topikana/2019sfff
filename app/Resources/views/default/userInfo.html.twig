@@ -1,0 +1,148 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+{% block body %}
+    <div class="m-5">
+        <h1>
+            <span class="fa fa-user"></span>
+            {{  dn|split("/Id=")[0]|split("/CN=")[1] }}
+        </h1>
+        <h4>
+{#            {% if '/O=AAI/' in dn %}#}
+{#                <small>({{ dn|split("/Id=")[1] }})</small>#}
+{#            {%  else %}#}
+{#                <small>({{ dn }})</small>#}
+{#            {% endif %}#}
+            <div class="float-right">
+                <a class="btn btn-primary " href="{{ path("logout") }}">
+                    <span     class='fas fa-sign-out-alt'> Logout</span>
+                </a>
+            </div>
+            <br>
+        </h4>
+
+        {% if opRoles["infos"] is defined %}
+        <ul>
+            {% for dn, roles in opRoles["infos"] %}
+                {% for role in roles %}
+                    <li><small>{{ role }}</small></li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+
+    {% if isSU == true %}
+
+        <div class="m-5 card ">
+            <div class="card-header bg-danger text-white">
+                <h2>Operations Portal</h2>
+            </div>
+            <div class="card-body">
+               <div>/ <span class="fa fa-star"></span> Super User</div>
+            </div>
+        </div>
+
+    {% endif %}
+
+
+    {% if opRoles["project"] is defined %}
+        <div class="m-5 card ">
+            <div class="card-header bg-light">
+                <h2>Project</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                {% for value, roles in opRoles["project"] %}
+                    {% for role in roles %}
+
+                            <tr>
+                                <th>{{ value }}</th>
+                                <td>{{ role }}</td>
+                            </tr>
+
+                    {% endfor %}
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {% if opRoles["ngi"] is defined %}
+        <div class="m-5 card ">
+            <div class="card-header bg-primary">
+                <h2>NGI</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    {% for ngi, roles in opRoles["ngi"] %}
+                        {% for role in roles %}
+                            <tr>
+                                <th>{{ ngi }}</th>
+                                <td>{{ role }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% if opRoles["site"] is defined %}
+        <div class="m-5 card card-success">
+            <div class="card-header bg-info">
+                <h2>Site</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    {% for site, roles in opRoles["site"] %}
+                        {% for role in roles %}
+                            <tr>
+                                <th>{{ site }}</th>
+                                <td>{{ role }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% if opRoles["service"] is defined %}
+        <div class="m-5 card card-success">
+            <div class="card-header bg-info">
+                <h2>Service</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    {% for service, roles in opRoles["service"] %}
+                        {% for  role in roles %}
+                            <tr>
+                                <th>{{ service }}</th>
+                                <td>{{ role }}</td>
+
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% if(opRoles["vo"] is defined) %}
+        <div class="m-5 card card-warning">
+            <div class="card-header bg-warning">
+                <h2>VO</h2>
+            </div>
+            <div class="card-body">
+                <h3>Vo</h3>
+                <table class="table">
+                    {% for vo, roles in  opRoles["vo"] %}
+                        {% for role in roles %}
+
+                            <tr>
+                                <th>{{ vo }}</th>
+                                <td>{{ role }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

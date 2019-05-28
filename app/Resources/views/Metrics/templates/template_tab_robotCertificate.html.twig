@@ -1,0 +1,98 @@
+<table class="table table-bordered table-responsive" id="rbCertListTable" cellspacing="0" width="100%">
+    <!-- table headers row -->
+    <thead class="floating-header">
+
+    <tr>
+        <th>Vo</th>
+        <th>Robot DN</th>
+        <th>Contact Email</th>
+        <th>use per-user sub-proxies</th>
+        <th>Service Name</th>
+        <th>Service Url</th>
+        <th>Validation date</th>
+        <th>Action</th>
+        <th style="display: none">Id</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+    {% for vo,dnList in rbList %}
+    {% for dn, rb in dnList %}
+
+
+        <tr>
+            <!-- get detail about VO -->
+            <td>
+                {{ vo }}
+            </td>
+
+            <td>{{ rb["robot_dn"] }}</td>
+
+            <td>
+                <a href="mailto:{{ rb["email"] }}" title="contact {{ rb["email"] }}">
+                    <span class="fas fa-envelope"></span>&nbsp;{{ rb["email"] }}
+                </a>
+            </td>
+            <td>
+                {{ rb["use_sub_proxies"] == 1 ? "Yes" : "<span class='badge badge-secondary'>N.A.</span>" }}
+            </td>
+
+            <td>
+                {% if  rb["service_name"] is not empty%}
+                    {{ rb["service_name"] }}
+                {% else %}
+                    <span class="badge badge-secondary">N.A.</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if  rb["service_url"] is not empty%}
+                    {{ rb["service_url"] }}
+                {% else %}
+                    <span class="badge badge-secondary">N.A.</span>
+                {% endif %}
+            </td>
+
+
+            <td>
+                {% if  rb["validation_date"] is not empty%}
+                    <span class="label label-success"> {{ rb["validation_date"]|date("Y-m-d H:i:s") }}</span>
+                {% else %}
+                    <span class="badge badge-secondary">N.A.</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <div class="dropdown">
+
+                    <button type="button" id="dropdownActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                            class="btn btn-xs btn-default dropdwon-toggle">
+                        Action&nbsp;&nbsp;
+                        <span class="fas fa-list-alt"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownActions">
+                        <li>
+                            <a title="edit {{ vo }} robot ceritificate id {{ rb["id"] }}" href="#modalVoRbCert"
+                               data-toggle="modal" data-target="#modalVoRbCert" onclick="completeRbModal(this)">
+                                <span class="fas fa-edit"></span>&nbsp; Edit
+                            </a></li>
+                        {% if rb["service_name"] is not empty and rb["service_url"] is not empty and rb["validation_date"] is not empty %}
+
+                            <li>
+                                <a title="remove {{ vo }} robot ceritificate id {{ rb["id"] }}" href="#modalVoRbCert"
+                                   data-toggle="modal" data-target="#modalVoRbCert" onclick="completeRbModal(this)">
+                                    <span class="fas fa-remove"></span>&nbsp; Remove
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </td>
+            <td style="display: none">{{ rb["id"] }}</td>
+        </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>

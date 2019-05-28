@@ -1,0 +1,86 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% block body %}
+    <div class="d-flex justify-content-center">
+    <form method="post" class="col-md-8 col-md-offset-2">
+        {{ form_start(form) }}
+
+        {#{{ form_widget('_token') }}#}
+        {#{{ csrf_token('_token') }}#}
+        {#{{ csrf_token('csrf_field_name') }}#}
+        {#{{ csrf_token("task_item_intention") }}#}
+        {#{{ form_row(form._token) }}#}
+        {#{{ form._token.vars.value }}#}
+        {#<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">#}
+        <div class="form-group">
+            {{ form_label(form.id) }}
+            {{ form_widget(form.id, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.id) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.author) }}
+            {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.author) }}
+        </div>
+        <div class="form-group" >
+            {{ form_label(form.subject) }}
+            {{ form_widget(form.subject, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.subject) }}
+        </div>
+        <div class="form-group" readonly>
+            {{ form_label(form.dateCreated) }}
+            {{ form_widget(form.dateCreated , {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateCreated) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.dateUpdated) }}
+            {{ form_widget(form.dateUpdated, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateUpdated) }}
+        </div>
+
+        <div class="form-group d-flex justify-content-between">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary', 'value' : 'submit', 'type' : 'submit'}}) }}
+            <button type="button" class="btn btn-success" onclick="location.href = '{{ path('tickets') }}'">Tickets List</button>
+        </div>
+
+    </form>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+    <div class="d-flex justify-content-center">
+        <form method="post" class="col-md-8 col-md-offset-2">
+        <h4>Comments</h4>
+
+        {% for comments in comment %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">{{ comments['date'] }}</label>
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="2">{{ comments['body']}}</textarea>
+        </div>
+        {% endfor %}
+
+        {{ form_start(formComment) }}
+        <div class="form-group">
+        {{ form_widget(formComment.body, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(formComment.body) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formComment.submit) }}
+            {{ form_widget(formComment.submit, { 'label': 'Add Comment'},{'attr': {'class': 'btn btn-primary', 'value' : 'submit', 'type' : 'submit'}}) }}
+        </div>
+
+        {#<div class="form-group">#}
+            {#<label for="exampleFormControlTextarea1">{{ comments[1] }}</label>#}
+            {#<textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="2">Test</textarea>#}
+        {#</div>#}
+
+        {{ form_end(formComment) }}
+
+        {#<button type="button" class="btn btn-primary" onclick="location.href = '{{ path('add_comment',   {'id' : id }) }}'">Add Comment</button>#}
+
+
+
+    </div>
+
+
+{% endblock %}

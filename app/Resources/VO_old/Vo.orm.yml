@@ -1,0 +1,114 @@
+AppBundle\Entity\Vo:
+  type: entity
+  table: vo
+  connection: dashboardConnection
+  id:
+    serial:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    name:
+      type: string
+      options:
+        fixed: false
+    validation_date:
+      type: datetime
+    creation_date:
+      type: datetime
+    last_change:
+      type: datetime
+    header_id:
+      type: integer
+      options:
+        fixed: false
+        unsigned: false
+    ressources_id:
+      type: integer
+      options:
+        unsigned: false
+    mailing_list_id:
+      type: integer
+      options:
+        unsigned: false
+    ggus_ticket_id:
+      type: integer
+      options:
+        unsigned: false
+    need_voms_help:
+      type: smallint
+      options:
+        unsigned: false
+    need_ggus_support:
+      type: smallint
+      options:
+        unsigned: false
+    voms_ticket_id:
+      type: integer
+      options:
+        unsigned: false
+    ggus_ticket_id_su_creation:
+      type: integer
+      options:
+        unsigned: false
+    monitored:
+      type: integer
+      options:
+        default: 0
+    enable_team_ticket:
+      type: smallint
+      options:
+        default: 0
+
+  oneToMany:
+    voVomsGroups:
+      targetEntity: VoVomsGroup
+      mappedBy: vo
+    voVomsServers:
+       targetEntity: VoVomsServer
+       mappedBy: vo
+    voContactHasProfiles:
+      targetEntity: VoContactHasProfile
+      mappedBy: vo
+    voDisciplines:
+        targetEntity: VoDisciplines
+        mappedBy: vo
+    voRobotCertificates:
+        targetEntity: VoRobotCertificate
+        mappedBy: vo
+
+  oneToOne:
+    voYearlyValidation:
+      targetEntity: VoYearlyValidation
+      joinColumn:
+        name: yearly_validation_id
+        referencedColumnName: id
+    voAcknowledgmentStatement:
+      targetEntity: voAcknowledgmentStatements
+      joinColumn:
+        name: acknowledgement_statements_id
+        referencedColumnName: id
+
+  manyToOne:
+    voHeader:
+      targetEntity: VoHeader
+      inversedBy: vos
+      joinColumn:
+        name: header_id
+        referencedColumnName: id
+    voMailingList:
+      targetEntity: VoMailingList
+      inversedBy : vos
+      joinColumn:
+        name: mailing_list_id
+        referencedColumnName: id
+    voRessource:
+      targetEntity: VoRessources
+      inversedBy: vos
+      joinColumn:
+        name: ressources_id
+        referencedColumnName: id
+
+
+

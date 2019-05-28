@@ -1,0 +1,91 @@
+<div class="card mt-4">
+    <div class="card-header">
+    <h2 id="vo_form_8_vovomsinfo" class="portal text-primary">Voms information</h2>
+    </div>
+    <div class="card-body">
+        <div id="voms_information" class="font-weight-bold" style="font-size : 14px;">
+            <div class="renderLabelHelp">
+                <br/>
+            </div>
+        </div>
+
+        <div class="alert alert-info" style="font-size: 14px">
+            If your VOMS server is not present in the list please
+            <strong>
+                {#<?php echo link_to(#}
+                {#'register it in GOC DB',#}
+                {#sfConfig::get('mod_vo_voms_registration'), array('target' => '_blank')) ?>#}
+            </strong>
+            or contact OSG Team
+        </div>
+        <div class="col-md-5">
+
+        </div>
+        <div class="col-md-5">
+
+        </div>
+        <div class="radio" style="font-size: 14px">
+            <label>
+                <input type="radio" name="voVomsRegistration[voms_need]" id="voVomsRegistration_voms_need_1" value="1" onchange="$('#vomsForm').hide()" checked>
+                This VO needs help to set up a VOMS server.
+            </label>
+        </div>
+        <div class="radio" style="font-size: 14px">
+            <label>
+                <input type="radio" name="voVomsRegistration[voms_need]" id="voVomsRegistration_voms_need_0" value="0" onchange="$('#vomsForm').show()">
+                This VO already has at least one VOMS server up and working.
+            </label>
+        </div>
+        <div class="radio" style="font-size: 14px">
+            <label>
+                <input type="radio" name="voVomsRegistration[voms_need]" id="voVomsRegistration_voms_need_2" value="2" onchange="$('#vomsForm').hide()">
+                This VO is using Perun managment system
+            </label>
+        </div>
+        <br>
+        <div id="vomsForm" style="display: none">
+            <div>
+                <div class="row font-weight-bold" style="font-size: 14px;">
+                <div class="col-md-5 pr-0">
+                    <label>{{ form_label(voVomsServerForm.hostname) }}
+                        <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+                           title="Voms Hostname"
+                           data-content="Hostname of the machine hosting the VOMS server. <br>
+                               If VO Manager cant find his newly setup VOMS server, please verify that it exists at
+                               <a href='https://goc.gridops.org/portal/'>GOCDB Portal</a>  or in OSG infrastructure <br>
+                               - if not, please register your VOMS server at
+                               <a href='https://gocdb4.esc.rl.ac.uk/portal'>Register at GOCDB</a> and start registration
+                               again or contact OSG Team"
+                           data-html='true'><span class='fa fa-info-circle'
+                                                  style="font-size: 15px"></span></a></label>
+                    <a class="infoLabel">{{ form_widget(voVomsServerForm.hostname, {'attr': {'onchange': 'buildMemberListUrl("vo_voms_server","vo_VoHeader")', 'class' : 'form-control form-control-sm'}}) }}</a>
+                </div>
+                <div class="col-md-3 pr-0 pl-0 help">
+                    <label class="infoLabel">{{ form_label(voVomsServerForm.https_port) }}</label>
+                    {{ form_widget(voVomsServerForm.https_port, {'attr': {'onchange': 'buildMemberListUrl("vo_voms_server","vo_VoHeader")', 'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-md-3 pl-0 help">
+                    <label class="infoLabel">{{ form_label(voVomsServerForm.vomses_port) }}</label>
+                    {{ form_widget(voVomsServerForm.vomses_port, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+                </div>
+                <div class="col-md-7 pl-0 font-weight-bold">
+                    <br/>
+                    <label class="infoLabel" style="font-size: 14px">{{ form_label(voVomsServerForm.members_list_url) }}</label>
+                    {{ form_widget(voVomsServerForm.members_list_url, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-md-12 row mt-4 help font-weight-bold"  style="font-size: 14px">
+                    <br/><br/>
+                    <a class="infoLabel">{{ form_widget(voVomsServerForm.is_vomsadmin_server) }}</a>
+                    <label>{{ form_label(voVomsServerForm.is_vomsadmin_server) }}</label>
+                </div>
+
+                {{ form_rest(voVomsServerForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

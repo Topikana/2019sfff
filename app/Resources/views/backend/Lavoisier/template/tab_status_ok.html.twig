@@ -1,0 +1,27 @@
+<!-- CC LAVOISIER  OK -->
+
+<div class="tab-pane" id="{{ lavoisierProdName }}OK">
+    <table class="tabResult table">
+        <thead>
+        <tr>
+            <th>View</th>
+            <th>Last Build Date</th>
+            <th>Last Build Duration (s)</th>
+            <th>Last Build Size (Ko)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, value in lavoiserArray %}
+            <tr>
+
+                <td>{{ value["view"] }}</td>
+                <td>{{ value["lastBuildDate"] }}</td>
+                <td>{{ value["lastBuildDuration"] }}</td>
+                <td>{{ value["lastBuildSize"] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- END CC LAVOISIER  OK -->
+

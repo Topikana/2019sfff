@@ -1,0 +1,14 @@
+step:
+  Status:
+    id: Status
+    value: verified
+    visibility: false
+  Comments:
+    visibility: false
+    id : Comment
+    label: Comment
+    required: true
+    order: 20
+    value: |
+                Ticket set to verified via ROD Dashboard.
+                +C.user+

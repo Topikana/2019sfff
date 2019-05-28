@@ -1,0 +1,57 @@
+imports:
+    - { resource: config.yml }
+    - { resource: GGUS/ggus_env.dev.xml}
+
+parameters:
+    lavoisierUrl: "cclavoisierfr.in2p3.fr"
+    aupUrl: %kernel.root_dir%/../../../documents/vo/AUP/
+    ggusUrl: "https://test.ggus.eu/ggus/index.php"
+    dirLogsApache: "%kernel.root_dir%/../../../log"
+    dirLogsSymfony3: "%kernel.root_dir%/../var/logs"
+    dirLogsSymfony1: "%kernel.root_dir%/../../sf1/log"
+    metadataFile: %saml_metadata_file%
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        console:
+            type:  console
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     %database_host_prod%
+        port:     %database_port_prod%
+        dbname:   %database_name_prod%
+        user:     %database_user_prod%
+        password: %database_password%
+        charset:  UTF8
+        mapping_types:
+            enum: string
+
+light_saml_symfony_bridge:
+    own:
+        entity_id: %saml_symfony_id% # required
+        credentials :
+            -
+                certificate: %certificate_opsportal%
+                key: %key_opsportal%
+                password: %password_certificate%
+    system:
+        event_dispatcher: ~
+        logger: ~
+    store:
+        id_state: id_store  # name of id store service created in step 6
+    party:
+        idp:
+            files:
+                - https://aai.egi.eu/proxy/saml2/idp/metadata.php
+

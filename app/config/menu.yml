@@ -1,0 +1,72 @@
+parameters:
+  menu:
+    #############################################################################################
+    #SF3
+    #############################################################################################
+    home:
+        module: home
+        title: Home
+        description: 'The information related to the portal : credits , release notes , contact form and a site map .'
+        icon: fa-home
+        items:
+            - { title: Home, module: home, action: home, id: home, description: links to the features}
+            - { title: Credits, module: home , action: credits , id: credits, description: credits page}
+            - { title: Site Map,  module: home , action: siteMap , id: siteMap, description: Browse the site map }
+            - { title: Release Note,  module: home , action: tasksList , id: taskList, description: Browse the different release notes}
+            - { title: Contact Us, module: home , action: contact , id: contact, description: Use the form and contact us}
+            - { title: Terms of Use, module: home , action: termsofuse , id: termsofuse, description: Terms of use of operations-portal application}
+
+    broadcast:
+        module: broadcast
+        title: Broadcast
+        icon: fa-bullhorn
+        description: 'Broadcast information to several stakeholders.'
+        items:
+            - { title: Send, module: broadcast, action: broadcast, id: broadcast, description: Send an EGI Broadcast}
+            - { title: Archives, module: broadcast, action: archive, id: archive, description: EGI Broadcast archives}
+
+    downtimes:
+        module: downtimes
+        title: Downtimes
+        icon: fa-stop-circle
+        description: 'Downtimes description'
+        items:
+            - { title: Timeline, module: downtimes, action: timeline, id: timeline, description: timeline }
+            - { title: Subscription, module: downtimes, action: homepage, id: downtimeshomepage, description: subscription }
+    vo:
+        module: vo
+        title: VO Management
+        icon: fa-users
+        description: 'Different interfaces to display and register vo information'
+        items:
+            - { title: List, module: vo , action: voList,  id: voList, description: List of vo}
+            - { title: Register/ Update, module: vo , action: registerUpdate,  id: registerUpdate, description: "Management of vo : Register, Update, Information..."}
+            - { title: User tracking, module: vo, action: userTracking, id: userTracking, description: Find information about a user}
+            - { title: Security , module: vo, action: security, id: security, description: Security Contacts for VO}
+
+    ROD:
+        module: ROD
+        title: Dashboard
+        icon: fa-eye
+        description: 'Synoptic view of the infrastructure status : detect, track and follow incidents'
+        items:
+            - { title: Dashboard, module: ROD , action: rod,  id: rod, description: Operations Dashboard}
+
+    metrics:
+        module: metrics
+        title: Metrics
+        icon: fa-chart-bar
+        description: 'All Users Metrics'
+        items:
+            - { title: EGI Reports, module: metrics, action: metricsReports, id: metricsReports, description: Metrics Reports - restricted access}
+            - { title: Disciplines Metrics, module: metrics, action: usersSummary, id: usersSummary, description: Metrics about users distribution over VO}
+            - { title: Robot Certificate , module: metrics, action: rbCert, id: rbCert, description: Robot Certificate for VO}
+    plugsla:
+        module: plugsla
+        title: Service Orders
+        icon: fa-concierge-bell
+        description: 'Manage Service Orders coming from MarketPlace'
+        items:
+            - { title: Service Orders list, module: plugsla, action: tickets, id: tickets, description: List of Service Orders - restricted access}
+            - { title: Manage authorisation, module: plugsla, action: userGroupe, id: userGroupe, description: Manage authorisation - restricted access}
+

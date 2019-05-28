@@ -1,0 +1,161 @@
+<h3 class="card card-header mb-4">
+    <span class="fa fa-flash"></span>
+    Issues security :
+</h3>
+
+<table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover details_alarms" >
+    <thead>
+    <tr>
+        <th class='sortable-text' rel="Site name">id</th>
+        <th class='sortable-text' rel="Site name">site</th>
+        <th class='sortable-text' rel="Site name">url_to_history</th>
+        <th class='sortable-text' rel="alarm name">Alarm's name</th>
+        <th class='sortable-text' rel="Alarms">Nagios status</th>
+        <th class='sortable-text' rel="alarm name">Execution date</th>
+        <th class='sortable-text' rel="Alarms">Host name</th>
+        <th class="sortable-numeric" rel="alarm availability">Service status</th>
+        <th class="sortable-numeric" rel="alarm availability">Service flavour</th>
+        <th class="sortable-numeric" rel="alarm reliability">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for alarm in details['alarmsSecurity'] %}
+        {% if alarm['ops_flags'] == 2 %}
+            <tr class="table-dark">
+        {% else %}
+            <tr>
+        {% endif %}
+        <td>{{ alarm['id'] }}</td>
+        <td>{{ alarm['site'] }}</td>
+        <td>{{ alarm['url_to_history'] }}</td>
+        <td>{{ alarm['test_name'] }}</td>
+        {% if alarm['status'] == 0 %}
+            <td>
+                <span class="badge badge-success">ok</span>
+            </td>
+        {% elseif alarm['status'] == 1 %}
+            <td>
+                <span class="badge badge-warning">warning</span>
+            </td>
+        {% elseif alarm['status'] == 2 %}
+            <td>
+                <span class="badge badge-danger">critical</span>
+            </td>
+        {% elseif alarm['status'] == 3 %}
+            <td>
+                <span class="badge badge-default">unknown</span>
+            </td>
+        {% elseif alarm['status'] == 4 %}
+            <td>
+                <span class="badge badge-primary">assigned</span>
+            </td>
+        {% endif %}
+        <td>{{ alarm['start_date'] }}</td>
+        <td>{{ alarm['host_name'] }}</td>
+        <td>
+            {% if alarm['monitored'] == 1 and alarm['in_production'] == 1 %}
+                <span class="badge badge-success">prod & monit</span>
+            {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 1) %}
+                <span class="badge badge-warning">prod & not monit</span>
+            {% elseif (alarm['monitored'] == 1 and alarm['in_production'] == 0) %}
+                <span class="badge badge-warning">not prod & monit</span>
+            {% elseif (alarm['monitored'] == 0 and alarm['in_production'] == 0) %}
+                <span class="badge badge-danger">not prod & not monit</span>
+            {% endif %}
+            {% if alarm['monitored'] == -1 or alarm['in_production'] == -1 %}
+                <span class="badge badge-light border border-secondary">endpoint not registered</span>
+            {% endif %}
+        </td>
+        <td>{{ alarm['service'] }}</td>
+        <td>
+            <div class="btn-group d-flex justify-content-center" role="group">
+                <a href="{{ alarm['url_to_history'] }}" title="Argo" class="btn btn-primary btn-sm">
+                    <span class="fa fa-link mr-1"></span>
+                </a>
+                <button type="button" class="btn btn-secondary btn-sm" title="Details" data-toggle="modal" data-target="#myModal-{{ alarm['id'] }}">
+                    <span class="fa fa-search-plus mr-1"></span>
+                </button>
+                <a href="{{ path('rod_history_alarm', {'id': alarm['id']}) }}" title="History" class="btn btn-warning btn-sm">
+                    <span class="fa fa-history mr-1"></span>
+                </a>
+            </div>
+        </td>
+        </tr>
+        {#{% endif %}#}
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Modal -->
+{% for alarm in details['alarmsSecurity'] %}
+
+    <div class="modal fade" id="myModal-{{ alarm['id'] }}" tabindex="-1" role="dialog" aria-badgeledby="myModalbadge">
+        <div class="modal-dialog modal-details" role="document">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <button type="button" class="close" data-dismiss="modal" aria-badge="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalbadge">Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5 class="card card-header">Output :</h5>
+                            <code class="text-left">{{  alarm['details'] |replace({"\\n": "<br>"})|raw }}</code>
+                            {#<h4>Profiles</h4>#}
+                            {#<ul>#}
+                                {#{% for profile in alarm['profiles'] %}#}
+                                    {#<li>{{ profile }}</li>#}
+                                {#{% endfor %}#}
+                            {#</ul>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<script async type="application/javascript">
+
+    $(document).ready(function() {
+        var datatable_alarm = $('.details_alarms').DataTable({
+
+            "columnDefs": [
+                {"className": "dt-left", "targets": [3]},
+                {"className": "dt-center", "targets": "_all"},
+                {
+                    "targets": [0,1,2],
+                    "visible": false
+                }
+            ],
+            "columns": [
+                {"data": "id"},
+                {"data": "site"},
+                {"data": "url_to_history"},
+                { "data": "name" },
+                { "data": "nagios_status" },
+                { "data": "execution_date" },
+                { "data": "host_name" },
+                { "data": "service_status" },
+                { "data": "service_flavour" },
+                { "data": "Action" }
+            ]
+
+            // dom: 'Blftipr',
+            // dom: 'lftiprB'
+        });
+
+        // $('#rod_table_length').append("");
+
+
+
+        $('.disabled').click(function () {
+            $(this).removeClass('selected');
+        })
+
+    });
+</script>

@@ -1,0 +1,33 @@
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Last Spool Emails</h2>
+        <a role="button" class="collapse-link pull-right"><i class="fa fa-chevron-up"></i></a>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        {% if error is defined %}
+            <p class="alert alert-danger">{{ error }}</p>
+        {% else %}
+            <table style="display: none" id="spoolTable" class="table">
+                <thead>
+                <tr>
+                    <th>Spool Type</th>
+                    <th>Generation Date</th>
+                    <th>Nb emails sent</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for key,tab in tabSpool %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ tab["GenerationDate"] }}</td>
+                        <td>{{ tab["Sent"] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+

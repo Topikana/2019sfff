@@ -1,0 +1,41 @@
+AppBundle\Entity\VoContacts:
+  type: entity
+  table: vo_contacts
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    first_name:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    last_name:
+      type: string
+      length : 255
+      options:
+        fixed: false
+    dn:
+      type: string
+      length : 255
+      options:
+        fixed: false
+    email:
+      type: string
+      length : 255
+      options:
+        fixed: false
+    grid_body:
+      type: smallint
+      options:
+        unsigned: false
+        default: '0'
+
+  oneToMany:
+    voContactHasProfiles:
+      targetEntity: VoContactHasProfile
+      mappedBy: voContacts

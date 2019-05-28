@@ -1,0 +1,49 @@
+AppBundle\Entity\VoRobotCertificate:
+  type: entity
+  table: vo_robot_certificate
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    robot_certificate_id:
+      type: string
+      length: 255
+      options:
+        fixed: false
+      nullable: true
+    service_name:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    service_url:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    email:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    robot_dn:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    use_sub_proxies:
+      type: integer
+      options:
+        unsigned: false
+
+  manyToOne:
+    vo:
+      targetEntity: Vo
+      inversedBy: voRobotCertificates
+      joinColumn:
+        name: vo_id
+        referencedColumnName: serial

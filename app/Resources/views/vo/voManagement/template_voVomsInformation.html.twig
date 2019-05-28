@@ -1,0 +1,128 @@
+
+    <div class="card-header">
+    <h2 class="portal text-primary">User Database</h2>
+    </div>
+    <div class="card-body">
+    {% if message is defined and message != null %}
+        <div id="submitMessage" class="alert alert-info alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{ message }}
+        </div>
+    {% endif %}
+    <!-- VOMS information -->
+    <h3>Perun</h3>
+    <br>
+    {% if perunUsed == true %}
+        <span class="alert alert-info">
+
+        This Vo is using Perun management system</span>
+    {% else %}
+        <span class="alert alert-warning">
+
+        This Vo isn't using Perun management system.</span> <a id="askForPerun" onclick="askForPerun('{{ path("askforPerunAjax") }}', {{ serial }}, 'panelVomsServer')"
+                                                               class="btn btn-primary text-light">Ask to use it</a>
+    {% endif %}
+
+    <br>
+
+    <h3 class="mt-3">VOMS Server</h3>
+    <table id="vomsInformationTable" class="table w-100 table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Detail</th>
+            <th>Hostname</th>
+            <th>Certificate expiration</th>
+            <th>Https port</th>
+            <th>Vomses port</th>
+            <th>Hosted by</th>
+            <th>Admin server</th>
+            <th>Url access</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if vomsList is not empty %}
+            {% for voms in vomsList %}
+                {% if voms.hostname == 'https://perun.cesnet.cz' %}
+                    <tr>
+                        <td colspan="9" class="text-center w-100">No data available...</td>
+                    </tr>
+
+                    {% else %}
+
+
+                <tr>
+                    <td><a href="#VOV_section" onclick="getVomsDetail(this,'{{ path("vomsDetailAjax") }}', '{{ voms.hostname }}', 10)"><span class="btn btn-sm btn-primary"><span
+                                        class="fa fa-plus"></span></span></a></td>
+
+                    <td><a href="{% if voms.gocurl is defined %}{{ voms.gocurl }}{% else %}#{% endif %}"
+                           title="go to {{ voms.hostname }}">{{ voms.hostname }}</a></td>
+                    <td>
+                        {% if voms.expiry is defined %}
+                            {{ voms.expiry }}
+                        {% else %}
+                            <span class="badge badge-danger">Expired</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ voms.https_port }}</td>
+                    <td>{{ voms.vomses_port }}</td>
+                    <td>{{ voms.site }}</td>
+                    <td class="text-center">
+                    <td>{% if voms.is_vomsadmin_server == 1 %} <span class="badge badge-success"><span
+                                    class="fa fa-check-circle"></span></span> {% else %}{% endif %}</td>
+                    <td>
+                        {% if voms.urlcheck_code is defined %}checkVoRegistration()
+                            <span class="badge {% if voms.urlcheck_code == 200 %} badge-success {% else %} badge-danger {% endif %}">{{ voms.urlcheck_code }}
+                                : {{ voms.urlcheck_description }}</span>
+                        {% else %}
+                            <span class="badge badge-danger"> undefined</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="dropdown btn-group" role="group">
+                            <a id="dLabel" type="button" class="btn btn-light btn-sm dropdown-toggle"
+                               data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                Action
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                <li>
+                                    <a onclick="entityAction('{{ path("vomsServerForm") }}', {{ serial }}, '{{ voms.hostname }}','VomsServer')"
+                                       href="#panelVomsServer"><span
+                                                class="fas fa-pencil-alt" style="font-size:15px"
+                                                rel="tooltip"
+                                                title="" data-original-title="Edit this Group/Role"></span> Edit</a>
+                                </li>
+                                <li>
+                                    <a href="#panelVomsServer"
+                                       onclick="deleteEntityAction('{{ path("deleteVomsServer") }}', {{ serial }}, '{{ voms.hostname }}','{{ voms.hostname }}','panelVomsServer')"><span
+                                                class="fas fa-times" style="font-size:15px"
+                                                rel="tooltip"
+                                                title="" data-original-title="Delete this Server"></span> Delete</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="9" class="text-center">No data available...</td>
+            </tr>
+        {% endif %}
+
+        <tr id="errorDivVoms" style="display: none">
+            <div style="display: none" class="badge badge-danger card-body"></div>
+        </tr>
+
+        </tbody>
+    </table>
+    <input type="button" class="btn btn-primary btn-sm"
+           onclick="entityAction('{{ path("vomsServerForm") }}', {{ serial }}, null,'VomsServer')"
+           value="Add">
+
+</div>
+<div id="divModalVomsServer">
+
+</div>

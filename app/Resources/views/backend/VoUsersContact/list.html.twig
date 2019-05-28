@@ -1,0 +1,130 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+    <div class="row">
+
+        <button class="pull-right btn btn-primary" id="reload_page"><span class="fa fa-refresh"></span>&nbsp; Refresh</button>
+        <br><br>
+
+        {% for flash_message in app.session.flashbag.get('danger') %}
+            <div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+        {% if listUsers is defined %}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+
+                    <div class="x_content">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHelp" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="fa fa-flag"></span>&nbsp; Help
+                        </button>
+                        <div class="collapse" id="collapseHelp">
+                            <hr>
+                            <p> Choose a letter to display corresponding Vo Users Contacts tab</p>
+                            <hr>
+                        </div>
+                        <nav aria-label="Page navigation">
+
+                            <ul class="pagination">
+                                <li {% if currentLetter == "numeric" %}class="active"{% endif %}><a  class="backEndLoader" href="{{ path("voUsersContactList", {"letter" : "numeric"}) }}">0...9</a></li>
+                                {% for letter in alphaArray %}
+                                    <li {% if letter == currentLetter %}class="active"{% endif %}><a class="backEndLoader" href="{{ path("voUsersContactList", {"letter" : letter}) }}">{{ letter }}</a></li>
+                                {% endfor %}
+                                <li {% if currentLetter == "special" %}class="active"{% endif %}><a  class="backEndLoader" href="{{ path("voUsersContactList", {"letter" : "special"}) }}">Special Character</a></li>
+                                <li {% if currentLetter == "none" %}class="active"{% endif %}><a  class="backEndLoader" href="{{ path("voUsersContactList", {"letter" : "none"}) }}">Empty name</a></li>
+                            </ul>
+                        </nav>
+
+                        <table style="display: none" id="VoUsersTab" class="table">
+                            <thead>
+                            <tr>
+                                <th>Last name</th>
+                                <th>First name</th>
+                                <th>DN</th>
+                                <th>Email</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key,user in listUsers %}
+                                <tr>
+                                    <td>{{ user.last_name }}</td>
+                                    <td>{{ user.first_name }}</td>
+                                    <td>{{ user.dn }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        {% if user.first_name|trim == "" %}
+                                            {% set firstName = "N.A" %}
+                                        {% else %}
+                                            {% set firstName = user.first_name %}
+                                        {% endif %}
+
+                                        {% if user.last_name|trim == "" %}
+                                            {% set lastName = "N.A" %}
+                                        {% else %}
+                                            {% set lastName = user.last_name %}
+                                        {% endif %}
+
+                                        {% if user.email|trim == "" %}
+                                            {% set email = "N.A" %}
+                                        {% else %}
+                                            {% set email = user.email %}
+                                        {% endif %}
+
+                                        <a class="btn btn-primary" href="{{ path("modifyContact", {"dn" : user.dn|url_encode , "firstName" : firstName, "lastName" : lastName , "email" : email}) }}">Modify</a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            var table = $("#VoUsersTab");
+            if (table) {
+
+                table.show();
+
+                table.DataTable();
+            }
+
+            $(".backEndLoader").click(function () {
+                $(".loader").show();
+                $(".loader-wrapper").show();
+            });
+
+
+                $("#reload_page").click(function () {
+
+                $(".loader").show();
+                $(".loader-wrapper").show();
+
+                    setTimeout(
+                            function () {
+                                location.reload();
+                            }, 3000);
+
+            });
+
+        });
+    </script>
+
+{% endblock %}

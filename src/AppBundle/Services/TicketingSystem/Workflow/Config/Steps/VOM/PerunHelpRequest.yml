@@ -1,0 +1,47 @@
+step:
+  Author:
+    id: Author
+    value: +C.manager+
+  Modifier:
+    id: Modifier
+    value: +C.manager+
+  AuthorEmail:
+    id: AuthorEmail
+    value: +C.manager_email+
+  Involve:
+    id: Involve
+    value: +C.manager_email+
+  Priority:
+    id: Priority
+    value: less urgent
+  Subject:
+    id: Subject
+    value: VO +C.vo_name+ has requested help to use Perun
+  NotificationStrategy:
+    id: NotificationStrategy
+    value: Every Change
+  Description:
+    id: Description
+    value: |
+        Dear +C.recipients+,
+
+        VO +C.vo_name+ has just registered in Operations Portal and is requesting the use of Perun system to register their users.
+        Can you help them with this registration process , please ?
+
+
+          Best regards,
+
+          +C.signature+
+
+
+
+  Status:
+    id: Status
+    value: new
+  Step:
+    id: Step
+    value: perun_help_request
+  Community:
+    id: Community
+    value: VOM
+

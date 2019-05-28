@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="loading" type="collection">
+            <parameter key="steps_param_identifier">ROD_steps</parameter>
+            <parameter key="locations" type="collection">
+                <parameter key='new'>/Steps/new.yml</parameter>
+                <parameter key='update'>/Steps/update.yml</parameter>
+                <parameter key='close'>/Steps/close.yml</parameter>
+                <parameter key='verify'>/Steps/verify.yml</parameter>
+            </parameter>
+        </parameter>
+
+        <parameter key="schema" id="schema" type="collection">
+
+            <parameter key='new' type="collection">
+                <parameter key='label'>Ticket creation</parameter>
+                <parameter key='next' type="collection">
+                    <parameter key='close'>+1</parameter>
+                </parameter>
+            </parameter>
+
+            <parameter key='update' type="collection">
+                <parameter key='label'>Ticket Update</parameter>
+                <parameter key='next' type="collection">
+                    <parameter key='close'>+1</parameter>
+                </parameter>
+            </parameter>
+
+            <parameter key='close' type="collection">
+                <parameter key='label'>Ticket Solved</parameter>
+                <parameter key='next' type="collection">
+                    <parameter key='close'>+1</parameter>
+                </parameter>
+            </parameter>
+
+            <parameter key='verify' type="collection">
+                <parameter key='label'>Ticket Closed</parameter>
+                <parameter key='next' type="collection">
+                    <parameter key='close'>+1</parameter>
+                </parameter>
+            </parameter>
+
+        </parameter>
+    </parameters>
+
+    <services>
+        <!-- VO workflow -->
+        <service id="workflow_rod" class="AppBundle\Services\TicketingSystem\Workflow\Workflow">
+            <call method="setDefaultStepId">
+                <argument id="stepId">new</argument>
+            </call>
+
+            <argument key="schema">%schema%</argument>
+            <argument key="steps">%ROD_steps%</argument>
+            <argument key="service_identifier">workflow_rod</argument>
+        </service>
+    </services>
+
+</container>

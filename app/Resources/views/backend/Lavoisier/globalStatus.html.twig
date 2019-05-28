@@ -1,0 +1,88 @@
+{% extends 'backend/base.html.twig' %}
+
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+    <div class="row">
+
+        <button class="pull-right btn btn-primary" id="reload_page"><span class="fa fa-refresh"></span>&nbsp; Refresh</button>
+        <br><br>
+
+        {% for flash_message in app.session.flashbag.get('danger') %}
+            <div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+        {% if  lavoisierStatus is defined %}
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="x_content">
+
+                    <table style="display: none" id="lavoisierUrlTab" class="table">
+                        <thead>
+                        <tr>
+                            <th>Lavoisier</th>
+                            <th>Url</th>
+                            <th>Status</th>
+                            <th>Restart</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lavoisier, info in lavoisierStatus %}
+                            <tr>
+                                <td>{{ lavoisier }}</td>
+                                <td>{{ info["lavoisier"] }}</td>
+                                <td>
+                                    <span class="urlStatus label label-{% if info["statusLavoisier"] == "Reachable" %}success{% elseif  info["statusLavoisier"] == "URL not exists" %}warning{% else %}danger{% endif %}">{{ info["statusLavoisier"] }}</span>
+                                </td>
+                                <td>
+                                    <a href="{{ info["lavoisier"] }}/restart" target="_blank" class="btn btn-sm btn-primary">
+                                        <span class="glyphicon glyphicon-refresh"></span>&nbsp; Restart
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            var table = $("#lavoisierUrlTab");
+            if (table) {
+
+                table.show();
+
+                table.DataTable();
+            }
+
+            $("#reload_page").click(function () {
+
+                $(".loader").show();
+                $(".loader-wrapper").show();
+
+                setTimeout(
+                        function () {
+                            location.reload();
+                        }, 3000);
+            });
+
+        });
+    </script>
+
+{% endblock %}

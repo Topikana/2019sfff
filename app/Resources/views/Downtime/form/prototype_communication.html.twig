@@ -1,0 +1,3 @@
+<td class="text-center col-md-5">{{ form_widget(form.type) }}</td>
+<td class="text-center col-md-6">{{ form_widget(form.value) }}</td>
+<td class="text-center col-md-1"><a onclick="removeLineComm(this, {% if form_index_sub is defined %}{{ form_index_sub }}{% else %}_name_{% endif %})" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a></td>

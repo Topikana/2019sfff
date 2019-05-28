@@ -1,0 +1,52 @@
+{% extends 'base_bootstrap_4.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/home.min.css') }}">
+
+{% endblock %}
+
+
+{% block body %}
+    <section id="homeSection">
+
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div role="alert" class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div>
+            <div class="card  m-5" >
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4>Feedback form</h4>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <p class="text-right"><em>All fields marked with <span style="color:#cd0a0a">*</span> are required</em></p>
+                    {{ form(form, {'attr': {'novalidate': 'novalidate', 'id' : 'feedBackForm'}}) }}
+                </div>
+
+                <div class="card-footer text-center">
+                    <p>You can contact us also by email : <a href="mailto:cic-information@in2p3.fr" title="mail to cic information at in2p3">cic-information AT in2p3.fr</a> // via <a href="https://rt.egi.eu/rt" title="contact egi rt system" target="_blank">EGI RT system</a> // or <a href="https://ggus.eu/?mode=ticket_submit" target="_blank" title="contact ggus" >GGUS</a></p>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+    </section>
+{% endblock %}
+

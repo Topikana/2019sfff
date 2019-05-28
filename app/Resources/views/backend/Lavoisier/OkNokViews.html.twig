@@ -1,0 +1,79 @@
+{% extends 'backend/base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/bootstrap.vertical-tabs.min.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+    <div class="row" style="border-top : 1px solid #DDDDDD">
+
+        <button class="pull-right btn btn-primary" id="reload_page"><span class="fa fa-refresh"></span>&nbsp; Refresh</button>
+        <br><br>
+
+
+        {% for flash_message in app.session.flashbag.get('danger') %}
+            <div role="alert" class="col-md-12 col-sm-12 col-xs-12 alert alert-danger">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+        {% if errors["errorcclavoisier01"] is defined %}
+            {% include ":backend/Lavoisier/template:tab_OkNokViews.html.twig" with {"error" : errors["errorcclavoisier01"] , "lavoisierProdName" : "cclavoisier01"} %}
+
+        {% endif %}
+
+        {% if  lavoisierFailedViewsProd01 is defined and lavoisierSuccessViewsProd01 is defined %}
+            {% include ":backend/Lavoisier/template:tab_OkNokViews.html.twig" with {"lavoiserArrayFailed" : lavoisierFailedViewsProd01, "lavoiserArraySuccess" : lavoisierSuccessViewsProd01, "lavoisierProdName" : "cclavoisier01"} %}
+            {% include ":backend/Lavoisier/template:modale_OkNokViews.html.twig" with {"lavoiserArray" : lavoisierFailedViewsProd01} %}
+
+
+        {% endif %}
+
+        {% if errors["errorccosvms0086"]  is defined %}
+            {% include ":backend/Lavoisier/template:tab_OkNokViews.html.twig" with {"error" : errors["errorccosvms0086"], "lavoisierProdName" : "ccosvms0086"} %}
+
+        {% endif %}
+        {% if  lavoisierFailedViewsProd0086 is defined and lavoisierSuccessViewsProd0086 is defined %}
+            {% include ":backend/Lavoisier/template:tab_OkNokViews.html.twig" with {"lavoiserArrayFailed" : lavoisierFailedViewsProd0086, "lavoiserArraySuccess" : lavoisierSuccessViewsProd0086, "lavoisierProdName" : "ccosvms0086"} %}
+            {% include ":backend/Lavoisier/template:modale_OkNokViews.html.twig" with {"lavoiserArray" : lavoisierFailedViewsProd0086} %}
+
+
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            var table = $(".tabResult");
+
+            if (table) {
+
+                table.show();
+
+                table.DataTable();
+            }
+
+            $("#reload_page").click(function () {
+
+                $(".loader").show();
+                $(".loader-wrapper").show();
+
+
+                setTimeout(
+                        function () {
+                            location.reload();
+                        }, 3000);
+
+            });
+        });
+    </script>
+
+{% endblock %}

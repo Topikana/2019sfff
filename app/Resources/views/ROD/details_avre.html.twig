@@ -1,0 +1,68 @@
+<h3 class="card card-header mb-4">Availabilites / Reliabilities:</h3>
+
+<table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover details_avres" >
+    <thead>
+    <tr>
+        <th class='sortable-text' rel="Site name">Date</th>
+        <th class='sortable-text' rel="avre name">availability</th>
+        <th class='sortable-text' rel="avres">reliability</th>
+        <th class='sortable-text' rel="avres">unknown</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for timestamp,avre in details['avre'] %}
+        <tr>
+            <td>{{ timestamp }}</td>
+            <td>
+                {% if avre['availability'] is defined %}
+                    {% if avre['availability'] > 80 %}
+                        <span class="badge badge-success">
+                             {{ avre['availability'] | number_format(2) }}
+                        </span>
+                    {% else %}
+                        <span class="badge badge-danger">
+                             {{ avre['availability'] | number_format(2) }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if avre['reliability'] is defined %}
+                    {% if avre['reliability'] > 85 %}
+                        <span class="badge badge-success">
+                             {{ avre['reliability'] | number_format(2) }}
+                        </span>
+                    {% else %}
+                        <span class="badge badge-danger">
+                             {{ avre['reliability'] | number_format(2) }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+            </td>
+
+            <td>
+
+                {% if avre['unknown']  is defined %}
+                    {% if avre['unknown'] * 100  < 20 %}
+                        <span class="badge badge-success">
+                             {{ avre['unknown'] * 100  | number_format(2) }}
+                        </span>
+                    {% else %}
+                        <span class="badge badge-danger">
+                             {{ avre['unknown'] * 100  | number_format(2) }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script async type="application/javascript">
+    $(document).ready(function() {
+        $('.details_avres').DataTable({
+            "order": [[ 0, "desc" ]]
+        });
+    });
+</script>

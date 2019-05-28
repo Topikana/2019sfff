@@ -1,0 +1,50 @@
+{% if  securityList is defined %}
+    <table class="table table-striped table-bordered table-hover table-responsive" id="securityListTable" cellspacing="0" width="100%" >
+        <!-- table headers row -->
+        <thead class="floating-header">
+
+            <tr>
+                <th>Vo Name</th>
+                <th>Security Contacts</th>
+                <th>Contacts Managers</th>
+                <th>Action</th>
+                <th style="display: none">Serial</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+
+        {% for id,security in securityList %}
+
+            <tr>
+                <!-- get detail about VO -->
+                <td>
+
+                    <a href="#" onclick="getVODetails(this,'{{ path("voDetailAjax") }}','securityListTable')"><span class="btn btn-sm btn-light" style="border-color: rgb(203,203,203)"><span
+                                    class="fa fa-search-plus"></span></span></a>&nbsp;&nbsp;{{ security["name"] }}
+                </td>
+
+                <td>
+                    {% if security["security_contact_mailing_list"] is defined and security["security_contact_mailing_list"] is not empty %}
+                        {{ security["security_contact_mailing_list"] }}
+                    {% else %}
+                        <label class="badge badge-danger"><span class="fas fa-times"></span>&nbsp; No security contact </label>
+                    {% endif %}
+                </td>
+                <td>
+                {% if security["contact_manager"] is defined and security["contact_manager"] is not empty %}
+                    {{ security["contact_manager"] }}
+                {% endif %}
+                </td>
+                <td>
+                    <a class="voAction btn-sm btn btn-primary"
+                       href="mailto:{% if security["security_contact_mailing_list"] is defined and security["security_contact_mailing_list"] is not empty %}{{ security["security_contact_mailing_list"] }}{% elseif security["contact_manager"] is defined and security["contact_manager"] is not empty %}{{ security["contact_manager"] }}{% else %}cic-information@in2p3.fr{% endif %}"
+                       title="send mail to security contact for VO {{ security["name"] }}"><span class="far fa-envelope"></span>&nbsp;Send mail</a>
+                </td>
+                <td style="display: none">{{ security["serial"] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

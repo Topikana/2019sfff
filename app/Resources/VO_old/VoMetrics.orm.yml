@@ -1,0 +1,26 @@
+AppBundle\Entity\VoMetrics:
+  type: entity
+  table: vo_metrics
+  connection: dashboardConnection
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: false
+      generator: {strategy : AUTO}
+  fields:
+    nb_vo:
+      type: integer
+    nb_added:
+      type: integer
+    nb_removed:
+     type: integer
+    nb_inter_vo:
+       type: integer
+    nb_inter_added:
+      type: integer
+    nb__inter_removed:
+     type: integer
+    day_date:
+      type: string
+      length: 10

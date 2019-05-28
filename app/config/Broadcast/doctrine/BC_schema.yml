@@ -1,0 +1,48 @@
+AppBundle\Entity\Broadcast\BroadcastMessage:
+  connection: dashboardConnection
+  actAs: { Timestampable: ~ }
+  columns:
+    author_email: {type: text, notnull: true }
+    author_cn: {type: text,notnull: true }
+    subject: { type: text,  notnull: true }
+    body: text
+    targets_mail: text
+    targets_label: text
+    targets_id: text
+    bcc: { type: text }
+    cc: {type: text}
+    publication_type: integer
+    attachements: text
+    old_id: {type: integer}
+    category: {type: integer}
+AppBundle\Entity\Broadcast\MailMessage:
+  connection: dashboardConnection
+  actAs: { Timestampable: ~ }
+  columns:
+    message: { type: blob, notnull: true }
+AppBundle\Entity\Broadcast\BroadcastMailingLists:
+  connection: dashboardConnection
+  tableName: broadcast_mailing_lists
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+    name:
+      type: string(150)
+      primary: false
+      notnull: true
+
+    value:
+      type: string(250)
+
+      primary: false
+      notnull: true
+
+    user_id:
+      type: string(255)
+      primary: false
+      notnull: true
+    scope:
+      type: string(100)
+      primary: false
+      notnull: true

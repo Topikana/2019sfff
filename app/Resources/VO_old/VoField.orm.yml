@@ -1,0 +1,57 @@
+AppBundle\Entity\VoField:
+  type: entity
+  table: vo_field
+  connection: dashboardConnection
+  id:
+    field_name:
+      type: string
+      length: 255
+      options:
+        fixed: false
+  fields:
+    field_error_msg:
+      type: string
+      length: 2000
+      options:
+        fixed: false
+    field_user_help:
+      type: string
+      length: 2000
+      options:
+        fixed: false
+    field_admin_help:
+      type: string
+      length: 2000
+      options:
+        fixed: false
+    category:
+      type: string
+      length: 2000
+      options:
+        fixed: false
+    field_link:
+      type: string
+      length: 255
+      options:
+        fixed: false
+    field_example:
+      type: string
+      length : 255
+      options:
+        fixed: false
+    field_regexp_id:
+      type: integer
+      options:
+        unsigned: false
+    required:
+      type: smallint
+      options:
+        unsigned: false
+
+  manyToOne:
+    voRegexp:
+      targetEntity: VoRegexp
+      inversedBy: voFields
+      joinColumn:
+        name: regexp_id
+        referencedColumnName: id

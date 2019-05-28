@@ -1,0 +1,353 @@
+{% extends "::base_bootstrap_4.html.twig" %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/vo.min.css') }}">
+    {% endblock %}
+
+{% block body %}
+
+    <div class="loader-wrapper absolute">
+        <div class="loader"></div>
+    </div>
+
+
+    <div id="flashes">
+
+        {% for flash_message in app.session.flashbag.get('danger') %}
+            <div role="alert" class="alert alert-danger">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+
+        {% for flash_message in app.session.flashbag.get('success') %}
+            <div role="alert" class="alert alert-success">
+                {{ flash_message|raw }}
+            </div>
+        {% endfor %}
+
+    </div>
+
+     <div class="row">
+            <div class="float-left col-10"></div>
+            <div class="float-right">
+                <a class="btn btn-sm btn-success float-right"  href="{{ path("registration") }}">
+                    <span class="fa fa-plus-circle"></span> Register a new VO
+                </a>
+            </div>
+     </div>
+    {% if isSuUser %}
+        <article class="m-4 page-header">
+            <h2 class="m-2  border-secondary border-bottom">VO(s) Not in Production </h2>
+        </article>
+
+        <article class="m-4 card-group" id="accordionVoNotInProdList" role="tablist" aria-multiselectable="true">
+
+            <div class="card">
+                <!-- VO WAITING FOR VALIDATION -->
+                <div class="card-header" role="tab" id="headingWaitingO">
+                    <h5 class="card-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordionVoNotInProdList"
+                           href="#collapseMWaitingVOList" aria-expanded="true" aria-controls="collapseMWaitingVOList">
+                            <span class="text-secondary fa fa-chevron-down "></span><span class="text-dark m-1">Incoming VO(s)</span>
+                            <span class="badge badge-success">
+                                {% if waitingVo is defined and waitingVo != null and waitingVo is not empty %}
+                                    {{ waitingVo|length }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </span>
+                        </a>
+                      
+
+                        {% for flash_message in app.session.flashbag.get('PendingVO') %}
+                            <span class="badge badge-success pull-right"> {{ flash_message|raw }} </span>
+                        {% endfor %}
+
+                    </h5>
+                </div>
+                <div id="collapseMWaitingVOList" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingWaitingO">
+                    <div class="card-body">
+                        <!-- help text -->
+                        <div class="" id="accordion1" role="tablist" aria-multiselectable="true">
+                            <button class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion1"
+                                    href="#collapseOne" aria-expanded="false">
+                                <span class="far fa-caret-square-right"></span> Explanation
+                            </button>
+                            <hr>
+                            <div id="errorDivWaiting" class="errorDiv card card-danger card-body"></div>
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+                                <div class="card-body">
+                                    {{ help["pages"]["waitingVo"]|raw }}
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                        {% if waitingVo is defined and waitingVo != null and waitingVo is not empty %}
+
+                            {% include ':vo/templates:template_tab_WaitingVOList.html.twig' %}
+                        {% else %}
+                            <div class="alert alert-danger">No Vo to be displayed here...</div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <!-- VO WAITING FOR VALIDATION END -->
+
+
+                <!-- Removed VO -->
+                <div class="card-header" role="tab" id="headingVoListRemoved">
+                    <h5 class="card-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordionVoNotInProdList" href="#collapseVoListRemoved"
+                           aria-expanded="true" aria-controls="collapseVoListRemoved">
+                            <span class="text-secondary fa fa-chevron-down "></span><span class="text-dark m-1">Removed VO(s)</span>
+                            <span class="badge  badge-danger">
+
+                                {% if voListRemoved is defined and voListRemoved != null and voListRemoved is not empty %}
+                                    {{ voListRemoved|length }}
+                                {% else %}
+                                    0
+                                {% endif %}
+
+                            </span>
+
+                        </a>
+                        
+
+                        {% for flash_message in app.session.flashbag.get('LeavingVO') %}
+                            <span class="badge badge-success"> {{ flash_message|raw }} </span>
+                        {% endfor %}
+
+                        {% for flash_message in app.session.flashbag.get('DeletedVO') %}
+                            <span class="badge badge-success"> {{ flash_message|raw }} </span>
+                        {% endfor %}
+
+                        {% for flash_message in app.session.flashbag.get('SuspendedVO') %}
+                            <span class="badge badge-success"> {{ flash_message|raw }} </span>
+                        {% endfor %}
+
+                    </h5>
+                </div>
+
+                <div id="collapseVoListRemoved" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingVoListRemoved">
+                    <div class="card-body">
+                        <div id="errorDivLeaving" class="errorDiv card card-danger card-body"></div>
+                        {% if  voListRemoved is defined and voListRemoved != null and voListRemoved is not empty %}
+
+                            {% include ':vo/templates:template_tab_LeavingVoList.html.twig' %}
+                        {% else %}
+                            <div class="alert alert-danger">No Vo to be displayed here...</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- LEAVING VO END -->
+            </div>
+
+        </article>
+    {% endif %}
+
+
+    <article class="m-4 page-header border-secondary border-bottom">
+        <h2 class="m-3">VO List</h2>
+    </article>
+
+    <article class="ml-3 mr-3" id="accordionVoList"  role="tablist" aria-multiselectable="true">
+
+        <div class="card">
+            <!-- MY VO -->
+
+            <div class="card-header"  role="tab" id="headingMyVO">
+                <h5 class="card-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordionVoList"  href="#collapseMyVOList"
+                       aria-expanded="true" aria-controls="collapseMyVoList">
+                        <span class="text-secondary fa fa-chevron-down "></span><span class="text-dark m-1">My VO(s)</span>
+                        <span class="badge  badge-success" >
+
+                                {% if myVoList is defined and myVoList != null and myVoList is not empty %}
+                                    {% set myVoCount = 0 %}
+                                    {% for vo in myVoList %}
+                                        {% if vo["status"] == "Production" %}
+                                            {% set myVoCount = myVoCount +1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ myVoCount }}
+                                {% else %}
+                                    0
+                                {% endif %}
+
+                        </span>
+
+                    </a>
+                </h5>
+            </div>
+            <div id="errorDivMyVO" class="errorDiv card card-danger card-body"></div>
+            <div id="collapseMyVOList" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMyVO">
+                <div class="card-body">
+                    <div id="errorDivMyVO" class="errorDiv card card-danger card-body"></div>
+                    {% if  myVoList is defined and myVoList != null and myVoList is not empty %}
+
+                        {% include ':vo/templates:template_tab_MyVoList.html.twig' %}
+                    {% else %}
+                        <div class="alert alert-danger" >No Vo to be displayed here...</div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- MY VO END -->
+
+            <!-- VO LIST OTHER -->
+
+            <div class="card-header" role="tab" id="headingVoListOther">
+                <h5 class="card-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordionVoList"  href="#collapseVoListOther"
+                       aria-expanded="true" aria-controls="collapseVoListOther">
+                        <span class="text-secondary fa fa-chevron-down "></span><span class="text-dark m-1">Other VO(s)</span>
+                        <span class="badge  badge-primary">
+
+                                {% if voListOther is defined and voListOther != null and voListOther is not empty %}
+                                    {{ voListOther|length }}
+                                {% else %}
+                                    0
+                                {% endif %}
+
+                        </span>
+
+                    </a>
+                    
+                    {% for flash_message in app.session.flashbag.get('ProductionVO') %}
+                        <span class="badge badge-success"> {{ flash_message|raw }} </span>
+                    {% endfor %}
+
+                </h5>
+            </div>
+            <div id="collapseVoListOther" class="panel-collapse collapse" role="tabpanel"
+                 aria-labelledby="headingVoListOther">
+                <div class="card-body">
+                    <!-- help text -->
+                    <div id="accordion3" role="tablist" aria-multiselectable="true">
+                        <button class="btn btn-sm btn-primary mb-2" data-toggle="collapse" data-parent="#accordion3"
+                                href="#collapseThree" aria-expanded="false">
+                            <span class="far fa-caret-square-right"></span> Help
+                        </button>
+
+                        <hr>
+                        <div id="errorDivOther" class="errorDiv card card-danger card-body"></div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
+                            <div class="card-body">
+                                {{ help["pages"]["voListOther"]|raw }}
+                            </div>
+                            <hr/>
+                        </div>
+                    </div>
+                    {% if  voListOther is defined and voListOther != null and voListOther is not empty %}
+
+                        {% include ':vo/templates:template_tab_OtherVoList.html.twig' %}
+                    {% else %}
+                        <div class="alert alert-danger">No Vo to be displayed here...</div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- VO LIST OTHER END -->
+
+
+            {% if isSuUser %}
+
+                <!-- VO VALIDITY -->
+                <div class="card-header" role="tab" id="headingVoValidity">
+                    <h5 class="card-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordionVoList" href="#collapseVoValidity"
+                           aria-expanded="true" aria-controls="collapseVoValidity" onclick="loadSynoptic('{{ path("synoptic") }}')" >
+                            <span class="text-secondary fa fa-chevron-down "></span><span class="text-dark m-1">VO Validity</span>
+                            <span class="badge  badge-info">
+
+                               {% if voListOther is defined and voListOther != null and voListOther is not empty %}
+                                   {{ voListOther|length }}
+                               {% else %}
+                                   0
+                               {% endif %}
+                            </span>
+
+                        </a>
+
+                    </h5>
+                </div>
+
+                <div id="collapseVoValidity" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingVoValidity">
+                    <div id="voValidityBody" class="card-body">
+                        <!-- help text -->
+                        <div class="card-group" id="accordion4" role="tablist" aria-multiselectable="true">
+                            <button class="btn btn-primary" data-toggle="collapse"
+                                    href="#collapseFour" aria-expanded="false">
+                                <span class="fa fa-expand-bottom"></span> Help
+                            </button>
+
+                            <hr>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel">
+                                <div class="card-body">
+                                    {{ help["pages"]["voValidity"]|raw }}
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div id="errorDivValidity" class="errorDiv card card-danger card-body"></div>
+
+
+                    </div>
+                </div>
+
+                <!-- VO VALIDITY END -->
+            {% endif %}
+
+        </div>
+
+    </article>
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{ asset('js/vo/voList.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/jstree/jstree.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/vo/aup.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vo/voManagement.js') }}"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            // Setup - add a text input to each header cell of datatable
+            setUpFilters();
+
+            //build vo tables with datatables plugin
+            buildVOTables();
+
+            //Apply the search by header
+            applySearch();
+
+            // Add XML exports button to Vo Other List Tab
+            {% if voFullLink  is defined  and voListOtherLink is defined %}
+            constructExportButtons('{{ voFullLink }}', '{{ voListOtherLink }}');
+            {% endif %}
+
+            //show page loader on click on action button in tab
+            showLoaderOnVoAction();
+
+
+            setUpAup();
+
+
+            setUpCvmfs();
+
+
+
+
+        });
+
+        </script>
+
+
+{% endblock %}

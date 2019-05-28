@@ -1,0 +1,37 @@
+<div class="card mt-4">
+
+    <div class="card-header">
+        <h2 class="portal text-primary">Disciplines
+            <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+               title="Disciplines"
+               data-content='<b>Discipline :</b> When you have selected a 2nd or 3rd level discipline, these parents will be automatically added as well.<br>
+    <b>For example : </b>If you select "<i>Architecture engineering</i>", when you save, "<i>Civil engineering</i>" and "<i>Engineering and Technology</i>" will be added.'
+               data-html='true'><span class='fa fa-info-circle' style="font-size: 15px"></span></a>
+        </h2>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="m-3">Search <input type="text" id="disciplines_q" value="" class="input"></div>
+        </div>
+        <div class="row">
+
+
+            <div id="disciplines" class="col-md-5 m-2">
+
+                {% for discipline in listDiscipline %}
+                    <input type="hidden" class="disciplineId" value="{{ discipline.id }}">
+                {% endfor %}
+
+                {% autoescape %}
+                    {{ viewDiscipline|raw }}  var won't be escaped
+                {% endautoescape %}
+            </div>
+            <div class="col-md-5 m-2">
+                <ul id="listdisciplines">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

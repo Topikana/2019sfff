@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        body {
+            counter-reset: footer;
+        }
+        .page::before{
+            /*counter-increment: footer;*/
+            /*content: counter(footer);*/
+            content: counter(footer);
+            counter-increment: footer;
+        }
+    </style>
+</head>
+<body>
+<footer style="padding: 5px;">
+    <img style="width: 50px; position: absolute; bottom: 10px; left: 0;" src="{{ app.request.getSchemeAndHttpHost() ~ asset('images/pluginsla/EGI_VO_SLA.png') }}" alt="EGI logo">
+    <p class="page" style="text-align: center;"></p>
+</footer>
+</body>
+</html>

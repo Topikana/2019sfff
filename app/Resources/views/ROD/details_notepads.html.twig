@@ -1,0 +1,103 @@
+<h3 class="card card-header mb-4">Notepads :</h3>
+
+<table class="table no-arrow table-striped table-bordered sortable-onload-0 table-hover details_notepads" >
+    <thead>
+        <tr>
+            <th class='sortable-text' rel="id">id</th>
+            <th class='sortable-text' rel="notepads">site</th>
+            <th class='sortable-text' rel="Create Date">Create Date</th>
+            <th class='sortable-text' rel="Last Update">Last Update</th>
+            <th class='sortable-text' rel="Subject">Subject</th>
+            <th class='sortable-text' rel="Status">Status</th>
+            <th class='sortable-text' rel="Last Modifer">Last Modifer</th>
+            <th class='sortable-text' rel="Alarm Group">Alarm Group</th>
+            <th class='sortable-text' rel="Actions">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for notepad in details['notepads'] %}
+    <tr>
+        <td>{{ notepad['id'] }}</td>
+        <td>{{ notepad['site'] }}</td>
+        <td>{{ notepad['creation_date'] }}</td>
+        <td>{{ notepad['last_update'] }}</td>
+        <td>{{ notepad['subject'] }}</td>
+        {% if notepad['status'] == 1 %}
+            <td>Open</td>
+        {% elseif notepad['status'] == 2 %}
+            <td>Close</td>
+            {% else %}
+            <td>{{ notepad['status'] }}</td>
+        {% endif %}
+        <td>{{ notepad['last_modifer'] }}</td>
+        <td>
+            {% for alarm in alarms['alarms'] %}
+                {% for alarmInfo in notepadAlarm  %}
+                    {% if alarmInfo.idNotepad == notepad['id'] and alarmInfo.idAlarm == alarm['id'] %}
+                        {% if alarm['status'] == 0 %}
+                            <a class="badge badge-success text-white">{{alarm['test_name'] }}</a>
+                        {% elseif alarm['status'] == 1 %}
+                            <a class="badge badge-warning text-white">{{alarm['test_name'] }}</a>
+                        {% elseif alarm['status'] == 2 %}
+                            <a class="badge badge-danger text-white">{{ alarm['test_name'] }}</a>
+                        {% elseif alarm['status'] == 3 %}
+                            <a class="badge badge-default text-white">{{ alarm['test_name'] }}</a>
+                        {% elseif alarm['status'] == 4 %}
+                            <a class="badge badge-primary text-white">{{ alarm['test_name'] }}</a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </td>
+        <td>
+            <div class="btn-group d-flex justify-content-center" role="group">
+                <a href="{{ path('notepadAlarmGroupe', {'site': notepad['site'], 'notepadId': notepad['id']}) }}" title="Alarms associated to the notepad" class="btn btn-primary btn-sm">
+                    <span class="fas fa-bell"></span>
+                </a>
+{#                <a class="btn btn-success btn-sm" href="{{ path('notepad_show', {'id': notepad['id']}) }}">#}
+{#                    <span class="fa fa-info-circle mr-1"></span>Details#}
+{#                </a>#}
+                <button class="btn btn-secondary btn-sm" title="Notepad details" type="button" data-toggle="modal" data-target="#detail_notepad-{{ notepad['id'] }}">
+                    <span class="fa fa-search-plus"></span>
+                </button>
+                <a class="btn btn-danger btn-sm" title="Close Notepad" href="{{ path('notepad_delete', {'id': notepad['id']}) }}">
+                    <span class="fa fa-times-circle"></span>
+                </a>
+            </div>
+        </td>
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% for notepad in details['notepads'] %}
+    <div class="modal fade" id="detail_notepad-{{ notepad['id'] }}" tabindex="-1" role="dialog" aria-labelledby="detail_notepad_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-75" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="detail_notepadLabel"><span class="fa fa-search-plus mr-2"></span>Notepad details</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Notepad:getDetailNotepad', {'id': notepad['id'] })) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+<script async type="application/javascript">
+    $(document).ready(function() {
+        $('.details_notepads').DataTable({
+            "columnDefs": [
+                { targets: [0, 1], visible: false}
+            ]
+        });
+    });
+</script>

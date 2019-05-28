@@ -1,0 +1,76 @@
+<div class="m-5">
+
+
+<table id="badVoListTable" class="table table-bordered table-condensed  table-striped table-hover">
+    <thead class="floating-header">
+    <tr>
+        <th>Vo name</th>
+        <th class="center" >Serial</th>
+        <th class="center">Admins</th>
+        <th class="center">AUP</th>
+        <th class="center">Description</th>
+        <th class="center">Homepage URL</th>
+        <th class="center">User Support</th>
+        <th class="center">Nb Voms Server</th>
+        <th class="center">Voms Users</th>
+        <th class="center">Score (%)</th>
+        <th class="center">Details</th>
+        <th class="center">Last report</th>
+        <th class="center">Submit report</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for voName, vopb in tabvopb %}
+    {% set voserial =  tabvopb[voName]["serial"] %}
+    {% set body = "\n\n" %}
+
+    <tr id='row_{{ voserial }}'>
+        <td ><a title="update VO {{ voName }}" href="{{ path("voUpdate", {"serial": voserial}) }}">{{ voName }}</a></td>
+        {% for key, pb in vopb %}
+            {% if pb|is_numeric  %}
+                <td class="center">{{ pb }}</td>
+            {% else %}
+                <td class="center">
+                    {% if (pb != 'ok') or (key == 'enrollment_url') or ( key == 'homepage_url') or (key == 'VomsServer') %}
+                        <a class="urlReportLink" href="http://{{ portalUrl }}/vo/voUrlCheckReport/voname/{{ voName }}"
+                           title="{{ key }} : {{ pb }} (=> click on icon to see details)">
+                            <span class="{{ tabicons[pb][0] }}" ></span>
+                        </a>
+                    {% else %}
+                        <span class="{{ tabicons[pb][0] }}" ></span>
+                    {% endif %}
+                    <span style="display:none">{{ tabicons[pb][1] }}</span>
+                </td>
+            {% endif %}
+
+            {% if (pb != "ok") and  pb|is_numeric %}
+                {% set body =  key ~ " : \n"  ~ pb ~ " \n" %}
+            {% endif %}
+
+        {% endfor %}
+
+        <td class='center'>
+            <a href="#" onclick="getVODetails(this,'{{ path("voDetailAjax") }}','badVoListTable')">
+                <span class="btn btn-sm btn-default"><span class="fa fa-search-plus"></span></span></a>
+        </td>
+
+        <td class='center' id="last_report_{{ voserial }}">
+            {% if tabreport[voserial] is defined %}
+                {{ tabreport[voserial]  }}
+            {% endif %}
+        </td>
+
+        <td class='center'>
+            <form action="{{ path('sendReport') }}" id='sendReportForm_{{ voserial }}' method="post">
+                <input type="hidden" name="voserial" value="{{ voserial }}"/>
+                <input type="hidden" name="body" value="{{ body }}"/>
+                <input type="hidden" name="mail_subject" value="VO ID card Incorrect">
+                <input type="submit" value="Report" class="btn btn-primary btn-sm voAction">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</div>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>  
+        <parameter key="ggus.throwException">0</parameter>
+        <parameter key="ggus.urls" type="collection">
+            <parameter key="wsdl">https://prod-ars.ggus.eu/arsys/WSDL/public/prod-ars/</parameter>
+            <parameter key="site">https://ggus.eu/index.php</parameter>
+        </parameter>          
+    </parameters>     
+    
+</container>

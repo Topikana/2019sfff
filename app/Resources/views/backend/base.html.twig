@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Meta, title, css, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Ops Backend{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ asset('build/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('build/vendor/font-awesome/css/all.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('build/css/global.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('build/css/backend/custom.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('build/css/backendStyle.min.css') }}" rel="stylesheet">
+
+    <!-- datatables -->
+    <link href="{{ asset('build/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+
+{#    <link rel="stylesheet" type="text/css"#}
+{#          href="https://cdn.datatables.net/s/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,kt-2.1.0,r-2.0.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.min.css"/>#}
+
+    {% block stylesheets %}{% endblock %}
+
+</head>
+
+
+<body class="nav-md">
+
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="{{ path('backendHome') }}" class="site_title"><i class="fas fa-sliders-h"></i> <span>Ops Backend</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu mt-4">
+                    <div class="menu_section">
+                        <h3>GENERAL</h3>
+                        <ul class="nav side-menu">
+                            <li>
+                                <a href="{{ path("backendHome") }}"><i class="fas fa-home"></i> Home</a>
+                            </li>
+                        </ul>
+                        {% for menu in backendMenu %}
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="{{ menu.icon }}"></i> {{ menu.title }}<span class="fas fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        {% for item in menu.items %}
+                                            {% if item.parameter is defined %}
+                                                <li><a href="{{ path(item.action, {'server':item.parameter}) }}">{{ item.title }}</a></li>
+                                            {% else %}
+                                                <li><a href="{{ path(item.action) }}">{{ item.title }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="menu_section">
+                        <h3>OPERATIONS PORTAL</h3>
+
+                        <ul class="nav side-menu">
+                            <li>
+                                <a href="{{ path("home") }}"><img src="{{ asset('favicon.ico') }}"> Back to Operations Portal</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fas fa-bars"></i></a>
+                    </div>
+
+                    <div class="page_title">
+                        {{ pageTitle }}
+                    </div>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="backendDate">
+                            <span class="fas fa-calendar"></span>&nbsp;{{ "now"|date("d M Y") }}
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            {% block body %}{% endblock %}
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Ops Backend - CC IN2P3 - CNRS © {{ "now"|date("Y") }} - Template : <a href="https://colorlib.com">Colorlib</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<script src="{{ asset('build/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('build/js/jquery-ui.min.js') }}"></script>
+
+<script src="{{ asset('build/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('build/vendor/datatables/js/dataTables.dataTables.min.js') }}"></script>
+
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"#}
+{#        integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="#}
+{#        crossorigin="anonymous"></script>#}
+
+{#<script type="text/javascript"#}
+{#        src="https://cdn.datatables.net/s/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,kt-2.1.0,r-2.0.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.min.js"></script>#}
+
+<!-- FastClick -->
+<script src="{{ asset('build/js/backend/fastclick.min.js') }}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{{ asset('build/js/backend/custom.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $(".loader").hide();
+        $(".loader-wrapper").hide();
+    });
+</script>
+{% block javascripts %}{% endblock %}
+
+
+</body>
+</html>

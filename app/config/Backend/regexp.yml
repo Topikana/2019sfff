@@ -1,0 +1,52 @@
+parameters:
+  regexp:
+    access:
+      regexp1:
+        title: 'IP-Date-Method-Navigator'
+        value: '/^(\S+) \S+ \S+ \[([^\]]+)\] "([A-Z]+)[^"]*" \d+ \d+ "[^"]*" "([^"]*)"$/m'
+        columns: ' Ip, Date, Method, Navigator,Details'
+      regexp2:
+         title: 'Server-IP-Date-Method-Navigator'
+         value: '/^([\w.]+) (\S+) \S+ \S+ \[([^\]]+)\] "([A-Z]+)[^"]*" \d+ \d+ "[^"]*" "([^"]*)"$/m'
+         columns: ' Server, Ip, Date, Method, Navigator,Details'
+      regexp3:
+         title: 'IP-Date-Hour-GMT-method-URL-ErrorCode-Navigator'
+         value: '/^(\S+) (\S+) (\S+) \[([^:]+):(\d+:\d+:\d+) ([^\]]+)\] \"(\S+) (.*?) (\S+)\" (\S+) (\S+) "([^"]*)" "([^"]*)"$/'
+         columns: 'IP, Date, Hour, GMT (hour), Method, URL, Error Code, Navigator, Details'
+    error:
+      regexpa:
+          title: 'Date-errortype-Client-text-message'
+          value: '#^(\[[\w:\s]+\]) (\[[\w]+\]) (\[[\w\d.\s]+\])?([\w\s\/.(")-]+[\-:][\w\/\s.])(\w+.+)#'
+          columns: 'Date, Errortype, Client, Text, message'
+    php_errors:
+      regexpb:
+          title: 'Date-Hour-TimeZone-Action'
+          value: '/^(\[\S{2}\-[a-zA-Z]+\-\S+\ (\S+\:)\S+\ ([a-zA-Z]+\/[a-zA-Z]+)\]\ )([\w \:\(\)\/\.\,]+)$/'
+          columns: 'Date, Hour, Time zone, Action'
+#    rewrite:
+#      regexpr:
+#          title: 'IP-Date-Error'
+#          value: '/^(\S+) \S+ \S+ \[([^\]]+)\] \[([a-z\-.\/#\w]+)\]\[(\w+#\w+\/[a-z]+)\] \(\S+\) (\[\w+.+\])(.+)$/'
+#          columns: 'IP,Date,3,4, 5, Error'
+    ssl_request:
+      regexpw:
+          title: 'time_method-code'
+          value: '/^(\[\w+\/\w+\/[0-9:]+ \+0100\]) ([\w+.]+) (\-?.?){3}(\"GET [\/\w+\-]+ [HT{2}P\/1.0-1]+\") (\d+)$/'
+          columns: 'Time, server, -, method, code '
+    sf3:
+      regexpy:
+           title: 'time-level-message'
+           value: '/^(\[\d+\-\d{2}\-\d{2}\s[\d{2}:]+\]) (\w+.\w+:) (\w.+)$/'
+           columns: 'Time, level, message'
+    sf1:
+      regexpt:
+           title: 'error'
+           value: '/^([a-zA-Z \w:+]+)(\[\w+\]) (\{\w+\}) (\w.+)$/'
+           columns: 'Date, Info, Error Type, Message'
+
+
+
+
+
+
+
